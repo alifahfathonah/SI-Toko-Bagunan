@@ -116,7 +116,7 @@
                                 <label>Provinsi</label>
                                 <!-- <input id="provSupplierEdit" type="text" class="form-control"> -->
                                 <select class="form-control" id="provSupplierEdit">
-                                    <option>--Pilih Provinsi</option>
+                                    <option>--Pilih Provinsi--</option>
                                     <option>Jawa Barat</option>
                                     <option>Jawa Tengah</option>
                                     <option>Jawa Timur</option>
@@ -128,7 +128,7 @@
                                 <label>Kota</label>
                                 <!-- <input id="kotaSupplierEdit" type="text" class="form-control"> -->
                                 <select class="form-control" id="kotaSupplierEdit">
-                                    <option>--Pilih Kota</option>
+                                    <option>--Pilih Kota--</option>
                                     <option>Bangkalan</option>
                                     <option>Pamekasan</option>
                                     <option>Sampang</option>

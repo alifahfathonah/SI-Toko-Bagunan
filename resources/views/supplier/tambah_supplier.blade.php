@@ -56,9 +56,8 @@
                                 <div class="col-sm-6">
                                     <div class="form-group">
                                         <label>Provinsi</label>
-                                        <!-- <input type="text" class="form-control form-control" id="provSupplier"> -->
                                         <select class="form-control" id="provSupplier">
-                                            <option>--Pilih Provinsi</option>
+                                            <option>--Pilih Provinsi--</option>
                                             <option>Jawa Barat</option>
                                             <option>Jawa Tengah</option>
                                             <option>Jawa Timur</option>
@@ -66,9 +65,8 @@
                                     </div>
                                     <div class="form-group">
                                         <label>Kota</label>
-                                        <!-- <input type="number" class="form-control form-control" id="kotaSupplier"> -->
                                         <select class="form-control" id="kotaSupplier">
-                                            <option>--Pilih Kota</option>
+                                            <option>--Pilih Kota--</option>
                                             <option>Bangkalan</option>
                                             <option>Pamekasan</option>
                                             <option>Sampang</option>

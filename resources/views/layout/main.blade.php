@@ -157,7 +157,7 @@
                                 </ul>
                             </div>
                         </li>
-                        <li class="nav-item">
+                        <!-- <li class="nav-item">
                             <a data-toggle="collapse" href="#barang">
                                 <i class="fas fa-box"></i>
                                 <p>Barang</p>
@@ -177,7 +177,7 @@
                                     </li>
                                 </ul>
                             </div>
-                        </li>
+                        </li> -->
                         <li class="nav-item">
                             <a data-toggle="collapse" href="#laporan">
                                 <i class="fas fa-file"></i>

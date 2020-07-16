@@ -110,23 +110,21 @@
                         <div class="col-md-6 pr-0">
                             <div class="form-group">
                                 <label>Supplier</label>
-                                <input id="supplierEdit" type="text" class="form-control">
-                                <!-- <select class="form-control" id="supplierEdit">
-                                    <option>--Pilih Supplier</option>
+                                <select class="form-control" id="supplierEdit">
+                                    <option>--Pilih Supplier--</option>
                                     <option>Dimas</option>
                                     <option>Icha</option>
-                                </select> -->
+                                </select>
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label>Sales</label>
-                                <input id="salesEdit" type="text" class="form-control">
-                                <!-- <select class="form-control" id="salesEdit">
+                                <select class="form-control" id="salesEdit">
                                     <option>--Pilih Sales</option>
                                     <option>Dimas</option>
                                     <option>Icha</option>
-                                </select> -->
+                                </select>
                             </div>
                         </div>
                         <div class="col-sm-12">

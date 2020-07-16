@@ -13,7 +13,7 @@
             <div class="price-value">
                 <div class="value">
                     <!-- <span class="logo"><img src="../public/assets/Atlantis-Lite-master/examples/assets/img/pp.jpg" alt="..." class="avatar-img"></span> -->
-                    <span class="amount">TB</span>
+                    <span class="amount">SR</span>
                     <!-- <span class="month">/month</span> -->
                 </div>
             </div>

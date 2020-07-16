@@ -41,9 +41,8 @@
                                 <div class="col-sm-12">
                                     <div class="form-group">
                                         <label>Supplier</label>
-                                        <!-- <input type="text" class="form-control form-control" id="supplierTambah"> -->
                                         <select class="form-control" id="supplierTambah">
-                                            <option>--Pilih Supplier</option>
+                                            <option>--Pilih Supplier--</option>
                                             <option>Dimas</option>
                                             <option>Icha</option>
                                         </select>
