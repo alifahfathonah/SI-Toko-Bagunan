@@ -35,25 +35,28 @@
                             <h4 class="card-title">Tambah Sales</h4>
                         </div>
                     </div>
-                    <form action="{{url('/')}}">
+                    <form action="{{route('sales.tambah')}}" method="POST">
+                        @csrf
                         <div class="card-body">
                             <div class="row">
                                 <div class="col-sm-12">
                                     <div class="form-group">
                                         <label>Supplier</label>
-                                        <select class="form-control" id="supplierTambah">
-                                            <option>--Pilih Supplier--</option>
-                                            <option>Dimas</option>
-                                            <option>Icha</option>
+                                        <select class="form-control" id="supplierTambah" name="supplierTambah">
+                                                <option value="">--Pilih Supplier--</option>
+                                            @foreach ($suppliers as $supplier)
+                                                <option value={{$supplier->id}}>{{$supplier->name}}</option>
+                                                
+                                            @endforeach
                                         </select>
                                     </div>
                                     <div class="form-group">
                                         <label>Nama</label>
-                                        <input type="text" class="form-control form-control" id="namaSales">
+                                        <input type="text" class="form-control form-control" id="namaSales" name="namaSales">
                                     </div>
                                     <div class="form-group">
                                         <label>Telephone</label>
-                                        <input type="number" class="form-control form-control" id="phoneSales">
+                                        <input type="number" class="form-control form-control" id="phoneSales" name="phoneSales">
                                     </div>
                                 </div>
                             </div>

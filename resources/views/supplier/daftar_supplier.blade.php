@@ -34,7 +34,7 @@
                     <div class="card-header">
                         <div class="d-flex align-items-center">
                             <h4 class="card-title">Daftar Supplier</h4>
-                            <a class="btn btn-primary btn-round ml-auto" href="{{url('/supplier/tambah_supplier')}}">
+                            <a class="btn btn-primary btn-round ml-auto" href="{{route('supplier.form.tambah')}}">
                                 <i class="fa fa-plus"></i>
                                 Tambah
                             </a>
@@ -50,20 +50,19 @@
                                         <th>Alamat</th>
                                         <th>Kota</th>
                                         <th>Provinsi</th>
-                                        <th>Kode Pos</th>
                                         <th>Telephone</th>
                                         <th style="width: 10%">Aksi</th>
                                     </tr>
                                 </thead>
                                 <tbody>
+                                    @foreach ($suppliers as $supplier)
                                     <tr>
-                                        <td>1</td>
-                                        <td>Dimas</td>
-                                        <td>Kamal</td>
-                                        <td>Bangkalan</td>
-                                        <td>Jawa Timur</td>
-                                        <td>69162</td>
-                                        <td>08983498757</td>
+                                        <td>{{$loop->iteration}}</td>
+                                        <td>{{$supplier->name}}</td>
+                                        <td>{{$supplier->address}}</td>
+                                        <td>{{$supplier->city}}</td>
+                                        <td>{{$supplier->phone}}</td>
+                                        <td>{{$supplier->province}}</td>
                                         <td>
                                             <div class="form-button-action">
                                                 <span data-toggle="modal" data-target="#editModal"><button class="btn btn-link btn-primary btn-lg" data-toggle="tooltip" data-placement="top" title="Edit"><i class="fa fa-edit"></i></button></span>
@@ -71,6 +70,7 @@
                                             </div>
                                         </td>
                                     </tr>
+                                    @endforeach
                                 </tbody>
                             </table>
                         </div>

@@ -36,22 +36,23 @@
                             <h4 class="card-title">Tambah Pembelian</h4>
                         </div>
                     </div>
-                    <form action="{{url('/')}}">
+                    <form action="{{route('pembelian.tambah')}}">
+                        @csrf
                         <div class="card-body">
                             <div class="row">
                                 <div class="col-sm-4 pr-0">
                                     <div class="form-group">
                                         <label>Tanggal</label>
-                                        <input type="date" class="form-control form-control" id="tglPembelian">
+                                        <input type="date" class="form-control form-control" id="tglPembelian" name="tglPembelian">
                                     </div>
                                 </div>
                                 <div class="col-sm-4 pr-0">
                                     <div class="form-group">
                                         <label>Supplier</label>
-                                        <select class="form-control" id="supplier">
+                                        <select class="form-control" id="supplier" name="supplier">
                                             <option>--Pilih Supplier</option>
-                                            <option>Dimas</option>
-                                            <option>Icha</option>
+                                            <option value="1">Dimas</option>
+                                            <option value="1">Icha</option>
                                         </select>
                                     </div>
                                 </div>

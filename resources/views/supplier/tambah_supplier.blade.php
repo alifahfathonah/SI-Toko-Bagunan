@@ -36,46 +36,44 @@
                             <h4 class="card-title">Tambah Supplier</h4>
                         </div>
                     </div>
-                    <form action="{{url('/')}}">
+                    <form action="{{route('supplier.tambah')}}" method="POST">
+                        @csrf
                         <div class="card-body">
                             <div class="row">
                                 <div class="col-sm-6">
                                     <div class="form-group">
                                         <label>Nama</label>
-                                        <input type="text" class="form-control form-control" id="namaSupplier">
+                                        <input type="text" class="form-control form-control" id="namaSupplier" name="namaSupplier">
                                     </div>
                                     <div class="form-group">
                                         <label>Telephone</label>
-                                        <input type="number" class="form-control form-control" id="phoneSupplier">
+                                        <input type="number" class="form-control form-control" id="phoneSupplier" name="phoneSupplier">
                                     </div>
                                     <div class="form-group">
                                         <label>Alamat</label>
-                                        <input type="text" class="form-control form-control" id="alamatSupplier">
+                                        <input type="text" class="form-control form-control" id="alamatSupplier" name="alamatSupplier">
                                     </div>
                                 </div>
+                                
                                 <div class="col-sm-6">
                                     <div class="form-group">
                                         <label>Provinsi</label>
-                                        <select class="form-control" id="provSupplier">
+                                        <select class="form-control" id="provSupplier" name="provSupplier">
                                             <option>--Pilih Provinsi--</option>
-                                            <option>Jawa Barat</option>
-                                            <option>Jawa Tengah</option>
-                                            <option>Jawa Timur</option>
+                                            <option value="Jawa Barat">Jawa Barat</option>
+                                            <option value="Jawa Tengah">Jawa Tengah</option>
+                                            <option value="Jawa Timur">Jawa Timur</option>
                                         </select>
                                     </div>
                                     <div class="form-group">
                                         <label>Kota</label>
-                                        <select class="form-control" id="kotaSupplier">
+                                        <select class="form-control" id="kotaSupplier" name="kotaSupplier">
                                             <option>--Pilih Kota--</option>
-                                            <option>Bangkalan</option>
-                                            <option>Pamekasan</option>
-                                            <option>Sampang</option>
-                                            <option>Sumenep</option>
+                                            <option  value="Bangkalan">Bangkalan</option>
+                                            <option  value="Pamekasan">Pamekasan</option>
+                                            <option  value="Sampang">Sampang</option>
+                                            <option  value="Sumenep">Sumenep</option>
                                         </select>
-                                    </div>
-                                    <div class="form-group">
-                                        <label>Kode Pos</label>
-                                        <input type="number" class="form-control form-control" id="posSupplier">
                                     </div>
                                 </div>
                             </div>

@@ -4,7 +4,12 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
-class PembelianController extends Controller
+use App\Models\Supplier;
+use App\Models\Sales;
+
+
+
+class SalesController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -13,8 +18,8 @@ class PembelianController extends Controller
      */
     public function index()
     {
-        return view('pembelian/daftar_pembelian');
-
+        $salers = Sales::all();
+        return view('supplier/daftar_sales',compact('salers'));
     }
 
     /**
@@ -24,7 +29,8 @@ class PembelianController extends Controller
      */
     public function create()
     {
-        return view('pembelian/tambah_pembelian');
+        $suppliers = Supplier::all();
+        return view('supplier/tambah_sales',compact('suppliers'));
     }
 
     /**
@@ -35,7 +41,13 @@ class PembelianController extends Controller
      */
     public function store(Request $request)
     {
-
+        $data = [
+            'supplier_id' => $request->input('supplierTambah'),
+            'name'        => $request->input('namaSales'),
+            'phone'       => $request->input('phoneSales'),
+        ];
+        Sales::create($data);
+        return redirect()->route('sales.index');
     }
 
     /**
@@ -82,6 +94,4 @@ class PembelianController extends Controller
     {
         //
     }
-    
-    
 }

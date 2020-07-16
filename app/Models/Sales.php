@@ -9,4 +9,9 @@ class Sales extends Model
     protected $fillable = [
         'supplier_id','name','phone'
     ];
+
+    public function supplier()
+    {
+        return $this->belongsTo(Supplier::class);
+    }
 }

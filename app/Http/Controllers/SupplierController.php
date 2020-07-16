@@ -4,22 +4,95 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
+use App\Models\Supplier;
+
 class SupplierController extends Controller
 {
-    public function daftar_supplier()
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function index()
     {
-        return view('supplier/daftar_supplier');
+        $suppliers = Supplier::all();
+        return view('supplier/daftar_supplier',compact('suppliers'));
+
     }
-    public function tambah_supplier()
+
+    /**
+     * Show the form for creating a new resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function create()
     {
         return view('supplier/tambah_supplier');
     }
-    public function daftar_sales()
+
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function store(Request $request)
     {
-        return view('supplier/daftar_sales');
+        $data = [
+            'name'          => $request->input('namaSupplier'),
+            'address'       => $request->input('alamatSupplier'),
+            'city'          => $request->input('kotaSupplier'),
+            'province'      => $request->input('provSupplier'),
+            'phone'         => $request->input('phoneSupplier'),
+        ];
+
+        Supplier::create($data);
+
+        return redirect()->route('supplier.index');
+    }   
+
+    /**
+     * Display the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function show($id)
+    {
+        //
     }
-    public function tambah_sales()
+
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function edit($id)
     {
-        return view('supplier/tambah_sales');
+        //
+    }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function update(Request $request, $id)
+    {
+        //
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function destroy($id)
+    {
+        //
     }
 }
