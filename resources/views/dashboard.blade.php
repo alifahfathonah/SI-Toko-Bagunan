@@ -1,9 +1,12 @@
+@extends('layout.header')
+@extends('layout.sidebar')
+@extends('layout.footer')
 @extends('layout.main')
 @section('title', 'Dashboard')
 
 
-@section('container')
-<!-- Container -->
+@section('contain')
+
 <div class="content">
     <div class="panel-header bg-primary-gradient">
         <div class="page-inner py-5">
@@ -26,5 +29,5 @@
         </div>
     </div>
 </div>
-<!-- End Container -->
+
 @endsection

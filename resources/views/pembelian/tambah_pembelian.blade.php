@@ -1,9 +1,12 @@
 @extends('layout.main')
+@extends('layout.header')
+@extends('layout.sidebar')
+@extends('layout.footer')
 @section('title', 'Tambah Pembelian')
 
 
-@section('container')
-<!-- Container -->
+@section('contain')
+
 <div class="content">
     <div class="page-inner">
         <div class="page-header">
@@ -143,7 +146,7 @@
         </div>
     </div>
 </div>
-<!-- End Container -->
+
 @endsection
 
 @section('modal')
