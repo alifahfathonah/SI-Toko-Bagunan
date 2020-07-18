@@ -149,7 +149,7 @@
                         <div class="col-sm-12">
                             <div class="form-group">
                                 <label>Tanggal</label>
-                                <input type="date" class="form-control form-control" value="" disabled>
+                                <input type="date" class="form-control form-control" disabled>
                             </div>
                             <!-- <div class="form-group">
                                 <label>No. Referensi</label>
@@ -157,7 +157,7 @@
                             </div> -->
                             <div class="form-group">
                                 <label>Total</label>
-                                <input type="number" class="form-control form-control" value="" disabled>
+                                <input type="number" class="form-control form-control" disabled>
                             </div>
                         </div>
                     </div>
