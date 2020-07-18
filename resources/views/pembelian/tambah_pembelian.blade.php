@@ -51,8 +51,10 @@
                                         <label>Supplier</label>
                                         <select class="form-control" id="supplier" name="supplier">
                                             <option>--Pilih Supplier</option>
-                                            <option value="1">Dimas</option>
-                                            <option value="1">Icha</option>
+                                            @foreach ($suppliers as $supplier)
+                                                <option value="{{$supplier->id}}">{{$supplier->name}}</option>
+                                            @endforeach
+                                            
                                         </select>
                                     </div>
                                 </div>
@@ -61,8 +63,9 @@
                                         <label>Sales</label>
                                         <select class="form-control" id="sales">
                                             <option>--Pilih Sales--</option>
-                                            <option>Dimas</option>
-                                            <option>Icha</option>
+                                            @foreach ($sales as $item)
+                                                <option value="{{$item->id}}">{{$item->name}}</option>
+                                            @endforeach
                                         </select>
                                     </div>
                                 </div>
@@ -72,8 +75,9 @@
                                     <div class="form-group">
                                         <label>Status Pembayaran</label>
                                         <select class="form-control" id="status">
-                                            <option>Complete</option>
-                                            <option>Partial</option>
+                                            <option>Lunas</option>
+                                            <option>Sebagian</option>
+                                            <option>Belum</option>
                                         </select>
                                     </div>
                                 </div>
@@ -167,18 +171,12 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <form action="{{url('/')}}">
                 <div class="modal-body">
                     <div class="row">
                         <div class="col-sm-12">
                             <div class="form-group">
                                 <label>Nama Item</label>
-                                <select class="form-control" id="namaItem">
-                                    <option>--Pilih Item--</option>
-                                    <option>Semen</option>
-                                    <option>Usuk</option>
-                                    <option>Reng</option>
-                                </select>
+                                <input type="text" class="form-control form-control" id="namaItem">
                             </div>
                         </div>
                         <div class="col-md-6 pr-0">
@@ -190,17 +188,14 @@
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label>Unit</label>
-                                <select class="form-control" id="unitItem">
-                                    <option>--Pilih Unit--</option>
-                                    <option>m2</option>
-                                    <option>m3</option>
-                                </select>
+                                <input type="number" class="form-control form-control" id="unitItem">
                             </div>
                         </div>
                         <div class="col-md-6 pr-0">
                             <div class="form-group">
-                                <label>Harga</label>
-                                <input type="number" class="form-control form-control" id="hargaItem">
+                                <label>Harga Satuan</label>
+                                <input type="text" class="form-control form-control" id="hargaItem" value="0">
+                                <small id="hargahelp" class="form-text text-muted">Kosongi jika tidak ada harga satuan</small>
                             </div>
                         </div>
                         <div class="col-md-6">
@@ -212,10 +207,10 @@
                     </div>
                 </div>
                 <div class="modal-footer no-bd">
-                    <button type="button" class="btn btn-danger" data-dismiss="modal">Batal</button>
-                    <button type="submit" class="btn btn-success">Simpan</button>
+                    <button type="button" class="btn btn-danger"  data-dismiss="modal">Batal</button>
+                    <button type="button" class="btn btn-success"  id="simpan">Simpan</button>
                 </div>
-            </form>
+            
         </div>
     </div>
 </div>
@@ -239,12 +234,7 @@
                         <div class="col-sm-12">
                             <div class="form-group">
                                 <label>Nama Item</label>
-                                <select class="form-control" id="namaItemEdit">
-                                    <option>--Pilih Item--</option>
-                                    <option>Semen</option>
-                                    <option>Usuk</option>
-                                    <option>Reng</option>
-                                </select>
+                                <input type="text" class="form-control form-control" id="namaItemEdit">
                             </div>
                         </div>
                         <div class="col-md-6 pr-0">
@@ -256,11 +246,8 @@
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label>Unit</label>
-                                <select class="form-control" id="unitItemEdit">
-                                    <option>--Pilih Unit--</option>
-                                    <option>m2</option>
-                                    <option>m3</option>
-                                </select>
+                                <input type="text" class="form-control form-control" id="unitItemEdit">
+                                
                             </div>
                         </div>
                         <div class="col-md-6 pr-0">
@@ -318,6 +305,20 @@
         $('#daftarItem').DataTable({
             "pageLength": 5,
         });
+
+        // $('#simpan').click(function(){
+        //     console.log("adad");
+        //     listItem.row.add( [
+        //     counter,
+        //     counter +$('#namaItem').val(),
+        //     $('#jumlahItem').val(),
+        //     ('#unitItem').val(),
+        //     ('#hargaItem').val(),
+        //     ('#totalItem').val(),
+        // ] ).draw( false );
+ 
+        // counter++;
+        // })
     });
 </script>
 @endsection

@@ -262,6 +262,8 @@
         $('#daftarPembelian').DataTable({
             "pageLength": 5,
         });
+
+        $
     });
 </script>
 @endsection

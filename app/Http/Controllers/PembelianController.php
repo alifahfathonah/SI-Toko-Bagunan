@@ -4,6 +4,9 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
+use App\Models\Supplier;
+use App\Models\Sales;
+
 class PembelianController extends Controller
 {
     /**
@@ -24,7 +27,9 @@ class PembelianController extends Controller
      */
     public function create()
     {
-        return view('pembelian/tambah_pembelian');
+        $suppliers = Supplier::all();
+        $sales     = Sales::all();
+        return view('pembelian/tambah_pembelian',compact('suppliers','sales'));
     }
 
     /**
