@@ -1,5 +1,3 @@
-@section('header')
-
 <div class="main-header">
     <!-- Logo Header -->
     <div class="logo-header" data-background-color="blue">
@@ -46,5 +44,3 @@
     </nav>
     <!-- End Navbar -->
 </div>
-
-@endsection

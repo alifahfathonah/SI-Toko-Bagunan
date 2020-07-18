@@ -1,7 +1,4 @@
 @extends('layout.main')
-@extends('layout.header')
-@extends('layout.sidebar')
-@extends('layout.footer')
 @section('title', 'Daftar Pembelian')
 
 
@@ -55,7 +52,7 @@
                                         <th>Total</th>
                                         <th>Status Pembelian</th>
                                         <th>Status Pembayaran</th>
-                                        <th style="width: 10%">Aksi</th>
+                                        <th style="width: 10%"></th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -68,9 +65,15 @@
                                         <td>Completed</td>
                                         <td>Completed</td>
                                         <td>
-                                            <div class="form-button-action">
-                                                <span data-toggle="modal" data-target="#editModal"><button class="btn btn-link btn-primary btn-lg" data-toggle="tooltip" data-placement="top" title="Edit"><i class="fa fa-edit"></i></button></span>
-                                                <span data-toggle="modal" data-target="#hapusModal"><button class="btn btn-link btn-danger" data-toggle="tooltip" data-placement="top" title="Hapus"><i class="fa fa-times"></i></button></span>
+                                            <button class="btn btn-primary btn-border dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Aksi</button>
+                                            <div class="dropdown-menu">
+                                                <span class="dropdown-item" data-toggle="modal" data-target="#tambahModal">Tambah Pembayaran</span>
+                                                <div role="separator" class="dropdown-divider"></div>
+                                                <span class="dropdown-item" data-toggle="modal" data-target="#detailModal">Detail Pembayaran</span>
+                                                <div role="separator" class="dropdown-divider"></div>
+                                                <span class="dropdown-item" data-toggle="modal" data-target="#editModal">Edit</span>
+                                                <div role="separator" class="dropdown-divider"></div>
+                                                <span class="dropdown-item" data-toggle="modal" data-target="#hapusModal">Hapus</span>
                                             </div>
                                         </td>
                                     </tr>
@@ -87,8 +90,88 @@
 @endsection
 
 @section('modal')
+<!-- Tambah Modal -->
+<div class=" modal fade" id="tambahModal" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header no-bd">
+                <h5 class="modal-title">
+                    <span class="fw-mediumbold">
+                        Tambah Pembayaran</span>
+                </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form action="{{url('/')}}">
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="form-group">
+                                <label>Tanggal</label>
+                                <input type="date" class="form-control form-control" id="tglPembayaran">
+                            </div>
+                            <!-- <div class="form-group">
+                                <label>No. Referensi</label>
+                                <input type="text" class="form-control form-control" id="refPembayaran">
+                            </div> -->
+                            <div class="form-group">
+                                <label>Total</label>
+                                <input type="number" class="form-control form-control" id="totalPembayaran">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer no-bd">
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">Batal</button>
+                    <button type="submit" class="btn btn-success">Simpan</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<!-- Detail Modal -->
+<div class=" modal fade" id="detailModal" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header no-bd">
+                <h5 class="modal-title">
+                    <span class="fw-mediumbold">
+                        Detail Pembayaran</span>
+                </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form action="{{url('/')}}">
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="form-group">
+                                <label>Tanggal</label>
+                                <input type="date" class="form-control form-control" value="" disabled>
+                            </div>
+                            <!-- <div class="form-group">
+                                <label>No. Referensi</label>
+                                <input type="text" class="form-control form-control" value="" disabled>
+                            </div> -->
+                            <div class="form-group">
+                                <label>Total</label>
+                                <input type="number" class="form-control form-control" value="" disabled>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer no-bd">
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">Batal</button>
+                    <button type="submit" class="btn btn-success">Simpan</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
 <!-- Edit Modal -->
-<div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-hidden="true">
+<div class=" modal fade" id="editModal" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header no-bd">

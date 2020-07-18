@@ -1,6 +1,3 @@
-@extends('layout.header')
-@extends('layout.sidebar')
-@extends('layout.footer')
 @extends('layout.main')
 @section('title', 'Dashboard')
 

@@ -1,7 +1,4 @@
 @extends('layout.main')
-@extends('layout.header')
-@extends('layout.sidebar')
-@extends('layout.footer')
 @section('title', 'Tambah Sales')
 
 @section('contain')
