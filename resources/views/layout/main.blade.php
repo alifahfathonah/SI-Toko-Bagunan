@@ -35,11 +35,11 @@
     <div class="wrapper">
 
         <!-- Header -->
-        @yield('header')
+        @include('layout.header')
         <!-- End Header -->
 
         <!-- Sidebar -->
-        @yield('sidebar')
+        @include('layout.sidebar')
         <!-- End Sidebar -->
 
         <div class="main-panel">
@@ -48,7 +48,7 @@
             <!-- End Container -->
 
             <!-- Footer -->
-            @yield('footer')
+            @include('layout.footer')
             <!-- End Footer -->
 
         </div>

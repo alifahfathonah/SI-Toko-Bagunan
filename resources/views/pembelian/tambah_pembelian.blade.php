@@ -1,7 +1,4 @@
 @extends('layout.main')
-@extends('layout.header')
-@extends('layout.sidebar')
-@extends('layout.footer')
 @section('title', 'Tambah Pembelian')
 
 
@@ -118,9 +115,15 @@
                                                     <td>20.000</td>
                                                     <td>400.000</td>
                                                     <td>
-                                                        <div class="form-button-action">
+                                                        <!-- <div class="form-button-action">
                                                             <span data-toggle="modal" data-target="#editModal" class="btn btn-link btn-primary btn-lg"><i class="fa fa-edit"></i></span>
                                                             <span data-toggle="modal" data-target="#hapusModal" class="btn btn-link btn-danger"><i class="fa fa-times"></i></span>
+                                                        </div> -->
+                                                        <button class="btn btn-primary btn-border dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Aksi</button>
+                                                        <div class="dropdown-menu">
+                                                            <span class="dropdown-item" data-toggle="modal" data-target="#editModal">Edit</span>
+                                                            <div role="separator" class="dropdown-divider"></div>
+                                                            <span class="dropdown-item" data-toggle="modal" data-target="#hapusModal">Hapus</span>
                                                         </div>
                                                     </td>
                                                 </tr>
