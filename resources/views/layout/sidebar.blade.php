@@ -31,12 +31,12 @@
                     <div class="collapse" id="pembelian">
                         <ul class="nav nav-collapse">
                             <li>
-                                <a href="{{url('pembelian/daftar')}}">
+                                <a href="{{url('pembelian')}}">
                                     <span class="sub-item">Daftar Pembelian</span>
                                 </a>
                             </li>
                             <li>
-                                <a href="{{url('pembelian/tambah')}}">
+                                <a href="{{url('pembelian/create')}}">
                                     <span class="sub-item">Tambah Pembelian</span>
                                 </a>
                             </li>
@@ -52,22 +52,22 @@
                     <div class="collapse" id="supplier">
                         <ul class="nav nav-collapse">
                             <li>
-                                <a href="{{url('/supplier/daftar_supplier')}}">
+                                <a href="{{url('supplier/index')}}">
                                     <span class="sub-item">Daftar Supplier</span>
                                 </a>
                             </li>
                             <li>
-                                <a href="{{url('/supplier/tambah_supplier')}}">
+                                <a href="{{url('supplier/create')}}">
                                     <span class="sub-item">Tambah Supplier</span>
                                 </a>
                             </li>
                             <li>
-                                <a href="{{url('/supplier/daftar_sales')}}">
+                                <a href="{{url('sales/index')}}">
                                     <span class="sub-item">Daftar Sales</span>
                                 </a>
                             </li>
                             <li>
-                                <a href="{{url('/supplier/tambah_sales')}}">
+                                <a href="{{url('sales/create')}}">
                                     <span class="sub-item">Tambah Sales</span>
                                 </a>
                             </li>

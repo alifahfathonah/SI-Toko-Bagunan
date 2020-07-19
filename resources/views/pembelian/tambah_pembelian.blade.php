@@ -371,5 +371,28 @@
 
 
     });
+
+    function tambah_pembelian() {
+        var status = document.getElementById("status").value;
+        var jml_beli = 1000;
+        var jml_bayar = document.getElementById("jmlBayar").value;
+
+        if (status == 'lunas') {
+            if (jml_bayar < jml_beli || jml_bayar > jml_beli) {
+                alert("Jumlah pembayaran tidak sesuai !");
+            } else {
+                alert("Sukses !");
+            }
+        } else {
+            if (jml_bayar <= 0) {
+                alert("Jumlah pembayaran harus lebih dari 0 !");
+            } else if (jml_bayar == jml_beli) {
+                alert("Status pembayaran tidak sesuai !");
+            } else {
+                // window.location.href = "{{route('pembelian.tambah')}}";
+                alert("Sukses !");
+            }
+        }
+    }
 </script>
 @endsection

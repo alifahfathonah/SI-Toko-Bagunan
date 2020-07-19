@@ -25,18 +25,21 @@ Route::resource('pembelian','PembelianController')->names([
     'index' => 'pembelian.index',
     'create' => 'pembelian.form.tambah',
     'store' => 'pembelian.tambah',
+    'destroy' => 'pembelian.hapus',
 ]);
 
-Route::resource('supplier','SupplierController')->names([
+Route::resource('supplier', 'SupplierController')->names([
     'index' => 'supplier.index',
     'create' => 'supplier.form.tambah',
     'store' => 'supplier.tambah',
+    'destroy' => 'supplier.hapus',
 ]);
 
-Route::resource('sales','SalesController')->names([
+Route::resource('sales', 'SalesController')->names([
     'index'  => 'sales.index',
     'create' => 'sales.form.tambah',
     'store' => 'sales.tambah',
+    'destroy' => 'sales.hapus',
 ]);
 
 
