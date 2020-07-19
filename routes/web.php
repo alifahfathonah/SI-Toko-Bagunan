@@ -21,13 +21,24 @@ Route::get('/', 'AuthController@index');
 Route::get('/dashboard', 'AuthController@login');
 Route::get('/ubah_pass', 'AuthController@ubah_pass');
 
-Route::get('/pembelian/daftar', 'PembelianController@daftar');
-Route::get('/pembelian/tambah', 'PembelianController@tambah');
+Route::resource('pembelian','PembelianController')->names([
+    'create' => 'pembelian.form.tambah',
+    'store' => 'pembelian.tambah',
+]);
 
-Route::get('/supplier/daftar_supplier', 'SupplierController@daftar_supplier');
-Route::get('/supplier/tambah_supplier', 'SupplierController@tambah_supplier');
-Route::get('/supplier/daftar_sales', 'SupplierController@daftar_sales');
-Route::get('/supplier/tambah_sales', 'SupplierController@tambah_sales');
+Route::resource('supplier','SupplierController')->names([
+    'index' => 'supplier.index',
+    'create' => 'supplier.form.tambah',
+    'store' => 'supplier.tambah',
+]);
+
+Route::resource('sales','SalesController')->names([
+    'index'  => 'sales.index',
+    'create' => 'sales.form.tambah',
+    'store' => 'sales.tambah',
+]);
+
+
 
 Route::get('/barang/daftar', 'BarangController@daftar');
 Route::get('/barang/tambah', 'BarangController@tambah');
