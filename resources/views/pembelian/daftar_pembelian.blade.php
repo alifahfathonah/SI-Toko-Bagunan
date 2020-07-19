@@ -103,7 +103,8 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <form action="{{url('/')}}">
+            <p id="demo"></p>
+            <form onsubmit="tambah_pembayaran()">
                 <div class="modal-body">
                     <div class="row">
                         <div class="col-sm-12">
@@ -116,7 +117,11 @@
                                 <input type="text" class="form-control form-control" id="refPembayaran">
                             </div> -->
                             <div class="form-group">
-                                <label>Total</label>
+                                <label>Jumlah Pembelian</label>
+                                <input type="number" class="form-control form-control" id="totalPembelian" value="1000" disabled>
+                            </div>
+                            <div class="form-group">
+                                <label>Jumlah Pembayaran</label>
                                 <input type="number" class="form-control form-control" id="totalPembayaran">
                             </div>
                         </div>
@@ -242,7 +247,7 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <form action="{{url('/')}}">
+            <form action="{{url('pembelian/destroy')}}">
                 <div class="modal-body">
                     <p>Yakin untuk menghapus data dengan nomor referensi . . . . . ?</p>
                 </div>
@@ -263,5 +268,17 @@
             "pageLength": 5,
         });
     });
+
+    function tambah_pembayaran() {
+        var jml_bayar = document.getElementById("totalPembayaran").value;
+        var jml_beli = document.getElementById("totalPembelian").value;
+
+        if (jml_bayar < jml_beli || jml_bayar > jml_beli) {
+            alert("Jumlah pembayaran tidak sesuai !");
+        } else {
+            // window.location.href = "{{url('pembelian')}}";
+            alert("Sukses !");
+        }
+    }
 </script>
 @endsection

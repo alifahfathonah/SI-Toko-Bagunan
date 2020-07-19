@@ -36,7 +36,8 @@
                             <h4 class="card-title">Tambah Pembelian</h4>
                         </div>
                     </div>
-                    <form action="{{route('pembelian.tambah')}}">
+                    <form onsubmit="tambah_pembelian()">
+                        <!-- <form action="{{route('pembelian.tambah')}}"> -->
                         @csrf
                         <div class="card-body">
                             <div class="row">
@@ -72,8 +73,8 @@
                                     <div class="form-group">
                                         <label>Status Pembayaran</label>
                                         <select class="form-control" id="status">
-                                            <option>Complete</option>
-                                            <option>Partial</option>
+                                            <option value="lunas">Lunas</option>
+                                            <option value="sebagian">Sebagian</option>
                                         </select>
                                     </div>
                                 </div>
@@ -129,12 +130,14 @@
                                                     </td>
                                                 </tr>
 
-                                                <tr>
-                                                    <td colspan="5" style="text-align: center;"><b>Total</b></td>
-                                                    <td><b>0000000</b></td>
-                                                    <td></td>
-                                                </tr>
                                             </tbody>
+                                            <tfoot>
+                                                <tr>
+                                                    <th colspan="5" style="text-align: center;"><b>Total</b></th>
+                                                    <th>0000000</th>
+                                                    <th></th>
+                                                </tr>
+                                            </tfoot>
                                         </table>
                                     </div>
                                 </div>
@@ -319,5 +322,29 @@
             "pageLength": 5,
         });
     });
+
+    function tambah_pembelian() {
+        var status = document.getElementById("status").value;
+        var jml_beli = 1000;
+        var jml_bayar = document.getElementById("jmlBayar").value;
+
+        if (status == 'lunas') {
+            if (jml_bayar < jml_beli || jml_bayar > jml_beli) {
+                alert("Jumlah pembayaran tidak sesuai !");
+            } else {
+                // window.location.href = "{{route('pembelian.tambah')}}";
+                alert("Sukses !");
+            }
+        } else {
+            if (jml_bayar <= 0) {
+                alert("Jumlah pembayaran harus lebih dari 0 !");
+            } else if (jml_bayar == jml_beli) {
+                alert("Status pembayaran tidak sesuai !");
+            } else {
+                // window.location.href = "{{route('pembelian.tambah')}}";
+                alert("Sukses !");
+            }
+        }
+    }
 </script>
 @endsection

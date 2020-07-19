@@ -173,7 +173,7 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <form action="{{url('/')}}">
+            <form action="{{url('supplier/destroy')}}">
                 <div class="modal-body">
                     <p>Yakin untuk menghapus data dengan nama . . . . . ?</p>
                 </div>

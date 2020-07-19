@@ -21,21 +21,24 @@ Route::get('/', 'AuthController@index');
 Route::get('/dashboard', 'AuthController@login');
 Route::get('/ubah_pass', 'AuthController@ubah_pass');
 
-Route::resource('pembelian','PembelianController')->names([
+Route::resource('pembelian', 'PembelianController')->names([
     'create' => 'pembelian.form.tambah',
     'store' => 'pembelian.tambah',
+    'destroy' => 'pembelian.hapus',
 ]);
 
-Route::resource('supplier','SupplierController')->names([
+Route::resource('supplier', 'SupplierController')->names([
     'index' => 'supplier.index',
     'create' => 'supplier.form.tambah',
     'store' => 'supplier.tambah',
+    'destroy' => 'supplier.hapus',
 ]);
 
-Route::resource('sales','SalesController')->names([
+Route::resource('sales', 'SalesController')->names([
     'index'  => 'sales.index',
     'create' => 'sales.form.tambah',
     'store' => 'sales.tambah',
+    'destroy' => 'sales.hapus',
 ]);
 
 

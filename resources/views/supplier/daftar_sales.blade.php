@@ -54,17 +54,17 @@
                                 </thead>
                                 <tbody>
                                     <tr>
-                                        @foreach ($salers as $sales)   
-                                            <td>{{$loop->iteration}}</td>
-                                            <td>{{$sales->supplier->name}}</td>
-                                            <td>{{$sales->name}}</td>
-                                            <td>{{$sales->phone}}</td>
-                                            <td>
-                                                <div class="form-button-action">
-                                                    <span data-toggle="modal" data-target="#editModal"><button class="btn btn-link btn-primary btn-lg" data-toggle="tooltip" data-placement="top" title="Edit"><i class="fa fa-edit"></i></button></span>
-                                                    <span data-toggle="modal" data-target="#hapusModal"><button class="btn btn-link btn-danger" data-toggle="tooltip" data-placement="top" title="Hapus"><i class="fa fa-times"></i></button></span>
-                                                </div>
-                                            </td>
+                                        @foreach ($salers as $sales)
+                                        <td>{{$loop->iteration}}</td>
+                                        <td>{{$sales->supplier->name}}</td>
+                                        <td>{{$sales->name}}</td>
+                                        <td>{{$sales->phone}}</td>
+                                        <td>
+                                            <div class="form-button-action">
+                                                <span data-toggle="modal" data-target="#editModal"><button class="btn btn-link btn-primary btn-lg" data-toggle="tooltip" data-placement="top" title="Edit"><i class="fa fa-edit"></i></button></span>
+                                                <span data-toggle="modal" data-target="#hapusModal"><button class="btn btn-link btn-danger" data-toggle="tooltip" data-placement="top" title="Hapus"><i class="fa fa-times"></i></button></span>
+                                            </div>
+                                        </td>
                                         @endforeach
                                     </tr>
                                 </tbody>
@@ -138,7 +138,7 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <form action="{{url('/')}}">
+            <form action="{{url('sales/destroy')}}">
                 <div class="modal-body">
                     <p>Yakin untuk menghapus data dengan nama . . . . . ?</p>
                 </div>
