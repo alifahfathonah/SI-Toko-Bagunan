@@ -56,14 +56,15 @@
                                     </tr>
                                 </thead>
                                 <tbody>
+                                    @foreach ($purchases as $purchase)
                                     <tr>
-                                        <td>15-07-2020</td>
-                                        <td>123</td>
-                                        <td>123</td>
-                                        <td>123</td>
-                                        <td>10000</td>
-                                        <td>Completed</td>
-                                        <td>Completed</td>
+                                        <td>{{$purchase->purchase_date}}</td>
+                                        <td>{{$purchase->supplier->name}}</td>
+                                        <td>{{$purchase->sales->name}}</td>
+                                        <td>{{$purchase->reference_no}}</td>
+                                        <td>{{$purchase->total}}</td>
+                                        <td>{{$purchase->purchase_status}}</td>
+                                        <td>{{$purchase->payment_status}}</td>
                                         <td>
                                             <button class="btn btn-primary btn-border dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Aksi</button>
                                             <div class="dropdown-menu">
@@ -77,6 +78,7 @@
                                             </div>
                                         </td>
                                     </tr>
+                                    @endforeach
                                 </tbody>
                             </table>
                         </div>
@@ -263,7 +265,7 @@
             "pageLength": 5,
         });
 
-        $
+        
     });
 </script>
 @endsection

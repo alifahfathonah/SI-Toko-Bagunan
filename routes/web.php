@@ -22,6 +22,7 @@ Route::get('/dashboard', 'AuthController@login');
 Route::get('/ubah_pass', 'AuthController@ubah_pass');
 
 Route::resource('pembelian','PembelianController')->names([
+    'index' => 'pembelian.index',
     'create' => 'pembelian.form.tambah',
     'store' => 'pembelian.tambah',
 ]);

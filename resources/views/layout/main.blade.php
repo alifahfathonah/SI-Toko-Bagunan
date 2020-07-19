@@ -70,7 +70,8 @@
     <!-- jQuery Scrollbar -->
     <script src="{{url('/assets/js/plugin/jquery-scrollbar/jquery.scrollbar.min.js')}}"></script>
     <!-- Datatables -->
-    <script type="text/javascript" src="https://cdn.datatables.net/v/ju/jq-3.3.1/datatables.min.js"></script>
+    <script src="{{url('/assets/js/plugin/datatables/datatables.min.js')}}"></script>
+
     <!-- Atlantis JS -->
     <script src="{{url('/assets/js/atlantis.min.js')}}"></script>
 
