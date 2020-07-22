@@ -52,22 +52,22 @@
                     <div class="collapse" id="supplier">
                         <ul class="nav nav-collapse">
                             <li>
-                                <a href="{{url('supplier/index')}}">
+                                <a href="{{route('supplier.index')}}">
                                     <span class="sub-item">Daftar Supplier</span>
                                 </a>
                             </li>
                             <li>
-                                <a href="{{url('supplier/create')}}">
+                                <a href="{{route('supplier.form.tambah')}}">
                                     <span class="sub-item">Tambah Supplier</span>
                                 </a>
                             </li>
                             <li>
-                                <a href="{{url('sales/index')}}">
+                                <a href="{{route('sales.index')}}">
                                     <span class="sub-item">Daftar Sales</span>
                                 </a>
                             </li>
                             <li>
-                                <a href="{{url('sales/create')}}">
+                                <a href="{{route('sales.form.tambah')}}">
                                     <span class="sub-item">Tambah Sales</span>
                                 </a>
                             </li>

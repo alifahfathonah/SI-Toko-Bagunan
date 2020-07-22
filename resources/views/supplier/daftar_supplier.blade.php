@@ -66,9 +66,9 @@
                                         <td>
                                             <button class="btn btn-primary btn-border dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Aksi</button>
                                             <div class="dropdown-menu">
-                                                <span class="dropdown-item" data-toggle="modal" data-target="#editModal">Edit</span>
+                                                <a class="dropdown-item" href="{{route('supplier.edit', $supplier->id)}}">Edit</a>
                                                 <div role="separator" class="dropdown-divider"></div>
-                                                <span class="dropdown-item" data-toggle="modal" data-target="#hapusModal">Hapus</span>
+                                                <a class="dropdown-item" data-toggle="modal" data-target="#hapusModal{{$supplier->id}}">Hapus</a>
                                             </div>
                                         </td>
                                     </tr>
@@ -82,86 +82,13 @@
         </div>
     </div>
 </div>
-
 @endsection
 
 @section('modal')
-<!-- Edit Modal -->
-<div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header no-bd">
-                <h5 class="modal-title">
-                    <span class="fw-mediumbold">
-                        Edit Data Supplier</span>
-                </h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <form action="{{url('/')}}">
-                <div class="modal-body">
-                    <div class="row">
-                        <div class="col-sm-12">
-                            <div class="form-group">
-                                <label>Nama</label>
-                                <input type="text" class="form-control form-control" id="namaSupplierEdit">
-                            </div>
-                            <div class="form-group">
-                                <label>Alamat</label>
-                                <input type="text" class="form-control form-control" id="alamatSupplierEdit">
-                            </div>
-                        </div>
-                        <div class="col-md-4 pr-0">
-                            <div class="form-group">
-                                <label>Provinsi</label>
-                                <!-- <input id="provSupplierEdit" type="text" class="form-control"> -->
-                                <select class="form-control" id="provSupplierEdit">
-                                    <option>--Pilih Provinsi--</option>
-                                    <option>Jawa Barat</option>
-                                    <option>Jawa Tengah</option>
-                                    <option>Jawa Timur</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="col-md-4 pr-0">
-                            <div class="form-group">
-                                <label>Kota</label>
-                                <!-- <input id="kotaSupplierEdit" type="text" class="form-control"> -->
-                                <select class="form-control" id="kotaSupplierEdit">
-                                    <option>--Pilih Kota--</option>
-                                    <option>Bangkalan</option>
-                                    <option>Pamekasan</option>
-                                    <option>Sampang</option>
-                                    <option>Sumenep</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="col-md-4">
-                            <div class="form-group">
-                                <label>Kode Pos</label>
-                                <input id="posSupplierEdit" type="number" class="form-control">
-                            </div>
-                        </div>
-                        <div class="col-sm-12">
-                            <div class="form-group">
-                                <label>Telephone</label>
-                                <input type="number" class="form-control form-control" id="phoneSupplierEdit">
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="modal-footer no-bd">
-                    <button type="button" class="btn btn-danger" data-dismiss="modal">Batal</button>
-                    <button type="submit" class="btn btn-success">Simpan</button>
-                </div>
-            </form>
-        </div>
-    </div>
-</div>
 
 <!-- Hapus Modal -->
-<div class="modal fade" id="hapusModal" tabindex="-1" role="dialog" aria-hidden="true">
+@foreach ($suppliers as $supplier)
+<div class="modal fade" id="hapusModal{{$supplier->id}}" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header no-bd">
@@ -173,9 +100,11 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <form action="{{url('supplier/destroy')}}">
+            <form action="{{route('supplier.hapus', $supplier->id)}}" method="POST">
+                @method ('DELETE')
+                @csrf
                 <div class="modal-body">
-                    <p>Yakin untuk menghapus data dengan nama . . . . . ?</p>
+                    <p>Yakin untuk menghapus data dengan nama {{$supplier->name}} ?</p>
                 </div>
                 <div class="modal-footer no-bd">
                     <button type="button" class="btn btn-danger" data-dismiss="modal">Batal</button>
@@ -185,6 +114,7 @@
         </div>
     </div>
 </div>
+@endforeach
 @endsection
 
 @section('script')
