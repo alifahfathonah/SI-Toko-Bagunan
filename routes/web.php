@@ -28,6 +28,10 @@ Route::resource('pembelian','PembelianController')->names([
     'destroy' => 'pembelian.hapus',
 ]);
 
+Route::get('/pembelian/{id}/pembayaran/create', 'PembelianController@payment_show')->name('pembayaran.form.tambah');
+Route::post('/pembelian/{id}/pembayaran/store', 'PembelianController@payment_store')->name('pembayaran.tambah');
+
+
 Route::resource('supplier', 'SupplierController')->names([
     'index' => 'supplier.index',
     'create' => 'supplier.form.tambah',

@@ -9,6 +9,8 @@ use App\Models\Sales;
 use App\Models\Purchase;
 use App\Models\PurchaseItem;
 use App\Models\Unit;
+use App\Models\Payment;
+
 
 
 
@@ -126,6 +128,47 @@ class PembelianController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function payment_show($id){
+        $purchase = Purchase::find($id);
+
+        $must_pay = $purchase->total - $purchase->paid_amount;
+
+        return json_encode(compact('must_pay'));
+    }
+
+    public function payment_store($id,Request $request){
+        $purchase = Purchase::find($id);
+
+        $payPurchase = [
+            'payment_date' =>$request->input('tglPembayaran'),
+            'purchase_id' =>$id,
+            'amount' =>$request->input('totalPembayaran'),
+        ];
+        
+        Payment::create($payPurchase);
+
+        $newPaidAmount = $purchase->paid_amount + $payPurchase['amount'];
+
+        if($newPaidAmount == $purchase->total){
+            $purchaseStatus = "selesai";
+            $paymentStatus  = "lunas";
+        }
+
+        if($newPaidAmount >= 0 && $newPaidAmount < $purchase->total){
+            $purchaseStatus = "proses";
+            $paymentStatus  = "sebagian";
+        }
+        
+
+        $purchase->purchase_status = $purchaseStatus;
+        $purchase->payment_status  = $paymentStatus;
+        $purchase->paid_amount = $newPaidAmount;
+        $purchase->save();
+
+        return redirect()->route('pembelian.index');
+
     }
     
     
