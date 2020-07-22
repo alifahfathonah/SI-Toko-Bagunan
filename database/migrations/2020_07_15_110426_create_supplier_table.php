@@ -15,11 +15,11 @@ class CreateSupplierTable extends Migration
     {
         Schema::create('suppliers', function (Blueprint $table) {
             $table->id();
-            $table->string('name',50);
-            $table->string('address',100);
-            $table->string('city',100);
-            $table->string('province',100);
-            $table->string('phone',15)->nullable();
+            $table->string('name', 50);
+            $table->string('address', 100);
+            $table->string('city', 100);
+            $table->string('province', 100);
+            $table->string('phone', 15)->nullable();
             $table->timestamps();
             $table->softDeletes('deleted_at', 0);
         });

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 use App\Models\Supplier;
 
@@ -16,8 +17,7 @@ class SupplierController extends Controller
     public function index()
     {
         $suppliers = Supplier::all();
-        return view('supplier/daftar_supplier',compact('suppliers'));
-
+        return view('supplier/daftar_supplier', compact('suppliers'));
     }
 
     /**
@@ -49,7 +49,7 @@ class SupplierController extends Controller
         Supplier::create($data);
 
         return redirect()->route('supplier.index');
-    }   
+    }
 
     /**
      * Display the specified resource.
@@ -71,6 +71,9 @@ class SupplierController extends Controller
     public function edit($id)
     {
         //
+        $supplier = Supplier::find($id);
+
+        return view('supplier.edit_supplier', ['supplier' => $supplier]);
     }
 
     /**
@@ -83,6 +86,17 @@ class SupplierController extends Controller
     public function update(Request $request, $id)
     {
         //
+        $supplier = Supplier::find($id);
+
+        $supplier->name = $request->input('namaSupplierEdit');
+        $supplier->address = $request->input('alamatSupplierEdit');
+        $supplier->city = $request->input('kotaSupplierEdit');
+        $supplier->province = $request->input('provSupplierEdit');
+        $supplier->phone = $request->input('phoneSupplierEdit');
+
+        $supplier->save();
+
+        return redirect()->route('supplier.index');
     }
 
     /**
@@ -94,5 +108,10 @@ class SupplierController extends Controller
     public function destroy($id)
     {
         //
+        $supplier = Supplier::find($id);
+
+        $supplier->delete();
+
+        return redirect()->route('supplier.index');
     }
 }

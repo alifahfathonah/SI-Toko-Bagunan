@@ -25,7 +25,7 @@ Route::resource('pembelian','PembelianController')->names([
     'index' => 'pembelian.index',
     'create' => 'pembelian.form.tambah',
     'store' => 'pembelian.tambah',
-    'destroy' => 'pembelian.hapus',
+    'destroy' => 'pembelian.hapus'
 ]);
 
 Route::get('/pembelian/{id}/pembayaran/create', 'PembelianController@payment_show')->name('pembayaran.form.tambah');
@@ -36,14 +36,18 @@ Route::resource('supplier', 'SupplierController')->names([
     'index' => 'supplier.index',
     'create' => 'supplier.form.tambah',
     'store' => 'supplier.tambah',
-    'destroy' => 'supplier.hapus',
+    'edit' => 'supplier.edit',
+    'update' => 'supplier.update',
+    'destroy' => 'supplier.hapus'
 ]);
 
 Route::resource('sales', 'SalesController')->names([
     'index'  => 'sales.index',
     'create' => 'sales.form.tambah',
     'store' => 'sales.tambah',
-    'destroy' => 'sales.hapus',
+    'edit' => 'sales.edit',
+    'update' => 'sales.update',
+    'destroy' => 'sales.hapus'
 ]);
 
 
