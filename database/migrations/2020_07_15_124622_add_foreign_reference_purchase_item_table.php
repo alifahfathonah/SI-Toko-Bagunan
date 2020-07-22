@@ -28,6 +28,8 @@ class AddForeignReferencePurchaseItemTable extends Migration
     public function down()
     {
         Schema::table('purchase_items', function (Blueprint $table) {
+            $table->dropForeign('purchase_items_purchase_id_foreign');
+            $table->dropForeign('purchase_unit_id_foreign');
             //
         });
     }

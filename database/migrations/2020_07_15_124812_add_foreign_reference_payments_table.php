@@ -27,7 +27,7 @@ class AddForeignReferencePaymentsTable extends Migration
     public function down()
     {
         Schema::table('payments', function (Blueprint $table) {
-            //
+            $table->dropForeign('payments_purchase_id_foreign');
         });
     }
 }

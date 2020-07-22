@@ -29,6 +29,8 @@ class AddForeignReferencePurchasesTable extends Migration
     public function down()
     {
         Schema::table('purchases', function (Blueprint $table) {
+            $table->dropForeign('purchase_suplier_id_foreign');
+            $table->dropForeign('purchase_sales_id_foreign');
             //
         });
     }
