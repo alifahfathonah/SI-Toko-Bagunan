@@ -3,7 +3,7 @@
         <div class="sidebar-content">
             <div class="user">
                 <div class="avatar-sm float-left mr-2">
-                    <img src="{{url('/assets/img/pp.jpg')}}" alt="..." class="avatar-img rounded-circle">
+                    <img src="{{asset('/assets/img/pp.jpg')}}" alt="..." class="avatar-img rounded-circle">
                 </div>
                 <div class="info">
                     <a aria-expanded="true">
