@@ -36,8 +36,7 @@
                             <h4 class="card-title">Tambah Pembelian</h4>
                         </div>
                     </div>
-                    <form onsubmit="tambah_pembelian()">
-                        <!-- <form action="{{route('pembelian.tambah')}}"> -->
+                    <form id="purchaseForm" method="POST">
                         @csrf
                         <div class="card-body">
                             <div class="row">
@@ -52,18 +51,21 @@
                                         <label>Supplier</label>
                                         <select class="form-control" id="supplier" name="supplier">
                                             <option>--Pilih Supplier</option>
-                                            <option value="1">Dimas</option>
-                                            <option value="1">Icha</option>
+                                            @foreach ($suppliers as $supplier)
+                                                <option value="{{$supplier->id}}">{{$supplier->name}}</option>
+                                            @endforeach
+                                            
                                         </select>
                                     </div>
                                 </div>
                                 <div class="col-sm-4">
                                     <div class="form-group">
                                         <label>Sales</label>
-                                        <select class="form-control" id="sales">
+                                        <select class="form-control" id="sales" name="sales">
                                             <option>--Pilih Sales--</option>
-                                            <option>Dimas</option>
-                                            <option>Icha</option>
+                                            @foreach ($sales as $item)
+                                                <option value="{{$item->id}}">{{$item->name}}</option>
+                                            @endforeach
                                         </select>
                                     </div>
                                 </div>
@@ -72,23 +74,24 @@
                                 <div class="col-sm-4 pr-0">
                                     <div class="form-group">
                                         <label>Status Pembayaran</label>
-                                        <select class="form-control" id="status">
+                                        <select class="form-control" id="status" name="paymentStatus">
                                             <option value="lunas">Lunas</option>
                                             <option value="sebagian">Sebagian</option>
+                                            <option value="belum">Belum</option>
                                         </select>
                                     </div>
                                 </div>
                                 <div class="col-sm-4 pr-0">
                                     <div class="form-group">
                                         <label>Jumlah yang Dibayarkan</label>
-                                        <input type="number" class="form-control form-control" id="jmlBayar">
+                                        <input type="number" class="form-control form-control" id="jmlBayar" name="jmlBayar">
                                     </div>
                                 </div>
                             </div>
                             <div class="col-md-12">
                                 <div class="card-header">
                                     <div class="d-flex align-items-center">
-                                        <span class="btn btn-primary btn-round ml-auto" data-toggle="modal" data-target="#tambahModal">
+                                        <span class="btn btn-primary btn-round ml-auto" data-toggle="modal" data-target="#tambahModal" >
                                             <i class="fa fa-plus"></i>
                                             Tambah Item
                                         </span>
@@ -109,33 +112,13 @@
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                <tr>
-                                                    <td>1</td>
-                                                    <td>Usuk</td>
-                                                    <td>20</td>
-                                                    <td>meter</td>
-                                                    <td>20.000</td>
-                                                    <td>400.000</td>
-                                                    <td>
-                                                        <!-- <div class="form-button-action">
-                                                            <span data-toggle="modal" data-target="#editModal" class="btn btn-link btn-primary btn-lg"><i class="fa fa-edit"></i></span>
-                                                            <span data-toggle="modal" data-target="#hapusModal" class="btn btn-link btn-danger"><i class="fa fa-times"></i></span>
-                                                        </div> -->
-                                                        <button class="btn btn-primary btn-border dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Aksi</button>
-                                                        <div class="dropdown-menu">
-                                                            <span class="dropdown-item" data-toggle="modal" data-target="#editModal">Edit</span>
-                                                            <div role="separator" class="dropdown-divider"></div>
-                                                            <span class="dropdown-item" data-toggle="modal" data-target="#hapusModal">Hapus</span>
-                                                        </div>
-                                                    </td>
-                                                </tr>
 
                                             </tbody>
                                             <tfoot>
                                                 <tr>
-                                                    <th colspan="5" style="text-align: center;"><b>Total</b></th>
-                                                    <th>0000000</th>
-                                                    <th></th>
+                                                    <td colspan="5" style="text-align: center;"><b>Total</b></td>
+                                                    <td><b><span id="grandTotal">0</span></b></td>
+                                                    <td></td>
                                                 </tr>
                                             </tfoot>
                                         </table>
@@ -145,7 +128,7 @@
                         </div>
                         <div class="card-footer text-right">
                             <button type="reset" class="btn btn-info">Reset</button>&nbsp;
-                            <button type="submit" class="btn btn-success">Simpan</button>
+                            <button type="submit" class="btn btn-success" id="submitPurchase">Simpan</button>
                         </div>
                     </form>
                 </div>
@@ -170,18 +153,13 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <form action="{{url('/')}}">
                 <div class="modal-body">
+                    <form id="tambahItem">
                     <div class="row">
                         <div class="col-sm-12">
                             <div class="form-group">
                                 <label>Nama Item</label>
-                                <select class="form-control" id="namaItem">
-                                    <option>--Pilih Item--</option>
-                                    <option>Semen</option>
-                                    <option>Usuk</option>
-                                    <option>Reng</option>
-                                </select>
+                                <input type="text" class="form-control form-control" id="namaItem">
                             </div>
                         </div>
                         <div class="col-md-6 pr-0">
@@ -193,17 +171,14 @@
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label>Unit</label>
-                                <select class="form-control" id="unitItem">
-                                    <option>--Pilih Unit--</option>
-                                    <option>m2</option>
-                                    <option>m3</option>
-                                </select>
+                                <input type="text" class="form-control form-control" id="unitItem">
                             </div>
                         </div>
                         <div class="col-md-6 pr-0">
                             <div class="form-group">
-                                <label>Harga</label>
-                                <input type="number" class="form-control form-control" id="hargaItem">
+                                <label>Harga Satuan</label>
+                                <input type="text" class="form-control form-control" id="hargaItem" value="0">
+                                <small id="hargahelp" class="form-text text-muted">Kosongi jika tidak ada harga satuan</small>
                             </div>
                         </div>
                         <div class="col-md-6">
@@ -213,12 +188,13 @@
                             </div>
                         </div>
                     </div>
+                    </form>
                 </div>
                 <div class="modal-footer no-bd">
-                    <button type="button" class="btn btn-danger" data-dismiss="modal">Batal</button>
-                    <button type="submit" class="btn btn-success">Simpan</button>
+                    <button type="button" class="btn btn-danger"  data-dismiss="modal">Batal</button>
+                    <button type="button" class="btn btn-success" id="simpan" data-dismiss="modal">Simpan</button>
                 </div>
-            </form>
+            
         </div>
     </div>
 </div>
@@ -242,12 +218,7 @@
                         <div class="col-sm-12">
                             <div class="form-group">
                                 <label>Nama Item</label>
-                                <select class="form-control" id="namaItemEdit">
-                                    <option>--Pilih Item--</option>
-                                    <option>Semen</option>
-                                    <option>Usuk</option>
-                                    <option>Reng</option>
-                                </select>
+                                <input type="text" class="form-control form-control" id="namaItemEdit">
                             </div>
                         </div>
                         <div class="col-md-6 pr-0">
@@ -259,11 +230,8 @@
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label>Unit</label>
-                                <select class="form-control" id="unitItemEdit">
-                                    <option>--Pilih Unit--</option>
-                                    <option>m2</option>
-                                    <option>m3</option>
-                                </select>
+                                <input type="text" class="form-control form-control" id="unitItemEdit">
+                                
                             </div>
                         </div>
                         <div class="col-md-6 pr-0">
@@ -313,14 +281,95 @@
         </div>
     </div>
 </div>
+
 @endsection
 
 @section('script')
+<script src="{{asset('assets/js/plugin/sweetalert/sweetalert.min.js')}}"></script>
 <script>
+    
+    
+
     $(document).ready(function() {
-        $('#daftarItem').DataTable({
-            "pageLength": 5,
+        var listItem = $('#daftarItem').DataTable({
+            "pageLength": 7,
+            "columns": [
+                { "data": "nomor" },
+                { "data": "nama" },
+                { "data": "jumlahItem" },
+                { "data": "unitItem" },
+                { "data": "hargaItem" },
+                { "data": "totalItem" },
+                { "data": "action" }
+            ]
+            
         });
+        var counter = 1;
+        $('#simpan').click(function(){
+            let data = 
+                {'nomor'         :counter, 
+                 'nama'          :$('#namaItem').val(),
+                 'jumlahItem'    :$('#jumlahItem').val(),
+                 'unitItem'      :$('#unitItem').val(),
+                 'hargaItem'     :$('#hargaItem').val(),
+                 'totalItem'     :$('#totalItem').val(),
+                 'action'        :'<button class="btn btn-primary btn-border dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Aksi</button>\
+                                                            <div class="dropdown-menu">\
+                                                            <span class="dropdown-item editDaftarItem" data-toggle="modal" data-target="#editModal"  data-row="$(counter)">Edit</span>\
+                                                            <div role="separator" class="dropdown-divider"></div>\
+                                                            <span class="dropdown-item editDaftarItem" data-toggle="modal" data-target="#hapusModal" data-row="$(counter)">Hapus</span>\
+                                                        </div>'};
+            
+            listItem.row.add( data ).draw();
+
+            
+            $('#grandTotal').html(  parseInt($('#grandTotal').html()) + parseInt($('#totalItem').val()) );
+            counter++;
+            $('#tambahItem').trigger('reset');
+        });
+        
+        $('#submitPurchase').click(function(event){
+            event.preventDefault();
+
+            
+            var purchase = $('#purchaseForm').serializeArray().reduce(function(obj, item) {
+                obj[item.name] = item.value;
+                return obj;
+            }, {});
+            purchase['grandTotal'] = parseInt($('#grandTotal').html());
+            purchase['dataItem']   = [];
+
+            dataItem =  listItem.rows().data();
+            
+            for (let i = 0; i < dataItem.length; i++) {
+                purchase['dataItem'].push(dataItem[i]);
+            }
+
+
+            $.ajax({
+                data: purchase,
+                url: "{!!  route('pembelian.tambah') !!}",
+                type: "POST",
+                dataType: 'json',
+                success: function (data) {
+                    swal("Sukses!", "Tambah data pembelian sukses 😀", {
+						buttons: {        			
+							confirm: {
+								className : 'btn btn-success'
+							}
+						},
+					});
+                    window.location.href = "{!!route('pembelian.index')!!}";
+                },
+                error: function (data) {
+                    console.log('Error:', "error insert data");
+                    
+                }
+            });
+            
+        });
+
+
     });
 
     function tambah_pembelian() {
@@ -332,7 +381,6 @@
             if (jml_bayar < jml_beli || jml_bayar > jml_beli) {
                 alert("Jumlah pembayaran tidak sesuai !");
             } else {
-                // window.location.href = "{{route('pembelian.tambah')}}";
                 alert("Sukses !");
             }
         } else {
