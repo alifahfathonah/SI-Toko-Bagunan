@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateUnitsTable extends Migration
+class CreateSalesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,12 +13,13 @@ class CreateUnitsTable extends Migration
      */
     public function up()
     {
-        Schema::create('units', function (Blueprint $table) {
+        Schema::create('sales', function (Blueprint $table) {
             $table->id();
-            $table->string('name_unit',20);
+            $table->foreignID('supplier_id')->references('id')->on('suppliers');
+            $table->string('name',50);
+            $table->string('phone',15);
             $table->timestamps();
             $table->softDeletes('deleted_at', 0);
-
         });
     }
 
@@ -29,6 +30,6 @@ class CreateUnitsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('units');
+        Schema::dropIfExists('sales');
     }
 }

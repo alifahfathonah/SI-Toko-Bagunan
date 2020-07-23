@@ -16,13 +16,13 @@ class CreatePurchasesTable extends Migration
         Schema::create('purchases', function (Blueprint $table) {
             $table->id();
             $table->date('purchase_date');
-            $table->foreignID('suplier_id');
-            $table->foreignID('sales_id');
-            $table->string('reference_no');
-            $table->decimal('total',25,4)->default(0.0000);
+            $table->foreignID('supplier_id')->references('id')->on('suppliers');
+            $table->foreignID('sales_id')->references('id')->on('sales');
+            $table->string('reference_no')->nullable();
+            $table->decimal('total',25,2)->default(0.00);
             $table->string('purchase_status',20);
             $table->string('payment_status',20);
-            $table->decimal('paid_amount',25,4)->default(0.0000);
+            $table->decimal('paid_amount',25,2)->default(0.00);
             $table->timestamps();
             $table->softDeletes('deleted_at', 0);
         });

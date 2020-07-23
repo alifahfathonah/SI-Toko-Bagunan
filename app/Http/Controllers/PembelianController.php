@@ -56,7 +56,6 @@ class PembelianController extends Controller
             'paid_amount'    => $request->input('jmlBayar'),
         ];
 
-        $data['reference_no']    = "SALE/2020/07/0001";
         $data['purchase_status'] = $request->input('paymentStatus') == "lunas" ? "selesai" : "proses"; 
 
         $purchase = Purchase::create($data);
@@ -78,7 +77,7 @@ class PembelianController extends Controller
         }
 
         PurchaseItem::insert($purchaseItem);
-
+        
         return json_encode("insert success");
         
 
