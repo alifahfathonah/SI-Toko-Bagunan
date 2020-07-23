@@ -59,6 +59,16 @@ class PembelianController extends Controller
         $data['purchase_status'] = $request->input('paymentStatus') == "lunas" ? "selesai" : "proses"; 
 
         $purchase = Purchase::create($data);
+
+        if($data['paid_amount'] > 0){
+            $payPurchase = [
+                'payment_date'      =>$data['purchase_date'],
+                'purchase_id'       =>$purchase->id,
+                'amount'            =>$data['paid_amount'],
+            ];
+            
+            Payment::create($payPurchase);
+        }
         
         $items = $request->input('dataItem');
         $purchaseItem = [];

@@ -16,3 +16,15 @@ function set_active($uri, $output = 'active')
         }
     }
 }
+
+function set_show($uri, $output = 'show')
+{
+    if (is_array($uri)) {
+        foreach ($uri as $u) {
+            if (Route::is($u)) {
+                return $output;
+            }
+        }
+    } 
+}
+

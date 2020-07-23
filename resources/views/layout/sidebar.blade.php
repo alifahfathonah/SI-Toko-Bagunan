@@ -16,26 +16,26 @@
                 </div>
             </div>
             <ul class="nav nav-primary">
-                <li class="nav-item active">
+                <li class="nav-item">
                     <a href="{{url('/')}}" aria-expanded="false">
                         <i class="fas fa-home"></i>
                         <p>Dashboard</p>
                     </a>
                 </li>
-                <li class="nav-item">
+            <li class="nav-item {{set_active(['pembelian.index','pembelian.form.tambah'])}}">
                     <a data-toggle="collapse" href="#pembelian">
                         <i class="fas fa-shopping-cart "></i>
                         <p>Pembelian</p>
                         <span class="caret"></span>
                     </a>
-                    <div class="collapse" id="pembelian">
+                    <div class="collapse {{set_show(['pembelian.index','pembelian.form.tambah'])}}" id="pembelian">
                         <ul class="nav nav-collapse">
-                            <li>
+                            <li class="{{set_active('pembelian.index')}}">
                                 <a href="{{url('pembelian')}}">
                                     <span class="sub-item">Daftar Pembelian</span>
                                 </a>
                             </li>
-                            <li>
+                            <li class="{{set_active('pembelian.form.tambah')}}">
                                 <a href="{{url('pembelian/create')}}">
                                     <span class="sub-item">Tambah Pembelian</span>
                                 </a>
@@ -43,30 +43,30 @@
                         </ul>
                     </div>
                 </li>
-                <li class="nav-item">
+                <li class="nav-item {{set_active(['supplier.index','supplier.form.tambah','sales.index','sales.form.tambah'])}}">
                     <a data-toggle="collapse" href="#supplier">
                         <i class="fas fa-users"></i>
                         <p>Supplier</p>
                         <span class="caret"></span>
                     </a>
-                    <div class="collapse" id="supplier">
+                    <div class="collapse {{set_show(['supplier.index','supplier.form.tambah','sales.index','sales.form.tambah'])}}" id="supplier">
                         <ul class="nav nav-collapse">
-                            <li>
+                            <li class="{{set_active('supplier.index')}}">
                                 <a href="{{route('supplier.index')}}">
                                     <span class="sub-item">Daftar Supplier</span>
                                 </a>
                             </li>
-                            <li>
+                            <li class="{{set_active('supplier.form.tambah')}}">
                                 <a href="{{route('supplier.form.tambah')}}">
                                     <span class="sub-item">Tambah Supplier</span>
                                 </a>
                             </li>
-                            <li>
+                            <li class="{{set_active('sales.index')}}">
                                 <a href="{{route('sales.index')}}">
                                     <span class="sub-item">Daftar Sales</span>
                                 </a>
                             </li>
-                            <li>
+                            <li class="{{set_active('sales.form.tambah')}}">
                                 <a href="{{route('sales.form.tambah')}}">
                                     <span class="sub-item">Tambah Sales</span>
                                 </a>
