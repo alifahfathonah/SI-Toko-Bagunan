@@ -21,7 +21,7 @@ Route::get('/', 'AuthController@index');
 Route::get('/dashboard', 'AuthController@login');
 Route::get('/ubah_pass', 'AuthController@ubah_pass');
 
-Route::resource('pembelian','PembelianController')->names([
+Route::resource('pembelian', 'PembelianController')->names([
     'index' => 'pembelian.index',
     'create' => 'pembelian.form.tambah',
     'store' => 'pembelian.tambah',
@@ -31,6 +31,10 @@ Route::resource('pembelian','PembelianController')->names([
 Route::get('/pembelian/{id}/pembayaran/create', 'PembelianController@payment_show')->name('pembayaran.form.tambah');
 Route::post('/pembelian/{id}/pembayaran/store', 'PembelianController@payment_store')->name('pembayaran.tambah');
 
+Route::get('/pembelian/{id}/pembayaran/list', 'PembelianController@payment_list')->name('pembayaran.list');
+Route::get('/pembelian/pembayaran/edit/{id}/{purchase_id}', 'PembelianController@payment_edit')->name('pembayaran.edit');
+Route::get('/pembelian/pembayaran/update/{id}', 'PembelianController@payment_update')->name('pembayaran.update');
+Route::get('/pembelian/pembayaran/delete/{id}', 'PembelianController@payment_destroy')->name('pembayaran.destroy');
 
 Route::resource('supplier', 'SupplierController')->names([
     'index' => 'supplier.index',

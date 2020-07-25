@@ -1,5 +1,5 @@
 @extends('layout.main')
-@section('title', 'Tambah Supplier')
+@section('title', 'Edit Supplier')
 
 
 @section('contain')
@@ -80,7 +80,6 @@
                             </div>
                         </div>
                         <div class="card-footer text-right">
-                            <button type="reset" class="btn btn-info">Reset</button>&nbsp;
                             <button type="submit" class="btn btn-success">Simpan</button>
                         </div>
                     </form>

@@ -68,13 +68,13 @@
                                         <td>
                                             <button class="btn btn-primary btn-border dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Aksi</button>
                                             <div class="dropdown-menu">
-                                            <span class="dropdown-item tambahPembayaran" id="tambahPembayaran" data-toggle="modal" data-target="#tambahModal" data-purchase="{{$purchase->id}}">Tambah Pembayaran</span>
+                                                <a class="dropdown-item tambahPembayaran" id="tambahPembayaran" data-toggle="modal" data-target="#tambahModal" data-purchase="{{$purchase->id}}">Tambah Pembayaran</a>
                                                 <div role="separator" class="dropdown-divider"></div>
-                                                <span class="dropdown-item" data-toggle="modal" data-target="#detailModal" data-purchase="{{$purchase->id}}" >Detail Pembayaran</span>
+                                                <a class="dropdown-item" href="{{route('pembayaran.list', $purchase->id)}}">Detail Pembayaran</a>
                                                 <div role="separator" class="dropdown-divider"></div>
-                                                <span class="dropdown-item" data-toggle="modal" data-target="#editModal" data-purchase="{{$purchase->id}}">Edit</span>
+                                                <a class="dropdown-item" data-toggle="modal" data-target="#editModal" data-purchase="{{$purchase->id}}">Edit</a>
                                                 <div role="separator" class="dropdown-divider"></div>
-                                                <span class="dropdown-item" data-toggle="modal" data-target="#hapusModal">Hapus</span>
+                                                <a class="dropdown-item" data-toggle="modal" data-target="#hapusModal">Hapus</a>
                                             </div>
                                         </td>
                                     </tr>
@@ -105,7 +105,7 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            
+
             <form id="formPembayaran" method="POST">
                 @csrf
                 <input type="hidden" name="purchase_id">
@@ -117,7 +117,7 @@
                                 <input type="date" class="form-control form-control" id="tglPembayaran" name="tglPembayaran">
                             </div>
                             <div class="form-group">
-                                <label>Jumlah yang harus dibayar</label>
+                                <label>Jumlah yang Harus Dibayar</label>
                                 <input type="number" class="form-control form-control" id="totalTagihan" value="" disabled>
                             </div>
                             <div class="form-group">
@@ -143,46 +143,7 @@
         </div>
     </div>
 </div>
-<!-- Detail Modal -->
-<div class=" modal fade" id="detailModal" tabindex="-1" role="dialog" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header no-bd">
-                <h5 class="modal-title">
-                    <span class="fw-mediumbold">
-                        Detail Pembayaran</span>
-                </h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <form action="{{url('/')}}">
-                <div class="modal-body">
-                    <div class="row">
-                        <div class="col-sm-12">
-                            <div class="form-group">
-                                <label>Tanggal</label>
-                                <input type="date" class="form-control form-control" disabled>
-                            </div>
-                            <!-- <div class="form-group">
-                                <label>No. Referensi</label>
-                                <input type="text" class="form-control form-control" value="" disabled>
-                            </div> -->
-                            <div class="form-group">
-                                <label>Total</label>
-                                <input type="number" class="form-control form-control" disabled>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="modal-footer no-bd">
-                    <button type="button" class="btn btn-danger" data-dismiss="modal">Batal</button>
-                    <button type="submit" class="btn btn-success">Simpan</button>
-                </div>
-            </form>
-        </div>
-    </div>
-</div>
+
 <!-- Edit Modal -->
 <div class=" modal fade" id="editModal" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog" role="document">
@@ -276,49 +237,48 @@
             "pageLength": 5,
         });
 
-        
+
     });
 
-    $('.close-pembayaran').click(function(){
+    $('.close-pembayaran').click(function() {
         $('#formPembayaran').trigger('reset');
-        $('#jenisPembayaran').attr("disabled","disabled");
+        $('#jenisPembayaran').attr("disabled", "disabled");
         $('#formPembayaran').removeAttr("action");
 
 
     })
 
-    $('.tambahPembayaran').click(function () {
+    $('.tambahPembayaran').click(function() {
         var purchase_id = $(this).data('purchase');
         // console.log(purchase_id);
-        $('#formPembayaran').attr("action","{{route('pembayaran.tambah',['id'=>':id'])}}".replace(':id', purchase_id));
+        $('#formPembayaran').attr("action", "{{route('pembayaran.tambah',['id'=>':id'])}}".replace(':id', purchase_id));
         var _url = "{{route('pembayaran.form.tambah',['id'=>':id'])}}".replace(':id', purchase_id);
         $.ajax({
-                url: _url ,
-                type: "GET",
-                dataType: 'json',
-                success: function (data) {
-                    $('#purchase_id').val(purchase_id);
-                    $('#totalTagihan').val(data.must_pay);
-                    $('#jenisPembayaran').removeAttr("disabled");
-                    
-                },
-                error: function (data) {
-                    console.log("Error");
-                }
-            });
-        
+            url: _url,
+            type: "GET",
+            dataType: 'json',
+            success: function(data) {
+                $('#purchase_id').val(purchase_id);
+                $('#totalTagihan').val(data.must_pay);
+                $('#jenisPembayaran').removeAttr("disabled");
+
+            },
+            error: function(data) {
+                console.log("Error");
+            }
+        });
+
     })
 
-    $('#jenisPembayaran').change(function(){
-        if($(this).val() == 'lunas'){
+    $('#jenisPembayaran').change(function() {
+        if ($(this).val() == 'lunas') {
             $('#totalPembayaran').val($('#totalTagihan').val());
-        }
-        else if($(this).val() == 'sebagian'){
+        } else if ($(this).val() == 'sebagian') {
             $('#totalPembayaran').val(0);
         }
     });
-    
-    $('#totalPembayaran').blur(function(){
+
+    $('#totalPembayaran').blur(function() {
         $totalTagihan = parseInt($('#totalTagihan').val());
         $totalPembayaran = parseInt($(this).val());
 

@@ -1,5 +1,5 @@
 @extends('layout.main')
-@section('title', 'Edit Sales')
+@section('title', 'Edit Pembayaran')
 
 
 @section('contain')
@@ -7,7 +7,7 @@
 <div class="content">
     <div class="page-inner">
         <div class="page-header">
-            <h4 class="page-title">Supplier</h4>
+            <h4 class="page-title">Pembelian</h4>
             <ul class="breadcrumbs">
                 <li class="nav-home">
                     <a href="#">
@@ -18,13 +18,13 @@
                     <i class="flaticon-right-arrow"></i>
                 </li>
                 <li class="nav-item">
-                    <a href="{{route('sales.index')}}">Sales</a>
+                    <a href="#">Pembayaran</a>
                 </li>
                 <li class="separator">
                     <i class="flaticon-right-arrow"></i>
                 </li>
                 <li class="nav-item">
-                    <a href="#">Edit Sales</a>
+                    <a href="#">Edit Pembayaran</a>
                 </li>
             </ul>
         </div>
@@ -33,31 +33,26 @@
                 <div class="card">
                     <div class="card-header">
                         <div class="d-flex align-items-center">
-                            <h4 class="card-title">Edit Sales</h4>
+                            <h4 class="card-title">Edit Pembayaran</h4>
                         </div>
                     </div>
-                    <form method="POST" action="{{route('sales.update', $sales->id)}}">
-                        @method ('PUT')
+                    <form method="POST" action="{{route('pembayaran.update', $payment->id)}}">
+                        @method ('GET')
                         @csrf
                         <div class="card-body">
                             <div class="row">
                                 <div class="col-sm-12">
                                     <div class="form-group">
-                                        <label>Supplier</label>
-                                        <select class="form-control" name="supplierEdit" id="supplierEdit">
-                                            <option>--Pilih Supplier--</option>
-                                            @foreach ($suppliers as $supplier)
-                                            <option value="{{$supplier->id}}" {{ ($sales->supplier_id == $supplier->id ) ? 'selected' : '' }}>{{$supplier->name}}</option>
-                                            @endforeach
-                                        </select>
+                                        <label>Tanggal</label>
+                                        <input type="date" class="form-control form-control" name="tglPembayaranEdit" id="tglPembayaranEdit" value="{{$payment->payment_date}}">
                                     </div>
                                     <div class="form-group">
-                                        <label>Nama</label>
-                                        <input type="text" class="form-control form-control" name="namaSalesEdit" id="namaSalesEdit" value="{{$sales->name}}">
+                                        <label>Jumlah yang Harus Dibayar</label>
+                                        <input type="text" class="form-control form-control" value="{{$new_bill}}" disabled>
                                     </div>
                                     <div class="form-group">
-                                        <label>Telephone</label>
-                                        <input type="number" class="form-control form-control" name="phoneSalesEdit" id="phoneSalesEdit" value="{{$sales->phone}}">
+                                        <label>Jumlah Pembayaran</label>
+                                        <input type="number" class="form-control form-control" name="jmlPembayaranEdit" id="jmlPembayaranEdit" value="{{$payment->amount}}">
                                     </div>
                                 </div>
                             </div>

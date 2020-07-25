@@ -22,7 +22,7 @@
                         <p>Dashboard</p>
                     </a>
                 </li>
-            <li class="nav-item {{set_active(['pembelian.index','pembelian.form.tambah'])}}">
+                <li class="nav-item {{set_active(['pembelian.index','pembelian.form.tambah'])}}">
                     <a data-toggle="collapse" href="#pembelian">
                         <i class="fas fa-shopping-cart "></i>
                         <p>Pembelian</p>

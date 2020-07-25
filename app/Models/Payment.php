@@ -9,9 +9,11 @@ use Alfa6661\AutoNumber\AutoNumberTrait;
 class Payment extends Model
 {
     use AutoNumberTrait;
-    
+
+    protected $table = 'payments';
+
     protected $fillable = [
-        'payment_date','purchase_id','reference_no','amount'
+        'payment_date', 'purchase_id', 'reference_no', 'amount'
     ];
 
     /**
@@ -23,7 +25,7 @@ class Payment extends Model
     {
         return [
             'reference_no' => [
-                'format' => 'BY/'.date('Y').'-'.date('m').'/?', // Format kode yang akan digunakan.
+                'format' => 'BY/' . date('Y') . '-' . date('m') . '/?', // Format kode yang akan digunakan.
                 'length' => 5 // Jumlah digit yang akan digunakan sebagai nomor urut
             ]
         ];
