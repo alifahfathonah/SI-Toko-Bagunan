@@ -54,6 +54,23 @@ Route::resource('sales', 'SalesController')->names([
     'destroy' => 'sales.hapus'
 ]);
 
+Route::group(['prefix' => 'lokasi', 'as' => 'lokasi'], function () {
+    Route::get('provinsi/{id_prov?}', 'LokasiController@getProvinsi')->name('prov');
+
+    Route::get('provinsi/{id_prov}/kabupaten', 'LokasiController@getKabupatenByIdProv');
+    Route::get('provinsi/kabupaten/{id_kab}', 'LokasiController@getKabupatenByIdKab');
+
+
+    Route::get('kabupaten/{id_kab}/kecamatan', 'LokasiController@getKecamatanByIdKab');
+    Route::get('kabupaten/kecamatan/{id_kec}', 'LokasiController@getKecamatanByIdKec');
+
+
+    Route::get('kecamatan/{id_kec}/kelurahan', 'LokasiController@getKelurahanByIdKec');
+    Route::get('kecamatan/kelurahan/{id_kel}', 'LokasiController@getKelurahanByIdKel');
+});
+
+
+
 
 
 Route::get('/barang/daftar', 'BarangController@daftar');
