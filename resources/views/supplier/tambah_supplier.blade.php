@@ -101,6 +101,7 @@
             );
 
             let url = '/lokasi/provinsi/${$(this).val()}/kabupaten';
+
             $.get(url, function(data, status) {
                 data.forEach(function(item, index) {
                     $('#kotaSupplier').append(
