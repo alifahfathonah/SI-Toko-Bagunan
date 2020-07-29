@@ -60,20 +60,13 @@
                                     <div class="form-group">
                                         <label>Provinsi</label>
                                         <select class="form-control" name="provSupplierEdit" id="provSupplierEdit">
-                                            <option>--Pilih Provinsi--</option>
-                                            <option value="Jawa Barat" {{ ($supplier->province == "Jawa Barat" ) ? 'selected' : '' }}>Jawa Barat</option>
-                                            <option value="Jawa Tengah" {{ ($supplier->province == "Jawa Tengah" ) ? 'selected' : '' }}>Jawa Tengah</option>
-                                            <option value="Jawa Timur" {{ ($supplier->province == "Jawa Timur" ) ? 'selected' : '' }}>Jawa Timur</option>
+                                            <option value="{{$prov->id_prov}}"></option>
                                         </select>
                                     </div>
                                     <div class="form-group">
                                         <label>Kota</label>
                                         <select class="form-control" name="kotaSupplierEdit" id="kotaSupplierEdit">
-                                            <option>--Pilih Kota--</option>
-                                            <option value="Bangkalan" {{ ($supplier->city == "Bangkalan" ) ? 'selected' : '' }}>Bangkalan</option>
-                                            <option value="Pamekasan" {{ ($supplier->city == "Pamekasan" ) ? 'selected' : '' }}>Pamekasan</option>
-                                            <option value="Sampang" {{ ($supplier->city == "Sampang" ) ? 'selected' : '' }}>Sampang</option>
-                                            <option value="Sumenep" {{ ($supplier->city == "Sumenep" ) ? 'selected' : '' }}>Sumenep</option>
+                                            <option value="{{$kab->id_kab}}"></option>
                                         </select>
                                     </div>
                                 </div>
@@ -89,4 +82,78 @@
     </div>
 </div>
 
+@endsection
+
+@section('script')
+<script>
+    $(document).ready(function() {
+
+        $('#provSupplierEdit').change(function() {
+            $('#kotaSupplierEdit').empty().append(
+                '<option selected disabled>- Pilih Kabupaten -</option>'
+            );
+
+            let url = `/lokasi/provinsi/${$(this).val()}/kabupaten`;
+
+            $.get(url, function(data, status) {
+                data.forEach(function(item, index) {
+                    $('#kotaSupplierEdit').append(
+                        `<option value="${item.id_kab}"> ${item.nama} </option>`);
+                });
+            });
+        });
+
+        if ($('#provSupplierEdit').val() !== null) {
+            var id_prov = $('#provSupplierEdit').val();
+
+            $('#provSupplierEdit').empty().append(
+                '<option selected disabled>- Pilih Provinsi -</option>'
+            );
+            $.get("/lokasi/provinsi", function(data, status) {
+                data.forEach(function(item, index) {
+
+                    if (item.id_prov == id_prov) {
+                        $('#provSupplierEdit').append(
+                            `<option value="${item.id_prov}" selected> ${item.nama} </option>`
+                        );
+                    } else {
+                        $('#provSupplierEdit').append(
+                            `<option value="${item.id_prov}"> ${item.nama} </option>`
+                        );
+                    }
+                });
+            });
+        } else {
+            $.get("/lokasi/provinsi", function(data, status) {
+                data.forEach(function(item, index) {
+                    $('#provSupplierEdit').append(
+                        `<option value="${item.id_prov}"> ${item.nama} </option>`);
+                });
+            });
+        }
+
+        if ($('#kotaSupplierEdit').val() !== null) {
+            var id_kab = $('#kotaSupplierEdit').val();
+
+            $('#kotaSupplierEdit').empty().append(
+                '<option selected disabled>- Pilih Kabupaten -</option>'
+            );
+            let url = `/lokasi/provinsi/${id_prov}/kabupaten`;
+            $.get(url, function(data, status) {
+                data.forEach(function(item, index) {
+
+                    if (item.id_kab == id_kab) {
+                        $('#kotaSupplierEdit').append(
+                            `<option value="${item.id_kab}" selected> ${item.nama} </option>`
+                        );
+                    } else {
+                        $('#kotaSupplierEdit').append(
+                            `<option value="${item.id_kab}"> ${item.nama} </option>`
+                        );
+                    }
+                });
+            });
+        }
+    });
+</script>
 @endsection

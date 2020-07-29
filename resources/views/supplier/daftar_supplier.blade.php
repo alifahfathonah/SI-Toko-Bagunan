@@ -61,8 +61,8 @@
                                         <td>{{$supplier->name}}</td>
                                         <td>{{$supplier->address}}</td>
                                         <td>{{$supplier->city}}</td>
-                                        <td>{{$supplier->phone}}</td>
                                         <td>{{$supplier->province}}</td>
+                                        <td>{{$supplier->phone}}</td>
                                         <td>
                                             <button class="btn btn-primary btn-border dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Aksi</button>
                                             <div class="dropdown-menu">
