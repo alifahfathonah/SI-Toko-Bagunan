@@ -16,7 +16,7 @@ use Illuminate\Support\Facades\Route;
 
 
 // Route::get('/', 'AuthController@index');
-// Route::get('/dashboard', 'AuthController@login');
+Route::get('/dashboard', 'AuthController@login');
 // Route::get('/ubah_pass', 'AuthController@ubah_pass');
 
 Route::get('/', 'Auth\LoginController@getLogin')->name('login');

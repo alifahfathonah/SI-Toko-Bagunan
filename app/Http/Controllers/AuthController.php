@@ -3,6 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Supplier;
+use App\Models\Sales;
+use App\Models\Purchase;
 
 class AuthController extends Controller
 {
@@ -13,10 +16,13 @@ class AuthController extends Controller
     }
     public function login()
     {
-        return view('dashboard');
-    }
-    public function ubah_pass()
-    {
-        return view('users/ubah_pass');
+        $purchaseCount = Purchase::count();
+        $supplierCount = Supplier::count();
+        $salesCount = Sales::count();
+
+        // echo "<pre>";
+        // var_dump($purchaseCount, $supplierCount, $salesCount);
+        // echo "</pre>";
+        return view('dashboard', compact('purchaseCount', 'supplierCount', 'salesCount'));
     }
 }
