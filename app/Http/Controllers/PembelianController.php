@@ -240,7 +240,7 @@ class PembelianController extends Controller
 
         $payment->save();
 
-        return redirect()->route('pembelian.index');
+        return redirect()->route('pembayaran.list', $payment->purchase_id);
     }
 
     public function payment_destroy($id)
@@ -250,7 +250,7 @@ class PembelianController extends Controller
 
         $payment->delete();
 
-        return redirect()->route('pembelian.index');
+        return redirect()->route('pembayaran.list', $payment->purchase_id);
     }
 
     public function detail($id)

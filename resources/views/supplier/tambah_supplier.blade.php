@@ -54,25 +54,18 @@
                                         <input type="text" class="form-control form-control" id="alamatSupplier" name="alamatSupplier">
                                     </div>
                                 </div>
-                                
+
                                 <div class="col-sm-6">
                                     <div class="form-group">
                                         <label>Provinsi</label>
                                         <select class="form-control" id="provSupplier" name="provSupplier">
-                                            <option>--Pilih Provinsi--</option>
-                                            <option value="Jawa Barat">Jawa Barat</option>
-                                            <option value="Jawa Tengah">Jawa Tengah</option>
-                                            <option value="Jawa Timur">Jawa Timur</option>
+
                                         </select>
                                     </div>
                                     <div class="form-group">
                                         <label>Kota</label>
                                         <select class="form-control" id="kotaSupplier" name="kotaSupplier">
-                                            <option>--Pilih Kota--</option>
-                                            <option  value="Bangkalan">Bangkalan</option>
-                                            <option  value="Pamekasan">Pamekasan</option>
-                                            <option  value="Sampang">Sampang</option>
-                                            <option  value="Sumenep">Sumenep</option>
+
                                         </select>
                                     </div>
                                 </div>
@@ -89,4 +82,78 @@
     </div>
 </div>
 
+@endsection
+
+@section('script')
+<script>
+    $(document).ready(function() {
+
+        $('#provSupplier').change(function() {
+            $('#kotaSupplier').empty().append(
+                '<option selected disabled>- Pilih Kabupaten -</option>'
+            );
+
+            let url = `/lokasi/provinsi/${$(this).val()}/kabupaten`;
+
+            $.get(url, function(data, status) {
+                data.forEach(function(item, index) {
+                    $('#kotaSupplier').append(
+                        `<option value="${item.id_kab}"> ${item.nama} </option>`);
+                });
+            });
+        });
+
+        if ($('#provSupplier').val() !== null) {
+            var id_prov = $('#provSupplier').val();
+
+            $('#provSupplier').empty().append(
+                '<option selected disabled>- Pilih Provinsi -</option>'
+            );
+            $.get("/lokasi/provinsi", function(data, status) {
+                data.forEach(function(item, index) {
+
+                    if (item.id_prov == id_prov) {
+                        $('#provSupplier').append(
+                            `<option value="${item.id_prov}" selected> ${item.nama} </option>`
+                        );
+                    } else {
+                        $('#provSupplier').append(
+                            `<option value="${item.id_prov}"> ${item.nama} </option>`
+                        );
+                    }
+                });
+            });
+        } else {
+            $.get("/lokasi/provinsi", function(data, status) {
+                data.forEach(function(item, index) {
+                    $('#provSupplier').append(
+                        `<option value="${item.id_prov}"> ${item.nama} </option>`);
+                });
+            });
+        }
+
+        if ($('#kotaSupplier').val() !== null) {
+            var id_kab = $('#kotaSupplier').val();
+
+            $('#kotaSupplier').empty().append(
+                '<option selected disabled>- Pilih Kabupaten -</option>'
+            );
+            let url = '/lokasi/provinsi/${id_prov}/kabupaten';
+            $.get(url, function(data, status) {
+                data.forEach(function(item, index) {
+
+                    if (item.id_kab == id_kab) {
+                        $('#kotaSupplier').append(
+                            `<option value="${item.id_kab}" selected> ${item.nama} </option>`
+                        );
+                    } else {
+                        $('#kotaSupplier').append(
+                            `<option value="${item.id_kab}"> ${item.nama} </option>`
+                        );
+                    }
+                });
+            });
+        }
+    });
+</script>
 @endsection
