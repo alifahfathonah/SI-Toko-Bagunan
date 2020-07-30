@@ -14,20 +14,32 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-// Route::get('/', function () {
-//     return view('coba');
-// });
+
 Route::get('/', 'AuthController@index');
 Route::get('/dashboard', 'AuthController@login');
 Route::get('/ubah_pass', 'AuthController@ubah_pass');
+
+Route::get('/login', 'Auth\LoginController@getLogin')->name('login');
+Route::post('/login', 'Auth\LoginController@postLogin')->name('login');
+Route::get('/logout', 'Auth\LoginController@postLogout')->name('logout');
+
+Route::get('/register','Auth\RegisterController@showRegistrationForm')->name('register');
+Route::post('/register','Auth\RegisterController@register')->name('register');
+
+
+
+
+
 
 Route::resource('pembelian', 'PembelianController')->names([
     'index' => 'pembelian.index',
     'create' => 'pembelian.form.tambah',
     'store' => 'pembelian.tambah',
-    'destroy' => 'pembelian.hapus'
+    'destroy' => 'pembelian.hapus',
+    'edit'    => 'pembelian.form.edit',
+    'update'  => 'pembelian.edit',
 ]);
-
+Route::get('/pembelian/detail/{id}', 'PembelianController@detail')->name('pembelian.detail');
 Route::get('/pembelian/{id}/pembayaran/create', 'PembelianController@payment_show')->name('pembayaran.form.tambah');
 Route::post('/pembelian/{id}/pembayaran/store', 'PembelianController@payment_store')->name('pembayaran.tambah');
 
@@ -58,3 +70,4 @@ Route::resource('sales', 'SalesController')->names([
 
 Route::get('/barang/daftar', 'BarangController@daftar');
 Route::get('/barang/tambah', 'BarangController@tambah');
+

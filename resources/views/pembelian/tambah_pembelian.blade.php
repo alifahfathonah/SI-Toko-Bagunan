@@ -75,9 +75,9 @@
                                     <div class="form-group">
                                         <label>Status Pembayaran</label>
                                         <select class="form-control" id="status" name="paymentStatus">
-                                            <option value="lunas">Lunas</option>
-                                            <option value="sebagian">Sebagian</option>
-                                            <option value="belum">Belum</option>
+                                            <option value="Lunas">Lunas</option>
+                                            <option value="Sebagian">Sebagian</option>
+                                            <option value="Belum">Belum</option>
                                         </select>
                                     </div>
                                 </div>

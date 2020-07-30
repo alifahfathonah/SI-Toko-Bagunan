@@ -16,6 +16,10 @@ use App\Models\Payment;
 
 class PembelianController extends Controller
 {
+    
+    public function __construct() {
+        $this->middleware('auth');
+    }
     /**
      * Display a listing of the resource.
      *
@@ -110,7 +114,8 @@ class PembelianController extends Controller
      */
     public function edit($id)
     {
-        //
+        $purchase = Purchase::find($id);
+        return view('pembelian/edit_pembelian', compact('purchase'));
     }
 
     /**
@@ -122,7 +127,37 @@ class PembelianController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $purchase = Purchase::find($id);
+        $purchase->purchase_date  = $request->input('tglPembelian');
+        $purchase->supplier_id    = $request->input('supplier');
+        $purchase->sales_id       = $request->input('sales');
+        $purchase->total          = $request->input('grandTotal');
+        $purchase->payment_status = $request->input('paymentStatus');
+        $purchase->paid_amount    = $request->input('jmlBayar');
+        $purchase->purchase_status = $request->input('grandTotal') - $request->input('jmlBayar') <= 0 ? "selesai" : "proses";
+        $purchase->save();
+
+        PurchaseItem::where('purchase_id',$purchase->id)->delete();
+
+        $items = $request->input('dataItem');
+        $purchaseItem = [];
+
+        foreach ($items as $item) {
+            $unit = Unit::firstOrCreate(['name_unit' => $item['unitItem']]);
+            $purchaseItem[] = [
+                "purchase_id"   => $purchase->id,
+                "product_name"  => $item['nama'],
+                "unit_id"       => $unit->id,
+                "quantity"      => $item['jumlahItem'],
+                "unit_price"    => $item['hargaItem'],
+                "total"         => $item['totalItem'],
+
+            ];
+        }
+
+        PurchaseItem::insert($purchaseItem);
+
+        return json_encode("insert success");
     }
 
     /**
@@ -216,5 +251,12 @@ class PembelianController extends Controller
         $payment->delete();
 
         return redirect()->route('pembelian.index');
+    }
+
+    public function detail($id)
+    {
+        $purchase = Purchase::find($id);
+
+        return view('pembelian.lihat_pembelian',compact('purchase'));
     }
 }

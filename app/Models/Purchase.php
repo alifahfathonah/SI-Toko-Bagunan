@@ -21,6 +21,10 @@ class Purchase extends Model
         return $this->belongsTo(Sales::class);
     }
 
+    public function purchase_items(){
+        return $this->hasMany(PurchaseItem::class);
+    }
+
     /**
      * Return the autonumber configuration array for this model.
      *

@@ -34,7 +34,7 @@
                             <li>
                                 <a class="dropdown-item" href="{{url('ubah_pass')}}"><i class="fas fa-edit"> Ubah Password</i></a>
                                 <div class="dropdown-divider"></div>
-                                <a class="dropdown-item" href="#"><i class="fas fa-sign-out-alt"> Logout</i></a>
+                                <a class="dropdown-item" href="{{route('logout')}}"><i class="fas fa-edit"> Ubah Password</i></a>
                             </li>
                         </div>
                     </ul>

@@ -68,11 +68,13 @@
                                         <td>
                                             <button class="btn btn-primary btn-border dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Aksi</button>
                                             <div class="dropdown-menu">
+                                                <a class="dropdown-item" href="{{route('pembelian.detail', $purchase->id)}}">Detail Pembelian</a>
+                                                <div role="separator" class="dropdown-divider"></div>
                                                 <a class="dropdown-item tambahPembayaran" id="tambahPembayaran" data-toggle="modal" data-target="#tambahModal" data-purchase="{{$purchase->id}}">Tambah Pembayaran</a>
                                                 <div role="separator" class="dropdown-divider"></div>
                                                 <a class="dropdown-item" href="{{route('pembayaran.list', $purchase->id)}}">Detail Pembayaran</a>
                                                 <div role="separator" class="dropdown-divider"></div>
-                                                <a class="dropdown-item" data-toggle="modal" data-target="#editModal" data-purchase="{{$purchase->id}}">Edit</a>
+                                                <a class="dropdown-item" href="{{route('pembelian.form.edit', $purchase->id)}}">Edit</a>
                                                 <div role="separator" class="dropdown-divider"></div>
                                                 <a class="dropdown-item" data-toggle="modal" data-target="#hapusModal">Hapus</a>
                                             </div>
