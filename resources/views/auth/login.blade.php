@@ -1,7 +1,7 @@
 @extends('layout.user')
 @section('title', 'Login Page')
 
-@section('form')
+@section('content')
 <!-- Container -->
 <div class="content">
     <div class="col-12 col-sm-8 offset-sm-2 col-md-6 offset-md-3 col-lg-6 offset-lg-3 col-xl-4 offset-xl-4">
@@ -22,7 +22,7 @@
             <div class="card-body">
                 <div class="col-md-12">
                     <br>
-                    <form method="POST" action="">
+                    <form method="POST" action="{{route('login')}}">
                         @csrf
                         <div class="form-group">
                             <input type="text" class="form-control form-control" id="username" name="username" placeholder="Username">
@@ -34,6 +34,7 @@
                             <button type="submit" class="btn btn-primary btn-border btn-lg w-100 fw-bold mb-3"><i class="fas fa-key"> Login</i></button>
                         </div>
                     </form>
+                    <label>Belum punya akun ? <a href="{{route('register')}}">Daftar disini</a></label>
                 </div>
             </div>
         </div>

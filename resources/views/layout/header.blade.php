@@ -32,9 +32,9 @@
                     <ul class="dropdown-menu dropdown-user animated fadeIn">
                         <div class="dropdown-user-scroll scrollbar-outer">
                             <li>
-                                <a class="dropdown-item" href="{{url('ubah_pass')}}"><i class="fas fa-edit"> Ubah Password</i></a>
+                                <a class="dropdown-item" href="{{route('ubah_pass')}}"><i class="fas fa-edit"> Ubah Password</i></a>
                                 <div class="dropdown-divider"></div>
-                                <a class="dropdown-item" href="{{route('logout')}}"><i class="fas fa-edit"> Ubah Password</i></a>
+                                <a class="dropdown-item" href="{{route('logout')}}"><i class="fas fa-sign-out-alt"> Logout</i></a>
                             </li>
                         </div>
                     </ul>

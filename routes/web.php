@@ -15,21 +15,17 @@ use Illuminate\Support\Facades\Route;
 */
 
 
-Route::get('/', 'AuthController@index');
-Route::get('/dashboard', 'AuthController@login');
-Route::get('/ubah_pass', 'AuthController@ubah_pass');
+// Route::get('/', 'AuthController@index');
+// Route::get('/dashboard', 'AuthController@login');
+// Route::get('/ubah_pass', 'AuthController@ubah_pass');
 
+Route::get('/', 'Auth\LoginController@getLogin')->name('login');
 Route::get('/login', 'Auth\LoginController@getLogin')->name('login');
 Route::post('/login', 'Auth\LoginController@postLogin')->name('login');
 Route::get('/logout', 'Auth\LoginController@postLogout')->name('logout');
 
-Route::get('/register','Auth\RegisterController@showRegistrationForm')->name('register');
-Route::post('/register','Auth\RegisterController@register')->name('register');
-
-
-
-
-
+Route::get('/register', 'Auth\RegisterController@showRegistrationForm')->name('register');
+Route::post('/register', 'Auth\RegisterController@register')->name('register');
 
 Route::resource('pembelian', 'PembelianController')->names([
     'index' => 'pembelian.index',
@@ -76,4 +72,3 @@ Route::group(['prefix' => 'lokasi', 'as' => 'lokasi'], function () {
 
 Route::get('/barang/daftar', 'BarangController@daftar');
 Route::get('/barang/tambah', 'BarangController@tambah');
-

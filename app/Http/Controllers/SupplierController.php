@@ -11,7 +11,8 @@ use App\Models\Kabupaten;
 
 class SupplierController extends Controller
 {
-    public function __construct() {
+    public function __construct()
+    {
         $this->middleware('auth');
     }
     /**
