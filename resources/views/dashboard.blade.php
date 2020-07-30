@@ -82,17 +82,17 @@
                     <div class="col-md-12">
                         <h4><b>Panduan Penggunaan Sistem</b></h4>
                         <div role="separator" class="dropdown-divider"></div>
-                        <p style="font-size:15px;">1. &nbsp;Daftar pembelian dapat diakses dengan klik menu pembelian kemudian pilih daftar pembelian atau klik <a href="{{route('pembelian.index')}}">disini</a></p>
+                        <p style="font-size:15px;">1. &nbsp;Daftar pembelian dapat diakses dengan klik menu <b>pembelian</b> kemudian pilih <b>daftar pembelian</b> atau klik <a href="{{route('pembelian.index')}}">disini</a></p>
                         <div role="separator" class="dropdown-divider"></div>
-                        <p style="font-size:15px;">2. &nbsp;Tambah pembelian dapat diakses dengan klik menu pembelian kemudian pilih tambah pembelian atau klik <a href="{{route('pembelian.form.tambah')}}">disini</a></p>
+                        <p style="font-size:15px;">2. &nbsp;Tambah pembelian dapat diakses dengan klik menu <b>pembelian</b> kemudian pilih <b>tambah pembelian</b> atau klik <a href="{{route('pembelian.form.tambah')}}">disini</a></p>
                         <div role="separator" class="dropdown-divider"></div>
-                        <p style="font-size:15px;">3. &nbsp;Daftar supplier dapat diakses dengan klik menu supplier kemudian pilih daftar supplier atau klik <a href="{{route('supplier.index')}}">disini</a></p>
+                        <p style="font-size:15px;">3. &nbsp;Daftar supplier dapat diakses dengan klik menu <b>supplier</b> kemudian pilih <b>daftar supplier</b> atau klik <a href="{{route('supplier.index')}}">disini</a></p>
                         <div role="separator" class="dropdown-divider"></div>
-                        <p style="font-size:15px;">4. &nbsp;Tambah supplier dapat diakses dengan klik menu supplier kemudian pilih tambah supplier atau klik <a href="{{route('supplier.form.tambah')}}">disini</a></p>
+                        <p style="font-size:15px;">4. &nbsp;Tambah supplier dapat diakses dengan klik menu <b>supplier</b> kemudian pilih <b>tambah supplier</b> atau klik <a href="{{route('supplier.form.tambah')}}">disini</a></p>
                         <div role="separator" class="dropdown-divider"></div>
-                        <p style="font-size:15px;">5. &nbsp;Daftar sales dapat diakses dengan klik menu supplier kemudian pilih daftar sales atau klik <a href="{{route('sales.index')}}">disini</a></p>
+                        <p style="font-size:15px;">5. &nbsp;Daftar sales dapat diakses dengan klik menu <b>supplier</b> kemudian pilih <b>daftar sales</b> atau klik <a href="{{route('sales.index')}}">disini</a></p>
                         <div role="separator" class="dropdown-divider"></div>
-                        <p style="font-size:15px;">6. &nbsp;Tambah sales dapat diakses dengan klik menu supplier kemudian pilih tambah sales atau klik <a href="{{route('sales.form.tambah')}}">disini</a></p>
+                        <p style="font-size:15px;">6. &nbsp;Tambah sales dapat diakses dengan klik menu <b>supplier</b> kemudian pilih <b>tambah sales</b> atau klik <a href="{{route('sales.form.tambah')}}">disini</a></p>
                     </div>
                 </div>
             </div>

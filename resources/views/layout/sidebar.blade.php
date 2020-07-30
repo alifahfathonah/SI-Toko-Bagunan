@@ -3,7 +3,7 @@
         <div class="sidebar-content">
             <div class="user">
                 <div class="avatar-sm float-left mr-2">
-                    <img src="{{asset('/assets/img/pp.jpg')}}" alt="..." class="avatar-img rounded-circle">
+                    <img src="{{asset('/assets/img/logo.png')}}" alt="..." class="avatar-img">
                 </div>
                 <div class="info">
                     <a aria-expanded="true">
@@ -17,7 +17,7 @@
             </div>
             <ul class="nav nav-primary">
                 <li class="nav-item">
-                    <a href="{{url('/')}}" aria-expanded="false">
+                    <a href="{{url('/dashboard')}}" aria-expanded="false">
                         <i class="fas fa-home"></i>
                         <p>Dashboard</p>
                     </a>

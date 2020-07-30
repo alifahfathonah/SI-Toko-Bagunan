@@ -13,9 +13,7 @@
             </div>
             <div class="price-value">
                 <div class="value">
-                    <!-- <span class="logo"><img src="../public/assets/Atlantis-Lite-master/examples/assets/img/pp.jpg" alt="..." class="avatar-img"></span> -->
-                    <span class="amount">SR</span>
-                    <!-- <span class="month">/month</span> -->
+                    <span class="logo"><img src="{{asset('/assets/img/logo3.png')}}" alt="..." class="avatar-img"></span>
                 </div>
             </div>
             <div class="card-body">
