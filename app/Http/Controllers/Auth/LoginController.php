@@ -9,13 +9,15 @@ use Illuminate\Foundation\Auth\AuthenticatesUsers;
 
 class LoginController extends Controller
 {
+    use AuthenticatesUsers;
+
     protected $maxAttempts = 3;
     protected $decayMinutes = 2;
 
     public function __construct()
     {
         $this->middleware('guest')->except('postLogout');
-        $this->redirectTo = route('pembelian.index');
+        $this->redirectTo = route('home');
     }
 
     public function getLogin()
@@ -25,6 +27,7 @@ class LoginController extends Controller
 
     public function postLogin(Request $request)
     {
+        
         $this->validate($request, [
             'name' => 'required',
             'password' => 'required|min:5'

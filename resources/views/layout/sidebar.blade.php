@@ -8,7 +8,6 @@
                 <div class="info">
                     <a aria-expanded="true">
                         <span>
-                            Dimas
                             <span class="user-level">Administrator</span>
                         </span>
                     </a>
@@ -16,8 +15,8 @@
                 </div>
             </div>
             <ul class="nav nav-primary">
-                <li class="nav-item">
-                    <a href="{{url('/dashboard')}}" aria-expanded="false">
+                <li class="nav-item" {{set_active('home')}}>
+                    <a href="{{url('/dashboard')}}"  aria-expanded="false">
                         <i class="fas fa-home"></i>
                         <p>Dashboard</p>
                     </a>
