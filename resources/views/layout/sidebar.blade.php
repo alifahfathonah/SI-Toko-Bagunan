@@ -16,7 +16,7 @@
             </div>
             <ul class="nav nav-primary">
                 <li class="nav-item" {{set_active('home')}}>
-                    <a href="{{url('/dashboard')}}"  aria-expanded="false">
+                    <a href="{{url('/dashboard')}}" aria-expanded="false">
                         <i class="fas fa-home"></i>
                         <p>Dashboard</p>
                     </a>
@@ -94,7 +94,7 @@
                                 </ul>
                             </div>
                         </li> -->
-                <li class="nav-item">
+                <!-- <li class="nav-item">
                     <a data-toggle="collapse" href="#laporan">
                         <i class="fas fa-file"></i>
                         <p>Laporan</p>
@@ -124,7 +124,7 @@
                             </li>
                         </ul>
                     </div>
-                </li>
+                </li> -->
             </ul>
         </div>
     </div>
