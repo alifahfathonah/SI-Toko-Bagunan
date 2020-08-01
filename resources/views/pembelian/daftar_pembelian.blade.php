@@ -10,7 +10,7 @@
             <h4 class="page-title">Pembelian</h4>
             <ul class="breadcrumbs">
                 <li class="nav-home">
-                    <a href="#">
+                    <a href="{{route('home')}}">
                         <i class="flaticon-home"></i>
                     </a>
                 </li>
@@ -18,7 +18,7 @@
                     <i class="flaticon-right-arrow"></i>
                 </li>
                 <li class="nav-item">
-                    <a href="#">Pembelian</a>
+                    <a href="{{route('pembelian.index')}}">Pembelian</a>
                 </li>
                 <li class="separator">
                     <i class="flaticon-right-arrow"></i>
@@ -238,7 +238,9 @@
         document.getElementById("tglPembayaran").valueAsDate = new Date()
         $('#daftarPembelian').DataTable({
             "pageLength": 5,
-            "order": [[ 0, "desc" ]]
+            "order": [
+                [0, "desc"]
+            ]
         });
 
 

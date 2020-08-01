@@ -10,7 +10,7 @@
             <h4 class="page-title">Pembelian</h4>
             <ul class="breadcrumbs">
                 <li class="nav-home">
-                    <a href="#">
+                    <a href="{{route('home')}}">
                         <i class="flaticon-home"></i>
                     </a>
                 </li>
@@ -18,7 +18,7 @@
                     <i class="flaticon-right-arrow"></i>
                 </li>
                 <li class="nav-item">
-                    <a href="#">Pembayaran</a>
+                    <a href="{{route('pembayaran.list', $purchase_id)}}">Pembayaran</a>
                 </li>
                 <li class="separator">
                     <i class="flaticon-right-arrow"></i>

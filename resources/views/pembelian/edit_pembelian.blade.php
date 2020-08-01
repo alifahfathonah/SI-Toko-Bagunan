@@ -10,7 +10,7 @@
             <h4 class="page-title">Pembelian</h4>
             <ul class="breadcrumbs">
                 <li class="nav-home">
-                    <a href="#">
+                    <a href="{{route('home')}}">
                         <i class="flaticon-home"></i>
                     </a>
                 </li>
@@ -18,7 +18,7 @@
                     <i class="flaticon-right-arrow"></i>
                 </li>
                 <li class="nav-item">
-                    <a href="#">Pembelian</a>
+                    <a href="{{route('pembelian.index')}}">Pembelian</a>
                 </li>
                 <li class="separator">
                     <i class="flaticon-right-arrow"></i>
@@ -44,7 +44,7 @@
                                 <div class="col-sm-4 pr-0">
                                     <div class="form-group">
                                         <label>Nomor Refrensi</label>
-                                        <input type="text" class="form-control form-control"  name="nomorRefrensi" value="{{$purchase->reference_no}}" disabled>
+                                        <input type="text" class="form-control form-control" name="nomorRefrensi" value="{{$purchase->reference_no}}" disabled>
                                     </div>
                                 </div>
                             </div>
@@ -52,7 +52,7 @@
                                 <div class="col-sm-4 pr-0">
                                     <div class="form-group">
                                         <label>Tanggal</label>
-                                    <input type="date" class="form-control form-control" id="tglPembelian" name="tglPembelian" value="{{$purchase->purchase_date}}">
+                                        <input type="date" class="form-control form-control" id="tglPembelian" name="tglPembelian" value="{{$purchase->purchase_date}}">
                                     </div>
                                 </div>
                                 <div class="col-sm-4 pr-0">
@@ -80,8 +80,8 @@
                                         <label>Status Pembayaran</label>
                                         <select class="form-control" id="status" name="paymentStatus">
                                             <option value="lunas" {{$purchase->payment_status == 'lunas'? 'selected': '' }}>Lunas</option>
-                                            <option value="sebagian" {{$purchase->payment_status == 'sebagian'? 'selected': '' }} >Sebagian</option>
-                                            <option value="belum" {{$purchase->payment_status == 'belum' ? 'selected': '' }} >Belum</option>
+                                            <option value="sebagian" {{$purchase->payment_status == 'sebagian'? 'selected': '' }}>Sebagian</option>
+                                            <option value="belum" {{$purchase->payment_status == 'belum' ? 'selected': '' }}>Belum</option>
                                         </select>
                                     </div>
                                 </div>
@@ -89,14 +89,14 @@
                                     <div class="form-group">
                                         <label>Jumlah yang telah dibayarkan</label>
                                         <input type="number" class="form-control form-control" id="jmlBayar" name="jmlBayar" value="{{$purchase->paid_amount}}" disabled>
-                                        <small ><i>Mengganti jumlah yang telah dibayarkan dapat dilakukan di edit pembayaran</i></small>
+                                        <small><i>Mengganti jumlah yang telah dibayarkan dapat dilakukan di edit pembayaran</i></small>
                                     </div>
                                 </div>
                             </div>
                             <div class="col-md-12">
                                 <div class="card-header">
                                     <div class="d-flex align-items-center">
-                                        <span class="btn btn-primary btn-round ml-auto" data-toggle="modal" data-target="#tambahModal" >
+                                        <span class="btn btn-primary btn-round ml-auto" data-toggle="modal" data-target="#tambahModal">
                                             <i class="fa fa-plus"></i>
                                             Tambah Item
                                         </span>
@@ -118,22 +118,22 @@
                                             </thead>
                                             <tbody>
                                                 @foreach ($purchase->purchase_items as $item)
-                                                    <tr>
-                                                        <td>{{$loop->iteration}}</td>
-                                                        <td>{{$item->product_name}}</td>
-                                                        <td>{{$item->quantity}}</td>
-                                                        <td>{{$item->unit->name_unit}}</td>
-                                                        <td>{{$item->unit_price}}</td>
-                                                        <td>{{$item->total}}</td>
-                                                        <td>
-                                                            <button class="btn btn-primary btn-border dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Aksi</button>
-                                                            <div class="dropdown-menu">
-                                                                <span class="dropdown-item editDaftarItem" data-toggle="modal" data-target="#editModal"  data-row="{{$loop->iteration}}" >Edit</span>
-                                                                <div role="separator" class="dropdown-divider"></div>
-                                                                <span class="dropdown-item hapusDaftarItem" data-toggle="modal" data-target="#hapusModal" data-row="{{$loop->iteration}}">Hapus</span>
-                                                            </div>
-                                                        </td>
-                                                    </tr>
+                                                <tr>
+                                                    <td>{{$loop->iteration}}</td>
+                                                    <td>{{$item->product_name}}</td>
+                                                    <td>{{$item->quantity}}</td>
+                                                    <td>{{$item->unit->name_unit}}</td>
+                                                    <td>{{$item->unit_price}}</td>
+                                                    <td>{{$item->total}}</td>
+                                                    <td>
+                                                        <button class="btn btn-primary btn-border dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Aksi</button>
+                                                        <div class="dropdown-menu">
+                                                            <span class="dropdown-item editDaftarItem" data-toggle="modal" data-target="#editModal" data-row="{{$loop->iteration}}">Edit</span>
+                                                            <div role="separator" class="dropdown-divider"></div>
+                                                            <span class="dropdown-item hapusDaftarItem" data-toggle="modal" data-target="#hapusModal" data-row="{{$loop->iteration}}">Hapus</span>
+                                                        </div>
+                                                    </td>
+                                                </tr>
                                                 @endforeach
                                             </tbody>
                                             <tfoot>
@@ -175,8 +175,8 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-                <div class="modal-body">
-                    <form id="tambahItem">
+            <div class="modal-body">
+                <form id="tambahItem">
                     <div class="row">
                         <div class="col-sm-12">
                             <div class="form-group">
@@ -210,13 +210,13 @@
                             </div>
                         </div>
                     </div>
-                    </form>
-                </div>
-                <div class="modal-footer no-bd">
-                    <button type="button" class="btn btn-danger"  data-dismiss="modal">Batal</button>
-                    <button type="button" class="btn btn-success" id="simpan" data-dismiss="modal">Simpan</button>
-                </div>
-            
+                </form>
+            </div>
+            <div class="modal-footer no-bd">
+                <button type="button" class="btn btn-danger" data-dismiss="modal">Batal</button>
+                <button type="button" class="btn btn-success" id="simpan" data-dismiss="modal">Simpan</button>
+            </div>
+
         </div>
     </div>
 </div>
@@ -254,7 +254,7 @@
                             <div class="form-group">
                                 <label>Unit</label>
                                 <input type="text" class="form-control form-control" id="unitItemEdit">
-                                
+
                             </div>
                         </div>
                         <div class="col-md-6 pr-0">
@@ -293,14 +293,14 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-                <div class="modal-body">
-                    <p>Yakin untuk menghapus item ini ?</p>
-                    <input type="hidden" id="hapusItemId">
-                </div>
-                <div class="modal-footer no-bd">
-                    <button type="button" class="btn btn-danger" data-dismiss="modal">Batal</button>
-                    <button type="button" id="hapusItemBtn" class="btn btn-success" data-dismiss="modal">Hapus</button>
-                </div>
+            <div class="modal-body">
+                <p>Yakin untuk menghapus item ini ?</p>
+                <input type="hidden" id="hapusItemId">
+            </div>
+            <div class="modal-footer no-bd">
+                <button type="button" class="btn btn-danger" data-dismiss="modal">Batal</button>
+                <button type="button" id="hapusItemBtn" class="btn btn-success" data-dismiss="modal">Hapus</button>
+            </div>
         </div>
     </div>
 </div>
@@ -310,98 +310,109 @@
 @section('script')
 <script src="{{asset('assets/js/plugin/sweetalert/sweetalert.min.js')}}"></script>
 <script>
-    
-    
-
     $(document).ready(function() {
         var listItem = $('#daftarItem').DataTable({
             "pageLength": 7,
-            "columns": [
-                { "data": "nomor" },
-                { "data": "nama" },
-                { "data": "jumlahItem" },
-                { "data": "unitItem" },
-                { "data": "hargaItem" },
-                { "data": "totalItem" },
-                { "data": "action" }
+            "columns": [{
+                    "data": "nomor"
+                },
+                {
+                    "data": "nama"
+                },
+                {
+                    "data": "jumlahItem"
+                },
+                {
+                    "data": "unitItem"
+                },
+                {
+                    "data": "hargaItem"
+                },
+                {
+                    "data": "totalItem"
+                },
+                {
+                    "data": "action"
+                }
             ]
-            
+
         });
         var counter = 1;
-        $('#simpan').click(function(){
-            dataItem =  listItem.rows().data();
+        $('#simpan').click(function() {
+            dataItem = listItem.rows().data();
 
-            if(dataItem.length == 0){
-                $('#submitPurchase').removeAttr('disabled','disabled');
+            if (dataItem.length == 0) {
+                $('#submitPurchase').removeAttr('disabled', 'disabled');
             }
-            let data = 
-                {'nomor'         :counter, 
-                 'nama'          :$('#namaItem').val(),
-                 'jumlahItem'    :$('#jumlahItem').val(),
-                 'unitItem'      :$('#unitItem').val(),
-                 'hargaItem'     :$('#hargaItem').val(),
-                 'totalItem'     :$('#totalItem').val(),
-                 'action'        :`<button class="btn btn-primary btn-border dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Aksi</button>\
+            let data = {
+                'nomor': counter,
+                'nama': $('#namaItem').val(),
+                'jumlahItem': $('#jumlahItem').val(),
+                'unitItem': $('#unitItem').val(),
+                'hargaItem': $('#hargaItem').val(),
+                'totalItem': $('#totalItem').val(),
+                'action': `<button class="btn btn-primary btn-border dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Aksi</button>\
                                                             <div class="dropdown-menu">\
                                                             <span class="dropdown-item editDaftarItem" data-toggle="modal" data-target="#editModal"  data-row="${counter}">Edit</span>\
                                                             <div role="separator" class="dropdown-divider"></div>\
                                                             <span class="dropdown-item hapusDaftarItem" data-toggle="modal" data-target="#hapusModal" data-row="${counter}">Hapus</span>\
-                                                        </div>`};
-            
-            listItem.row.add( data ).draw();
+                                                        </div>`
+            };
 
-            
-            $('#grandTotal').html(  parseInt($('#grandTotal').html()) + parseInt($('#totalItem').val()) );
+            listItem.row.add(data).draw();
+
+
+            $('#grandTotal').html(parseInt($('#grandTotal').html()) + parseInt($('#totalItem').val()));
             counter++;
             $('#tambahItem').trigger('reset');
-            
+
         });
-        
-        $('.editDaftarItem').click(function(){
+
+        $('.editDaftarItem').click(function() {
             index = parseInt($(this).data('row')) - 1;
             let row = listItem.row(index).data();
 
             $('#idItemEdit').val(index);
             $('#namaItemEdit').val(row.nama);
-            $('#jumlahItemEdit').val(row.jumlahItem); 
-            $('#unitItemEdit').val(row.unitItem); 
+            $('#jumlahItemEdit').val(row.jumlahItem);
+            $('#unitItemEdit').val(row.unitItem);
             $('#hargaItemEdit').val(row.hargaItem);
             $('#totalItemEdit').val(row.totalItem);
             $('#totalItemEditHidden').val(row.totalItem)
 
         });
 
-        $('#simpanEdit').click(function(e){
+        $('#simpanEdit').click(function(e) {
             e.preventDefault();
             id = parseInt($('#idItemEdit').val());
             temp = listItem.row(id).data();
-            temp.nama =  $('#namaItemEdit').val();
-            temp.jumlahItem = $('#jumlahItemEdit').val(); 
-            temp.unitItem = $('#unitItemEdit').val(); 
-            temp.hargaItem = $('#hargaItemEdit').val(); 
+            temp.nama = $('#namaItemEdit').val();
+            temp.jumlahItem = $('#jumlahItemEdit').val();
+            temp.unitItem = $('#unitItemEdit').val();
+            temp.hargaItem = $('#hargaItemEdit').val();
             temp.totalItem = $('#totalItemEdit').val();
             listItem.row(id).data(temp);
-            
+
             grandtotal = parseInt($('#grandTotal').html());
-            newgrandTotal = (grandtotal -  parseInt($('#totalItemEditHidden').val())) +  parseInt($('#totalItemEdit').val());
+            newgrandTotal = (grandtotal - parseInt($('#totalItemEditHidden').val())) + parseInt($('#totalItemEdit').val());
             $('#grandTotal').html(newgrandTotal);
 
         })
 
-        $('#submitPurchase').click(function(event){
+        $('#submitPurchase').click(function(event) {
             event.preventDefault();
 
-            
+
             var purchase = $('#purchaseForm').serializeArray().reduce(function(obj, item) {
                 obj[item.name] = item.value;
                 return obj;
             }, {});
-            purchase['grandTotal']  = parseInt($('#grandTotal').html());
-            purchase['jmlBayar']    = parseInt($('#jmlBayar').val());
-            purchase['dataItem']    = [];
+            purchase['grandTotal'] = parseInt($('#grandTotal').html());
+            purchase['jmlBayar'] = parseInt($('#jmlBayar').val());
+            purchase['dataItem'] = [];
 
-            dataItem =  listItem.rows().data();
-            
+            dataItem = listItem.rows().data();
+
             for (let i = 0; i < dataItem.length; i++) {
                 purchase['dataItem'].push(dataItem[i]);
             }
@@ -412,44 +423,44 @@
                 url: _url,
                 type: "POST",
                 dataType: 'json',
-                success: function (data) {
+                success: function(data) {
                     swal("Sukses!", "Tambah data pembelian sukses 😀", {
-						buttons: {        			
-							confirm: {
-								className : 'btn btn-success'
-							}
-						},
-					});
+                        buttons: {
+                            confirm: {
+                                className: 'btn btn-success'
+                            }
+                        },
+                    });
                     window.location.href = "{!!route('pembelian.index')!!}";
                 },
-                error: function (data) {
+                error: function(data) {
                     console.log('Error:', "error insert data");
-                    
+
                 }
             });
-            
+
         });
 
         //tampil modal konfirmasi
-        $('.hapusDaftarItem').click(function(){
+        $('.hapusDaftarItem').click(function() {
             $('#hapusItemId').val($(this).data('row'));
         });
 
-        $('#hapusItemBtn').click(function(){
-            row = parseInt($('#hapusItemId').val())-1;
+        $('#hapusItemBtn').click(function() {
+            row = parseInt($('#hapusItemId').val()) - 1;
 
             deletedRow = listItem.row(row).data();
 
             grandtotal = parseInt($('#grandTotal').html());
-            newgrandTotal = (grandtotal -  parseInt(deletedRow.totalItem));
+            newgrandTotal = (grandtotal - parseInt(deletedRow.totalItem));
             $('#grandTotal').html(newgrandTotal);
 
             listItem.row(row).remove().draw();
 
-            dataItem =  listItem.rows().data();
+            dataItem = listItem.rows().data();
 
-            if(dataItem.length == 0){
-                $('#submitPurchase').attr('disabled','disabled');
+            if (dataItem.length == 0) {
+                $('#submitPurchase').attr('disabled', 'disabled');
             }
         });
 

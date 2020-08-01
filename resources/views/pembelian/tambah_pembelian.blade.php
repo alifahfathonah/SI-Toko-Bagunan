@@ -10,7 +10,7 @@
             <h4 class="page-title">Pembelian</h4>
             <ul class="breadcrumbs">
                 <li class="nav-home">
-                    <a href="#">
+                    <a href="{{route('home')}}">
                         <i class="flaticon-home"></i>
                     </a>
                 </li>
@@ -18,7 +18,7 @@
                     <i class="flaticon-right-arrow"></i>
                 </li>
                 <li class="nav-item">
-                    <a href="#">Pembelian</a>
+                    <a href="{{route('pembelian.index')}}">Pembelian</a>
                 </li>
                 <li class="separator">
                     <i class="flaticon-right-arrow"></i>
@@ -52,10 +52,10 @@
                                         <select class="form-control" id="supp" name="supp">
                                             <option selected disabled>--Pilih Supplier--</option>
                                             @foreach ($suppliers as $item)
-                                                <option value="{{$item->id}}">{{$item->name}}</option>
+                                            <option value="{{$item->id}}">{{$item->name}}</option>
                                             @endforeach
                                         </select>
-                                       
+
                                     </div>
                                 </div>
                                 <div class="col-sm-4">
@@ -63,7 +63,7 @@
                                         <label>Sales</label>
                                         <select class="form-control" id="sales" name="sales">
                                             <option selected disabled>--Pilih Sales--</option>
-                                            
+
                                         </select>
                                     </div>
                                 </div>
@@ -89,7 +89,7 @@
                             <div class="col-md-12">
                                 <div class="card-header">
                                     <div class="d-flex align-items-center">
-                                        <span class="btn btn-primary btn-round ml-auto" data-toggle="modal" data-target="#tambahModal" >
+                                        <span class="btn btn-primary btn-round ml-auto" data-toggle="modal" data-target="#tambahModal">
                                             <i class="fa fa-plus"></i>
                                             Tambah Item
                                         </span>
@@ -151,8 +151,8 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-                <div class="modal-body">
-                    <form id="tambahItem">
+            <div class="modal-body">
+                <form id="tambahItem">
                     <div class="row">
                         <div class="col-sm-12">
                             <div class="form-group">
@@ -187,13 +187,13 @@
                             </div>
                         </div>
                     </div>
-                    </form>
-                </div>
-                <div class="modal-footer no-bd">
-                    <button type="button" class="btn btn-danger"  data-dismiss="modal">Batal</button>
-                    <button type="button" class="btn btn-success" id="simpan" data-dismiss="modal">Simpan</button>
-                </div>
-            
+                </form>
+            </div>
+            <div class="modal-footer no-bd">
+                <button type="button" class="btn btn-danger" data-dismiss="modal">Batal</button>
+                <button type="button" class="btn btn-success" id="simpan" data-dismiss="modal">Simpan</button>
+            </div>
+
         </div>
     </div>
 </div>
@@ -231,7 +231,7 @@
                             <div class="form-group">
                                 <label>Unit</label>
                                 <input type="text" class="form-control form-control" id="unitItemEdit">
-                                
+
                             </div>
                         </div>
                         <div class="col-md-6 pr-0">
@@ -270,14 +270,14 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-                <div class="modal-body">
-                    <p>Yakin untuk menghapus data ini ?</p>
-                    <input type="hidden" id="hapusItemId">
-                </div>
-                <div class="modal-footer no-bd">
-                    <button type="button" class="btn btn-danger" data-dismiss="modal">Batal</button>
-                    <button id="hapusItemBtn" class="btn btn-success" data-dismiss="modal">Hapus</button>
-                </div>
+            <div class="modal-body">
+                <p>Yakin untuk menghapus data ini ?</p>
+                <input type="hidden" id="hapusItemId">
+            </div>
+            <div class="modal-footer no-bd">
+                <button type="button" class="btn btn-danger" data-dismiss="modal">Batal</button>
+                <button id="hapusItemBtn" class="btn btn-success" data-dismiss="modal">Hapus</button>
+            </div>
         </div>
     </div>
 </div>
@@ -287,74 +287,85 @@
 @section('script')
 <script src="{{asset('assets/js/plugin/sweetalert/sweetalert.min.js')}}"></script>
 <script>
-    
-    
-
     $(document).ready(function() {
         document.getElementById("tglPembelian").valueAsDate = new Date()
-        
-        var swalLoading = function(){
-		swal.fire({
-			title:"Loading....",
-			text: "Mohon Tunggu Sebentar",
-			allowOutsideClick: false,
-			onOpen: function() {
-				Swal.showLoading()
-			}
-		})
-	    }
-        
+
+        var swalLoading = function() {
+            swal.fire({
+                title: "Loading....",
+                text: "Mohon Tunggu Sebentar",
+                allowOutsideClick: false,
+                onOpen: function() {
+                    Swal.showLoading()
+                }
+            })
+        }
+
         var listItem = $('#daftarItem').DataTable({
             "pageLength": 7,
-            "columns": [
-                { "data": "nomor" },
-                { "data": "nama" },
-                { "data": "jumlahItem" },
-                { "data": "unitItem" },
-                { "data": "hargaItem" },
-                { "data": "totalItem" },
-                { "data": "action" }
+            "columns": [{
+                    "data": "nomor"
+                },
+                {
+                    "data": "nama"
+                },
+                {
+                    "data": "jumlahItem"
+                },
+                {
+                    "data": "unitItem"
+                },
+                {
+                    "data": "hargaItem"
+                },
+                {
+                    "data": "totalItem"
+                },
+                {
+                    "data": "action"
+                }
             ]
-            
+
         });
         var counter = 1;
-        $('#simpan').click(function(){
-            let data = 
-                {'nomor'         :counter, 
-                 'nama'          :$('#namaItem').val(),
-                 'jumlahItem'    :$('#jumlahItem').val(),
-                 'unitItem'      :$('#unitItem').val(),
-                 'hargaItem'     :$('#hargaItem').val(),
-                 'totalItem'     :$('#totalItem').val(),
-                 'action'        :`<button class="btn btn-primary btn-border dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Aksi</button>
+        $('#simpan').click(function() {
+            let data = {
+                'nomor': counter,
+                'nama': $('#namaItem').val(),
+                'jumlahItem': $('#jumlahItem').val(),
+                'unitItem': $('#unitItem').val(),
+                'hargaItem': $('#hargaItem').val(),
+                'totalItem': $('#totalItem').val(),
+                'action': `<button class="btn btn-primary btn-border dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Aksi</button>
                                                             <div class="dropdown-menu">
                                                             <span class="dropdown-item editDaftarItem" data-toggle="modal" data-target="#editModal"  data-row="${counter}">Edit</span>
                                                             <div role="separator" class="dropdown-divider"></div>
                                                             <span class="dropdown-item hapusDaftarItem" data-toggle="modal" data-target="#hapusModal" data-row="${counter}">Hapus</span>
-                                                        </div>`};
-                                                        
-            
-            listItem.row.add( data ).draw();
+                                                        </div>`
+            };
 
-            
-            $('#grandTotal').html(  parseInt($('#grandTotal').html()) + parseInt($('#totalItem').val()) );
+
+            listItem.row.add(data).draw();
+
+
+            $('#grandTotal').html(parseInt($('#grandTotal').html()) + parseInt($('#totalItem').val()));
             counter++;
             $('#tambahItem').trigger('reset');
         });
-        
-        $('#submitPurchase').click(function(event){
+
+        $('#submitPurchase').click(function(event) {
             event.preventDefault();
             swalLoading();
-            
+
             var purchase = $('#purchaseForm').serializeArray().reduce(function(obj, item) {
                 obj[item.name] = item.value;
                 return obj;
             }, {});
             purchase['grandTotal'] = parseInt($('#grandTotal').html());
-            purchase['dataItem']   = [];
+            purchase['dataItem'] = [];
 
-            dataItem =  listItem.rows().data();
-            
+            dataItem = listItem.rows().data();
+
             for (let i = 0; i < dataItem.length; i++) {
                 purchase['dataItem'].push(dataItem[i]);
             }
@@ -365,134 +376,132 @@
                 url: "{!!  route('pembelian.tambah') !!}",
                 type: "POST",
                 dataType: 'json',
-                success: function (data) {
+                success: function(data) {
                     swal.close();
                     swal("Sukses!", "Tambah data pembelian sukses 😀", {
-						buttons: {        			
-							confirm: {
-								className : 'btn btn-success'
-							}
-						},
-					});
+                        buttons: {
+                            confirm: {
+                                className: 'btn btn-success'
+                            }
+                        },
+                    });
                     window.location.href = "{!!route('pembelian.index')!!}";
                 },
-                error: function (data) {
+                error: function(data) {
                     console.log('Error:', "error insert data");
-                    
+
                 }
             });
-            
+
         });
 
         //tampil modal konfirmasi
-       
+
 
     });
 
-        $('#daftarItem').on('click', '.hapusDaftarItem', function() {
-            
-            $('#hapusItemId').val($(this).data('row'));
-        });
+    $('#daftarItem').on('click', '.hapusDaftarItem', function() {
 
-        $('#daftarItem').on('click', '.editDaftarItem', function() {
-            index = parseInt($(this).data('row')) - 1;
-            let row =$('#daftarItem').DataTable().row(index).data();
+        $('#hapusItemId').val($(this).data('row'));
+    });
 
-            $('#idItemEdit').val(index);
-            $('#namaItemEdit').val(row.nama);
-            $('#jumlahItemEdit').val(row.jumlahItem); 
-            $('#unitItemEdit').val(row.unitItem); 
-            $('#hargaItemEdit').val(row.hargaItem);
-            $('#totalItemEdit').val(row.totalItem);
-            $('#totalItemEditHidden').val(row.totalItem)
+    $('#daftarItem').on('click', '.editDaftarItem', function() {
+        index = parseInt($(this).data('row')) - 1;
+        let row = $('#daftarItem').DataTable().row(index).data();
 
-        });
+        $('#idItemEdit').val(index);
+        $('#namaItemEdit').val(row.nama);
+        $('#jumlahItemEdit').val(row.jumlahItem);
+        $('#unitItemEdit').val(row.unitItem);
+        $('#hargaItemEdit').val(row.hargaItem);
+        $('#totalItemEdit').val(row.totalItem);
+        $('#totalItemEditHidden').val(row.totalItem)
 
-        $('#simpanEdit').click(function(e){
-            e.preventDefault();
-            id = parseInt($('#idItemEdit').val());
-            temp = $('#daftarItem').DataTable().row(id).data();
-            temp.nama =  $('#namaItemEdit').val();
-            temp.jumlahItem = $('#jumlahItemEdit').val(); 
-            temp.unitItem = $('#unitItemEdit').val(); 
-            temp.hargaItem = $('#hargaItemEdit').val(); 
-            temp.totalItem = $('#totalItemEdit').val();
-            $('#daftarItem').DataTable().row(id).data(temp);
-            
-            grandtotal = parseInt($('#grandTotal').html());
-            newgrandTotal = (grandtotal -  parseInt($('#totalItemEditHidden').val())) +  parseInt($('#totalItemEdit').val());
-            $('#grandTotal').html(newgrandTotal);
+    });
 
-        })
+    $('#simpanEdit').click(function(e) {
+        e.preventDefault();
+        id = parseInt($('#idItemEdit').val());
+        temp = $('#daftarItem').DataTable().row(id).data();
+        temp.nama = $('#namaItemEdit').val();
+        temp.jumlahItem = $('#jumlahItemEdit').val();
+        temp.unitItem = $('#unitItemEdit').val();
+        temp.hargaItem = $('#hargaItemEdit').val();
+        temp.totalItem = $('#totalItemEdit').val();
+        $('#daftarItem').DataTable().row(id).data(temp);
 
-        $('#hapusItemBtn').click(function(){
-            row = parseInt($('#hapusItemId').val())-1;
+        grandtotal = parseInt($('#grandTotal').html());
+        newgrandTotal = (grandtotal - parseInt($('#totalItemEditHidden').val())) + parseInt($('#totalItemEdit').val());
+        $('#grandTotal').html(newgrandTotal);
 
-            deletedRow = $('#daftarItem').DataTable().row(row).data();
-            grandtotal = parseInt($('#grandTotal').html());
-            newgrandTotal = (grandtotal -  parseInt(deletedRow.totalItem));
-            $('#grandTotal').html(newgrandTotal);
+    })
 
-            $('#daftarItem').DataTable().row(row).remove().draw();
+    $('#hapusItemBtn').click(function() {
+        row = parseInt($('#hapusItemId').val()) - 1;
 
-            dataItem =  $('#daftarItem').DataTable().rows().data();
-            for (let index = 0; index < dataItem.length; index++) {
-                
-                dataItem[index].nomor  = index+1;
-                dataItem[index].action = `<button class="btn btn-primary btn-border dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Aksi</button>
+        deletedRow = $('#daftarItem').DataTable().row(row).data();
+        grandtotal = parseInt($('#grandTotal').html());
+        newgrandTotal = (grandtotal - parseInt(deletedRow.totalItem));
+        $('#grandTotal').html(newgrandTotal);
+
+        $('#daftarItem').DataTable().row(row).remove().draw();
+
+        dataItem = $('#daftarItem').DataTable().rows().data();
+        for (let index = 0; index < dataItem.length; index++) {
+
+            dataItem[index].nomor = index + 1;
+            dataItem[index].action = `<button class="btn btn-primary btn-border dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Aksi</button>
                                                             <div class="dropdown-menu">
                                                             <span class="dropdown-item editDaftarItem" data-toggle="modal" data-target="#editModal"  data-row="${index+1}">Edit</span>
                                                             <div role="separator" class="dropdown-divider"></div>
                                                             <span class="dropdown-item hapusDaftarItem" data-toggle="modal" data-target="#hapusModal" data-row="${index+1}">Hapus</span>
                                                         </div>`;
-                $('#daftarItem').DataTable().row(index).data(dataItem[index]);
+            $('#daftarItem').DataTable().row(index).data(dataItem[index]);
 
-            }
-            
+        }
 
-        });
 
-    $('#supp').on('change',function(){
-            swalLoading();
-            var value = $(this).val();
-            $.get(`/supplier/${value}/sales`, function(data) {
-                data.forEach(function(item) {
-                    $('#sales').append(
-                        `<option value="${item.id}" selected> ${item.name} </option>`
-                    );
-                });
-            });
-            swal.close();
     });
 
-    $('#hargaItem').change(function(){
-        if( parseInt($(this).val()) > 0 ) {
+    $('#supp').on('change', function() {
+        swalLoading();
+        var value = $(this).val();
+        $.get(`/supplier/${value}/sales`, function(data) {
+            data.forEach(function(item) {
+                $('#sales').append(
+                    `<option value="${item.id}" selected> ${item.name} </option>`
+                );
+            });
+        });
+        swal.close();
+    });
+
+    $('#hargaItem').change(function() {
+        if (parseInt($(this).val()) > 0) {
             jumlah = parseInt($('#jumlahItem').val());
-            
+
             totalItem = jumlah * parseInt($(this).val());
             $('#totalItem').val(totalItem);
 
         }
     });
 
-    $('#jmlBayar').change(function(){
+    $('#jmlBayar').change(function() {
         console.log("sda");
         jumlahBayar = parseInt($(this).val());
         grandTotal = parseInt($('#grandTotal').html());
 
-        if(jumlahBayar >= grandTotal){
+        if (jumlahBayar >= grandTotal) {
             $('#status').val('Lunas').change();
-        }
-        else if (jumlahBayar < grandTotal && jumlahBayar > 0 ){
+        } else if (jumlahBayar < grandTotal && jumlahBayar > 0) {
             $('#status').val('Sebagian').change();
-        }
-        else if (jumlahBayar <= 0 ){
+        } else if (jumlahBayar <= 0) {
             $('#status').val('Belum').change();
         }
 
     });
 
-     
+
 
     function tambah_pembelian() {
         var status = document.getElementById("status").value;
