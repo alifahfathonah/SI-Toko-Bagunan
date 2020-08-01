@@ -61,6 +61,7 @@ Route::resource('sales', 'SalesController')->names([
     'update' => 'sales.update',
     'destroy' => 'sales.hapus'
 ]);
+Route::get('supplier/{id}/sales','SalesController@getSales');
 
 Route::group(['prefix' => 'lokasi', 'as' => 'lokasi'], function () {
     Route::get('provinsi/{id_prov?}', 'LokasiController@getProvinsi')->name('prov');

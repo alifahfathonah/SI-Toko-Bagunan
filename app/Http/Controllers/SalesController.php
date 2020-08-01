@@ -117,4 +117,9 @@ class SalesController extends Controller
 
         return redirect()->route('sales.index');
     }
+
+    public function getSales($supplier_id){
+        $sales = Sales::where('supplier_id',$supplier_id)->get();
+        return $sales;
+    }
 }

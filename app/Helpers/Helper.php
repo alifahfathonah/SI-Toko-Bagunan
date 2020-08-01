@@ -28,3 +28,18 @@ function set_show($uri, $output = 'show')
     } 
 }
 
+function badge($status){
+    if(strtolower($status) == 'lunas' || strtolower($status) == 'selesai'){
+        return '<span class="badge badge-success">'.strtoupper($status).'</span>';
+    }
+    else if(strtolower($status) == 'proses' || strtolower($status) == 'sebagian'){
+        return '<span class="badge badge-warning">'.strtoupper($status).'</span>';
+    }
+
+}
+
+function currency($number)
+{
+    return str_replace(',', '.', number_format($number));
+}
+

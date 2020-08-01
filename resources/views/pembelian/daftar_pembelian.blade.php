@@ -62,19 +62,19 @@
                                         <td>{{$purchase->supplier->name}}</td>
                                         <td>{{$purchase->sales->name}}</td>
                                         <td>{{$purchase->reference_no}}</td>
-                                        <td>{{$purchase->total}}</td>
-                                        <td>{{$purchase->purchase_status}}</td>
-                                        <td>{{$purchase->payment_status}}</td>
+                                        <td>{{currency($purchase->total)}}</td>
+                                        <td>{!!badge($purchase->purchase_status)!!}</td>
+                                        <td>{!!badge($purchase->payment_status)!!}</td>
                                         <td>
                                             <button class="btn btn-primary btn-border dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Aksi</button>
                                             <div class="dropdown-menu">
                                                 <a class="dropdown-item" href="{{route('pembelian.detail', $purchase->id)}}">Detail Pembelian</a>
                                                 <div role="separator" class="dropdown-divider"></div>
+                                                <a class="dropdown-item" href="{{route('pembelian.form.edit', $purchase->id)}}">Edit Pembelian</a>
+                                                <div role="separator" class="dropdown-divider"></div>
                                                 <a class="dropdown-item tambahPembayaran" id="tambahPembayaran" data-toggle="modal" data-target="#tambahModal" data-purchase="{{$purchase->id}}">Tambah Pembayaran</a>
                                                 <div role="separator" class="dropdown-divider"></div>
                                                 <a class="dropdown-item" href="{{route('pembayaran.list', $purchase->id)}}">Detail Pembayaran</a>
-                                                <div role="separator" class="dropdown-divider"></div>
-                                                <a class="dropdown-item" href="{{route('pembelian.form.edit', $purchase->id)}}">Edit</a>
                                                 <div role="separator" class="dropdown-divider"></div>
                                                 <a class="dropdown-item" data-toggle="modal" data-target="#hapusModal">Hapus</a>
                                             </div>
@@ -235,8 +235,10 @@
 @section('script')
 <script>
     $(document).ready(function() {
+        document.getElementById("tglPembayaran").valueAsDate = new Date()
         $('#daftarPembelian').DataTable({
             "pageLength": 5,
+            "order": [[ 0, "desc" ]]
         });
 
 
@@ -246,6 +248,7 @@
         $('#formPembayaran').trigger('reset');
         $('#jenisPembayaran').attr("disabled", "disabled");
         $('#formPembayaran').removeAttr("action");
+        document.getElementById("tglPembayaran").valueAsDate = new Date()
 
 
     })

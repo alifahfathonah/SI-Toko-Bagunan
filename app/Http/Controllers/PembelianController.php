@@ -27,7 +27,7 @@ class PembelianController extends Controller
      */
     public function index()
     {
-        $purchases = Purchase::all();
+        $purchases = Purchase::orderBy('purchase_date','DESC')->get();
         return view('pembelian/daftar_pembelian', compact('purchases'));
     }
 
@@ -53,7 +53,7 @@ class PembelianController extends Controller
     {
         $data = [
             'purchase_date' => $request->input('tglPembelian'),
-            'supplier_id'   => $request->input('supplier'),
+            'supplier_id'   => $request->input('supp'),
             'sales_id'      => $request->input('sales'),
             'total'         => $request->input('grandTotal'),
             'payment_status' => $request->input('paymentStatus'),
@@ -129,7 +129,7 @@ class PembelianController extends Controller
     {
         $purchase = Purchase::find($id);
         $purchase->purchase_date  = $request->input('tglPembelian');
-        $purchase->supplier_id    = $request->input('supplier');
+        $purchase->supplier_id    = $request->input('supp');
         $purchase->sales_id       = $request->input('sales');
         $purchase->total          = $request->input('grandTotal');
         $purchase->payment_status = $request->input('paymentStatus');
@@ -225,8 +225,8 @@ class PembelianController extends Controller
         $payment = Payment::find($id);
         $purchase = Purchase::find($purchase_id);
 
-        $total_payment = $payment->sum('amount');
-        $new_bill = ($purchase->total + $payment->amount) - $total_payment;
+        
+        $new_bill = ($purchase->total - $purchase->paid_amount);
 
         return view('pembelian.edit_pembayaran', compact('payment', 'new_bill'));
     }
@@ -235,9 +235,22 @@ class PembelianController extends Controller
     {
         $payment = Payment::find($id);
 
-        $payment->payment_date = $request->input('tglPembayaranEdit');
-        $payment->amount = $request->input('jmlPembayaranEdit');
+        $purchase = Purchase::find($payment->id);
+        $purchase->paid_amount = ($purchase->paid_amount - $payment->amount) + $request->input('jmlPembayaranEdit');
+        
+        $balance = $purchase->paid_amount - $purchase->total;
+        if($balance <= 0){
+            $purchase->purchase_status = 'selesai';
+            $purchase->payment_status  = 'lunas';
+        }else{
+            $purchase->purchase_status = 'proses';
+            $purchase->payment_status  = 'sebagian';
+        }
+        
+        $purchase->save();
 
+        $payment->payment_date = $request->input('tglPembayaranEdit');
+        $payment->amount       = $request->input('jmlPembayaranEdit');
         $payment->save();
 
         return redirect()->route('pembayaran.list', $payment->purchase_id);
@@ -247,6 +260,18 @@ class PembelianController extends Controller
     {
         //
         $payment = Payment::find($id);
+        $purchase = Purchase::find($payment->id);
+        $purchase->paid_amount = ($purchase->paid_amount - $payment->amount);
+        $balance = $purchase->paid_amount - $purchase->total;
+        if($balance <= 0){
+            $purchase->purchase_status = 'selesai';
+            $purchase->payment_status  = 'lunas';
+        }else{
+            $purchase->purchase_status = 'proses';
+            $purchase->payment_status  = 'sebagian';
+        }
+        
+        $purchase->save();
 
         $payment->delete();
 

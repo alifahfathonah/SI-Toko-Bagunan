@@ -345,7 +345,7 @@
                                                             <div class="dropdown-menu">\
                                                             <span class="dropdown-item editDaftarItem" data-toggle="modal" data-target="#editModal"  data-row="${counter}">Edit</span>\
                                                             <div role="separator" class="dropdown-divider"></div>\
-                                                            <span class="dropdown-item editDaftarItem" data-toggle="modal" data-target="#hapusModal" data-row="${counter}">Hapus</span>\
+                                                            <span class="dropdown-item hapusDaftarItem" data-toggle="modal" data-target="#hapusModal" data-row="${counter}">Hapus</span>\
                                                         </div>`};
             
             listItem.row.add( data ).draw();

@@ -94,9 +94,8 @@
                             <div class="col-md-12">
                                 <div class="card-header">
                                     <div class="d-flex align-items-center">
-                                        <span class="btn btn-primary btn-round ml-auto" data-toggle="modal" data-target="#tambahModal" >
-                                            Lihat Daftar Pembayaran
-                                        </span>
+                                        <a href="{{route('pembayaran.list', $purchase->id)}}" class="btn btn-primary btn-round ml-auto">Lihat Daftar Pembayaran</a>
+                                        
                                     </div>
                                 </div>
                                 <div class="card-body">
