@@ -3,11 +3,18 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 use App\Models\Supplier;
+use App\Models\Provinsi;
+use App\Models\Kabupaten;
 
 class SupplierController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
     /**
      * Display a listing of the resource.
      *
@@ -16,8 +23,7 @@ class SupplierController extends Controller
     public function index()
     {
         $suppliers = Supplier::all();
-        return view('supplier/daftar_supplier',compact('suppliers'));
-
+        return view('supplier/daftar_supplier', compact('suppliers'));
     }
 
     /**
@@ -38,18 +44,24 @@ class SupplierController extends Controller
      */
     public function store(Request $request)
     {
+        $id_prov = $request->input('provSupplier');
+        $id_kab = $request->input('kotaSupplier');
+
+        $prov = Provinsi::where('id_prov', $id_prov)->first();
+        $kab = Kabupaten::where('id_kab', $id_kab)->first();
+
         $data = [
             'name'          => $request->input('namaSupplier'),
             'address'       => $request->input('alamatSupplier'),
-            'city'          => $request->input('kotaSupplier'),
-            'province'      => $request->input('provSupplier'),
+            'city'          => $kab->nama,
+            'province'      => $prov->nama,
             'phone'         => $request->input('phoneSupplier'),
         ];
 
         Supplier::create($data);
 
         return redirect()->route('supplier.index');
-    }   
+    }
 
     /**
      * Display the specified resource.
@@ -71,6 +83,11 @@ class SupplierController extends Controller
     public function edit($id)
     {
         //
+        $supplier = Supplier::find($id);
+        $prov = Provinsi::where('nama', $supplier->province)->first();
+        $kab = Kabupaten::where('nama', $supplier->city)->first();
+
+        return view('supplier.edit_supplier', compact('supplier', 'prov', 'kab'));
     }
 
     /**
@@ -83,6 +100,23 @@ class SupplierController extends Controller
     public function update(Request $request, $id)
     {
         //
+        $id_prov = $request->input('provSupplierEdit');
+        $id_kab = $request->input('kotaSupplierEdit');
+
+        $supplier = Supplier::find($id);
+
+        $prov = Provinsi::where('id_prov', $id_prov)->first();
+        $kab = Kabupaten::where('id_kab', $id_kab)->first();
+
+        $supplier->name = $request->input('namaSupplierEdit');
+        $supplier->address = $request->input('alamatSupplierEdit');
+        $supplier->city = $kab->nama;
+        $supplier->province = $prov->nama;
+        $supplier->phone = $request->input('phoneSupplierEdit');
+
+        $supplier->save();
+
+        return redirect()->route('supplier.index');
     }
 
     /**
@@ -94,5 +128,10 @@ class SupplierController extends Controller
     public function destroy($id)
     {
         //
+        $supplier = Supplier::find($id);
+
+        $supplier->delete();
+
+        return redirect()->route('supplier.index');
     }
 }

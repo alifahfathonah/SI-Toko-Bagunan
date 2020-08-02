@@ -9,7 +9,7 @@
             <h4 class="page-title">Supplier</h4>
             <ul class="breadcrumbs">
                 <li class="nav-home">
-                    <a href="#">
+                    <a href="{{route('home')}}">
                         <i class="flaticon-home"></i>
                     </a>
                 </li>
@@ -17,7 +17,7 @@
                     <i class="flaticon-right-arrow"></i>
                 </li>
                 <li class="nav-item">
-                    <a href="#">Supplier</a>
+                    <a href="{{route('sales.index')}}">Sales</a>
                 </li>
                 <li class="separator">
                     <i class="flaticon-right-arrow"></i>
@@ -43,10 +43,10 @@
                                     <div class="form-group">
                                         <label>Supplier</label>
                                         <select class="form-control" id="supplierTambah" name="supplierTambah">
-                                                <option value="">--Pilih Supplier--</option>
+                                            <option value="">--Pilih Supplier--</option>
                                             @foreach ($suppliers as $supplier)
-                                                <option value={{$supplier->id}}>{{$supplier->name}}</option>
-                                                
+                                            <option value={{$supplier->id}}>{{$supplier->name}}</option>
+
                                             @endforeach
                                         </select>
                                     </div>
