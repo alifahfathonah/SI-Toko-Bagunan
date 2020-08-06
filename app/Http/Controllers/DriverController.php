@@ -4,17 +4,10 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
-use App\Models\Supplier;
-use App\Models\Sales;
+use App\Models\Driver;
 
-
-
-class SalesController extends Controller
+class DriverController extends Controller
 {
-    public function __construct()
-    {
-        $this->middleware('auth');
-    }
     /**
      * Display a listing of the resource.
      *
@@ -22,8 +15,9 @@ class SalesController extends Controller
      */
     public function index()
     {
-        $salers = Sales::all();
-        return view('supplier/daftar_sales', compact('salers'));
+        //
+        $drivers = Driver::all();
+        return view('drivers/daftar_driver', compact('drivers'));
     }
 
     /**
@@ -33,8 +27,8 @@ class SalesController extends Controller
      */
     public function create()
     {
-        $suppliers = Supplier::all();
-        return view('supplier/tambah_sales', compact('suppliers'));
+        //
+        return view('drivers/tambah_driver');
     }
 
     /**
@@ -45,13 +39,13 @@ class SalesController extends Controller
      */
     public function store(Request $request)
     {
+        //
         $data = [
-            'supplier_id' => $request->input('supplierTambah'),
-            'name'        => $request->input('namaSales'),
-            'phone'       => $request->input('phoneSales'),
+            'name'        => $request->input('namaDriver'),
+            'phone'       => $request->input('phoneDriver'),
         ];
-        Sales::create($data);
-        return redirect()->route('sales.index');
+        Driver::create($data);
+        return redirect()->route('driver.index');
     }
 
     /**
@@ -63,7 +57,6 @@ class SalesController extends Controller
     public function show($id)
     {
         //
-
     }
 
     /**
@@ -75,10 +68,9 @@ class SalesController extends Controller
     public function edit($id)
     {
         //
-        $suppliers = Supplier::all();
-        $sales = Sales::find($id);
+        $driver = Driver::find($id);
 
-        return view('supplier.edit_sales', compact('suppliers', 'sales'));
+        return view('drivers.edit_driver', compact('driver'));
     }
 
     /**
@@ -91,16 +83,14 @@ class SalesController extends Controller
     public function update(Request $request, $id)
     {
         //
+        $driver = Driver::find($id);
 
-        $sales = Sales::find($id);
+        $driver->name = $request->input('namaDriverEdit');
+        $driver->phone = $request->input('phoneDriverEdit');
 
-        $sales->supplier_id = $request->input('supplierEdit');
-        $sales->name = $request->input('namaSalesEdit');
-        $sales->phone = $request->input('phoneSalesEdit');
+        $driver->save();
 
-        $sales->save();
-
-        return redirect()->route('sales.index');
+        return redirect()->route('driver.index');
     }
 
     /**
@@ -112,16 +102,10 @@ class SalesController extends Controller
     public function destroy($id)
     {
         //
-        $sales = Sales::find($id);
+        $driver = Driver::find($id);
 
-        $sales->delete();
+        $driver->delete();
 
-        return redirect()->route('sales.index');
-    }
-
-    public function getSales($supplier_id)
-    {
-        $sales = Sales::where('supplier_id', $supplier_id)->get();
-        return $sales;
+        return redirect()->route('driver.index');
     }
 }

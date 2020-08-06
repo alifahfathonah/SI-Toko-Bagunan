@@ -27,7 +27,7 @@ class LoginController extends Controller
 
     public function postLogin(Request $request)
     {
-        
+
         $this->validate($request, [
             'name' => 'required',
             'password' => 'required|min:5'
