@@ -61,7 +61,7 @@ Route::resource('sales', 'SalesController')->names([
     'update' => 'sales.update',
     'destroy' => 'sales.hapus'
 ]);
-Route::get('supplier/{id}/sales','SalesController@getSales');
+Route::get('supplier/{id}/sales', 'SalesController@getSales');
 
 Route::group(['prefix' => 'lokasi', 'as' => 'lokasi'], function () {
     Route::get('provinsi/{id_prov?}', 'LokasiController@getProvinsi')->name('prov');
@@ -73,3 +73,15 @@ Route::group(['prefix' => 'lokasi', 'as' => 'lokasi'], function () {
 
 Route::get('/barang/daftar', 'BarangController@daftar');
 Route::get('/barang/tambah', 'BarangController@tambah');
+
+Route::resource('driver', 'DriverController')->names([
+    'index'  => 'driver.index',
+    'create' => 'driver.form.tambah',
+    'store' => 'driver.tambah',
+    'edit' => 'driver.edit',
+    'update' => 'driver.update',
+    'destroy' => 'driver.hapus'
+]);
+
+Route::get('/pengiriman/daftar', 'ShippingController@index');
+Route::get('/pengiriman/cetak_invoice', 'ShippingController@cetak_invoice');

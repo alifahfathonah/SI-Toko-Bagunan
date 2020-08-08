@@ -28,6 +28,7 @@
     <!-- CSS Files -->
     <link rel="stylesheet" href="{{asset('/assets/css/bootstrap.min.css')}}">
     <link rel="stylesheet" href="{{asset('/assets/css/atlantis.min.css')}}">
+    <!-- <link rel="stylesheet" href="{{asset('/assets/css/table-style.css')}}"> -->
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/dt-1.10.21/datatables.min.css" />
 
 

@@ -73,6 +73,53 @@
                         </ul>
                     </div>
                 </li>
+                <li class="nav-item {{set_active(['penjualan.index','penjualan.form.tambah'])}}">
+                    <a data-toggle="collapse" href="#penjualan">
+                        <i class="fas fa-chart-bar"></i>
+                        <p>Penjualan</p>
+                        <span class="caret"></span>
+                    </a>
+                    <div class="collapse {{set_show(['penjualan.index','penjualan.form.tambah'])}}" id="penjualan">
+                        <ul class="nav nav-collapse">
+                            <li class="{{set_active('penjualan.index')}}">
+                                <a href="{{url('penjualan')}}">
+                                    <span class="sub-item">Daftar Penjualan</span>
+                                </a>
+                            </li>
+                            <li class="{{set_active('penjualan.form.tambah')}}">
+                                <a href="{{url('penjualan/create')}}">
+                                    <span class="sub-item">Tambah Penjualan</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </li>
+                <li class="nav-item {{set_active(['pengiriman.index','pengiriman.form.tambah'])}}">
+                    <a data-toggle="collapse" href="#pengiriman">
+                        <i class="fas fa-shipping-fast"></i>
+                        <p>Pengiriman</p>
+                        <span class="caret"></span>
+                    </a>
+                    <div class="collapse {{set_show(['pengiriman.index','pengiriman.form.tambah'])}}" id="pengiriman">
+                        <ul class="nav nav-collapse">
+                            <li class="{{set_active('pengiriman.index')}}">
+                                <a href="{{url('pengiriman/daftar')}}">
+                                    <span class="sub-item">Daftar Pengiriman</span>
+                                </a>
+                            </li>
+                            <li class="{{set_active('driver.index')}}">
+                                <a href="{{url('driver')}}">
+                                    <span class="sub-item">Daftar Supir</span>
+                                </a>
+                            </li>
+                            <li class="{{set_active('driver.form.tambah')}}">
+                                <a href="{{url('driver/create')}}">
+                                    <span class="sub-item">Tambah Supir</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </li>
                 <!-- <li class="nav-item">
                             <a data-toggle="collapse" href="#barang">
                                 <i class="fas fa-box"></i>
