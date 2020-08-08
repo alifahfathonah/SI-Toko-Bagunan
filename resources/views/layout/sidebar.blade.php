@@ -103,7 +103,7 @@
                     <div class="collapse {{set_show(['pengiriman.index','pengiriman.form.tambah'])}}" id="pengiriman">
                         <ul class="nav nav-collapse">
                             <li class="{{set_active('pengiriman.index')}}">
-                                <a href="{{url('pengiriman')}}">
+                                <a href="{{url('pengiriman/daftar')}}">
                                     <span class="sub-item">Daftar Pengiriman</span>
                                 </a>
                             </li>

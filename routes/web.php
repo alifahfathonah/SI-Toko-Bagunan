@@ -74,7 +74,6 @@ Route::group(['prefix' => 'lokasi', 'as' => 'lokasi'], function () {
 Route::get('/barang/daftar', 'BarangController@daftar');
 Route::get('/barang/tambah', 'BarangController@tambah');
 
-
 Route::resource('driver', 'DriverController')->names([
     'index'  => 'driver.index',
     'create' => 'driver.form.tambah',
@@ -83,3 +82,6 @@ Route::resource('driver', 'DriverController')->names([
     'update' => 'driver.update',
     'destroy' => 'driver.hapus'
 ]);
+
+Route::get('/pengiriman/daftar', 'ShippingController@index');
+Route::get('/pengiriman/cetak_invoice', 'ShippingController@cetak_invoice');
