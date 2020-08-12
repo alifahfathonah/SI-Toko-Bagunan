@@ -23,7 +23,7 @@ class PenjualanController extends Controller
      */
     public function create()
     {
-        //
+        return view('penjualan/tambah_penjualan');
     }
 
     /**

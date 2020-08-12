@@ -12,10 +12,10 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        //path to sql file
-        $sql = base_path('database/db_daerah.sql');
-
-        //collect contents and pass to DB::unprepared
-        DB::unprepared(file_get_contents($sql));
+        $this->call(UnitSeeder::class);
+        $this->call(DriverSeeder::class);
+        $this->call(ProductSeeder::class);
+        $this->call(PenjualanSeeder::class);
+        $this->call(PenjualanItemSeeder::class);
     }
 }
