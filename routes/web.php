@@ -89,6 +89,7 @@ Route::get('/pengiriman/cetak_invoice', 'ShippingController@cetak_invoice');
 Route::resource('penjualan', 'PenjualanController')->names([
     'index'  => 'penjualan.index',
     'create' => 'penjualan.form.tambah',
+    'show' => 'penjualan.detail',
     'store' => 'penjualan.tambah',
     'edit' => 'penjualan.edit',
     'update' => 'penjualan.update',

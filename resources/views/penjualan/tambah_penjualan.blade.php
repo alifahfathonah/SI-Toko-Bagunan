@@ -1,5 +1,5 @@
 @extends('layout.main')
-@section('title', 'Tambah Pembelian')
+@section('title', 'Tambah Penjualan')
 
 
 @section('contain')
@@ -18,13 +18,13 @@
                     <i class="flaticon-right-arrow"></i>
                 </li>
                 <li class="nav-item">
-                    <a href="{{route('pembelian.index')}}">Pembelian</a>
+                    <a href="{{route('pembelian.index')}}">Penjualan</a>
                 </li>
                 <li class="separator">
                     <i class="flaticon-right-arrow"></i>
                 </li>
                 <li class="nav-item">
-                    <a href="#">Tambah Pembelian</a>
+                    <a href="#">Tambah Penjualan</a>
                 </li>
             </ul>
         </div>
@@ -33,10 +33,10 @@
                 <div class="card">
                     <div class="card-header">
                         <div class="d-flex align-items-center">
-                            <h4 class="card-title">Tambah Pembelian</h4>
+                            <h4 class="card-title">Tambah Penjualan</h4>
                         </div>
                     </div>
-                    <form id="purchaseForm" method="POST">
+                    <form id="purchaseForm" action="{{route('penjualan.tambah')}}" method="POST">
                         @csrf
                         <div class="card-body">
                             <div class="row">
@@ -46,22 +46,16 @@
                                         <input type="date" class="form-control form-control" id="tglPembelian" name="tglPembelian">
                                     </div>
                                 </div>
-                                <div class="col-sm-4 pr-0">
+                                <div class="col-sm-4">
                                     <div class="form-group">
-                                        <label>Supplier</label>
-                                        <select class="form-control" id="supp" name="supp">
-                                           
-                                        </select>
-
+                                        <label>Nama Pembeli</label>
+                                        <input type="text" class="form-control form-control" id="" name="namaPembeli">
                                     </div>
                                 </div>
                                 <div class="col-sm-4">
                                     <div class="form-group">
-                                        <label>Sales</label>
-                                        <select class="form-control" id="sales" name="sales">
-                                            <option selected disabled>--Pilih Sales--</option>
-
-                                        </select>
+                                        <label>Alamat</label>
+                                        <textarea class="form-control" id="" name="alamatPembeli" rows="3"></textarea>
                                     </div>
                                 </div>
                             </div>
@@ -282,7 +276,7 @@
 @endsection
 
 @section('script')
-<script src="{{asset('assets/js/plugin/sweetalert/sweetalert.min.js')}}"></script>
+<script src="{{asset('assets/js/plugin/sweetalert/sweetalert2.js')}}"></script>
 <script>
     $(document).ready(function() {
         document.getElementById("tglPembelian").valueAsDate = new Date()
@@ -297,6 +291,7 @@
                 }
             })
         }
+        swalLoading();
 
         var listItem = $('#daftarItem').DataTable({
             "pageLength": 7,
@@ -352,7 +347,7 @@
 
         $('#submitPurchase').click(function(event) {
             event.preventDefault();
-            swalLoading();
+            // swalLoading();
 
             var purchase = $('#purchaseForm').serializeArray().reduce(function(obj, item) {
                 obj[item.name] = item.value;
@@ -370,19 +365,19 @@
 
             $.ajax({
                 data: purchase,
-                url: "{!!  route('pembelian.tambah') !!}",
+                url: "{!!  route('penjualan.tambah') !!}",
                 type: "POST",
                 dataType: 'json',
                 success: function(data) {
-                    swal.close();
-                    swal("Sukses!", "Tambah data pembelian sukses 😀", {
+                    // swal.close();
+                    swal("Sukses!", "Tambah data penjualan sukses 😀", {
                         buttons: {
                             confirm: {
                                 className: 'btn btn-success'
                             }
                         },
                     });
-                    window.location.href = "{!!route('pembelian.index')!!}";
+                    window.location.href = "{!!route('penjualan.index')!!}";
                 },
                 error: function(data) {
                     console.log('Error:', "error insert data");

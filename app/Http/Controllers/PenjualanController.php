@@ -3,6 +3,13 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Penjualan;
+use App\Models\PenjualanItem;
+use App\Models\Unit;
+use App\Models\Payment;
+use App\Models\Product;
+use Carbon\Carbon;
+
 
 class PenjualanController extends Controller
 {
@@ -13,7 +20,8 @@ class PenjualanController extends Controller
      */
     public function index()
     {
-        //
+        $sales = Penjualan::all();
+        return view('penjualan/daftar_penjualan',compact('sales'));
     }
 
     /**
@@ -34,7 +42,50 @@ class PenjualanController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $data = [
+            'date'                => $request->input('tglPembelian'),
+            'nama_pembeli'        => $request->input('namaPembeli'),
+            'alamat_pembeli'      => $request->input('alamatPembeli'),
+            'grandtotal'          => $request->input('grandTotal'),
+            'payment_status'      => $request->input('paymentStatus'),
+            'paid_amount'         => $request->input('jmlBayar'),
+        ];
+
+        $data['sale_status']  = $request->input('paymentStatus') == "lunas" ? "selesai" : "proses";
+
+        $sale = Penjualan::create($data);
+
+        if ($data['paid_amount'] > 0) {
+            $paySale = [
+                'payment_date'      => $data['date'],
+                'sale_id'           => $sale->id,
+                'amount'            => $data['paid_amount'],
+            ];
+
+            Payment::create($paySale);
+        }
+
+        $items = $request->input('dataItem');
+        $saleItem = [];
+
+        foreach ($items as $item) {
+            $unit = Unit::firstOrCreate(['name_unit' => $item['unitItem']]);
+            $product = Product::firstOrCreate(['nama_produk' => $item['nama']]);
+            $saleItem[] = [
+                "penjualan_id"   => $sale->id,
+                "product_id"     => $product->id,
+                "unit_id"        => $unit->id,
+                "quantity"       => $item['jumlahItem'],
+                "unit_price"     => $item['hargaItem'],
+                "total"          => $item['totalItem'],
+                "created_at"     => Carbon::now(),
+                "updated_at"     => Carbon::now(),
+            ]; 
+        }
+
+        PenjualanItem::insert($saleItem);
+        dd("suskse");
+        // return json_encode("insert success");
     }
 
     /**
@@ -43,9 +94,9 @@ class PenjualanController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Penjualan $penjualan)
     {
-        //
+        return view('penjualan/lihat_penjualan',compact('penjualan'));
     }
 
     /**
