@@ -1,0 +1,38 @@
+PANDUAN SISTEM INFORMASI TOKO BANGUNAN SUMBER REJEKI
+
+1. Gunakan php 7.4
+
+2. Lakukan composer install
+
+3. Buatlah database pada local computer
+
+4. Sesuaikan username, password, dan nama database pada local computer dengan file .env
+
+5. Lakukan php artisan migrate
+
+6. Copy SQL database db_daerah pada folder database ke dalam database yang telah dibuat
+
+7. Coba jalankan aplikasi
+
+8. Lakukan register akun sebelum login
+
+9. Login dengan akun yang telah dibuat sebelumnya
+
+10. Terdapat 2 menu utama yaitu Pembelian dan Supplier
+
+11. Menu Supplier
+   + Supplier
+	- Klik submenu Daftar Supplier untuk melihat data Supplier
+	- Klik pada tombol Tambah atau pilih submenu Tambah Supplier untuk menambahkan data supplier
+	- Edit dan Hapus data supplier dapat diakses dengan klik tombol Aksi pada Daftar Supplier
+   + Sales
+	- Klik submenu Daftar Sales untuk melihat data Sales
+	- Klik pada tombol Tambah atau pilih submenu Tambah Sales untuk menambahkan data Sales
+	- Edit dan Hapus data Sales dapat diakses dengan klik tombol Aksi pada Daftar Sales
+
+12. Setelah berhasil menambahkan data Supplier dan data Sales, maka dapat dilakukan Tambah Pembelian pada menu Pembelian
+
+13. Menu Pembelian
+	- Klik submenu Daftar Pembelian untuk melihat data pembelian yang telah dilakukan
+	- Klik tombol Tambah pada submenu Daftar Pembelian atau klik pada submenu Tambah Pembelian untuk menambahkan data pembelian
+	- Detail Pembelian, Edit Pembelian, Tambah Pembayaran, Detail Pembayaran, dan Hapus data Pembelian dapat diakses melalui tombol Aksi yang berada pada Daftar Pembelian

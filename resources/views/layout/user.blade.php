@@ -31,7 +31,7 @@
 
 <body>
     <div class="wrapper">
-        @yield('form')
+        @yield('content')
     </div>
 
 </body>

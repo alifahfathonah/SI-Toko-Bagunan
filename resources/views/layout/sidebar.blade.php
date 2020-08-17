@@ -3,12 +3,11 @@
         <div class="sidebar-content">
             <div class="user">
                 <div class="avatar-sm float-left mr-2">
-                    <img src="{{asset('/assets/img/pp.jpg')}}" alt="..." class="avatar-img rounded-circle">
+                    <img src="{{asset('/assets/img/logo.png')}}" alt="..." class="avatar-img">
                 </div>
                 <div class="info">
                     <a aria-expanded="true">
                         <span>
-                            Dimas
                             <span class="user-level">Administrator</span>
                         </span>
                     </a>
@@ -16,26 +15,26 @@
                 </div>
             </div>
             <ul class="nav nav-primary">
-                <li class="nav-item active">
-                    <a href="{{url('/')}}" aria-expanded="false">
+                <li class="nav-item" {{set_active('home')}}>
+                    <a href="{{url('/dashboard')}}" aria-expanded="false">
                         <i class="fas fa-home"></i>
                         <p>Dashboard</p>
                     </a>
                 </li>
-                <li class="nav-item">
+                <li class="nav-item {{set_active(['pembelian.index','pembelian.form.tambah'])}}">
                     <a data-toggle="collapse" href="#pembelian">
                         <i class="fas fa-shopping-cart "></i>
                         <p>Pembelian</p>
                         <span class="caret"></span>
                     </a>
-                    <div class="collapse" id="pembelian">
+                    <div class="collapse {{set_show(['pembelian.index','pembelian.form.tambah'])}}" id="pembelian">
                         <ul class="nav nav-collapse">
-                            <li>
+                            <li class="{{set_active('pembelian.index')}}">
                                 <a href="{{url('pembelian')}}">
                                     <span class="sub-item">Daftar Pembelian</span>
                                 </a>
                             </li>
-                            <li>
+                            <li class="{{set_active('pembelian.form.tambah')}}">
                                 <a href="{{url('pembelian/create')}}">
                                     <span class="sub-item">Tambah Pembelian</span>
                                 </a>
@@ -43,32 +42,79 @@
                         </ul>
                     </div>
                 </li>
-                <li class="nav-item">
+                <li class="nav-item {{set_active(['supplier.index','supplier.form.tambah','sales.index','sales.form.tambah'])}}">
                     <a data-toggle="collapse" href="#supplier">
                         <i class="fas fa-users"></i>
                         <p>Supplier</p>
                         <span class="caret"></span>
                     </a>
-                    <div class="collapse" id="supplier">
+                    <div class="collapse {{set_show(['supplier.index','supplier.form.tambah','sales.index','sales.form.tambah'])}}" id="supplier">
                         <ul class="nav nav-collapse">
-                            <li>
-                                <a href="{{url('supplier/index')}}">
+                            <li class="{{set_active('supplier.index')}}">
+                                <a href="{{route('supplier.index')}}">
                                     <span class="sub-item">Daftar Supplier</span>
                                 </a>
                             </li>
-                            <li>
-                                <a href="{{url('supplier/create')}}">
+                            <li class="{{set_active('supplier.form.tambah')}}">
+                                <a href="{{route('supplier.form.tambah')}}">
                                     <span class="sub-item">Tambah Supplier</span>
                                 </a>
                             </li>
-                            <li>
-                                <a href="{{url('sales/index')}}">
+                            <li class="{{set_active('sales.index')}}">
+                                <a href="{{route('sales.index')}}">
                                     <span class="sub-item">Daftar Sales</span>
                                 </a>
                             </li>
-                            <li>
-                                <a href="{{url('sales/create')}}">
+                            <li class="{{set_active('sales.form.tambah')}}">
+                                <a href="{{route('sales.form.tambah')}}">
                                     <span class="sub-item">Tambah Sales</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </li>
+                <li class="nav-item {{set_active(['penjualan.index','penjualan.form.tambah'])}}">
+                    <a data-toggle="collapse" href="#penjualan">
+                        <i class="fas fa-chart-bar"></i>
+                        <p>Penjualan</p>
+                        <span class="caret"></span>
+                    </a>
+                    <div class="collapse {{set_show(['penjualan.index','penjualan.form.tambah'])}}" id="penjualan">
+                        <ul class="nav nav-collapse">
+                            <li class="{{set_active('penjualan.index')}}">
+                                <a href="{{url('penjualan')}}">
+                                    <span class="sub-item">Daftar Penjualan</span>
+                                </a>
+                            </li>
+                            <li class="{{set_active('penjualan.form.tambah')}}">
+                                <a href="{{url('penjualan/create')}}">
+                                    <span class="sub-item">Tambah Penjualan</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </li>
+                <li class="nav-item {{set_active(['pengiriman.index','pengiriman.form.tambah'])}}">
+                    <a data-toggle="collapse" href="#pengiriman">
+                        <i class="fas fa-shipping-fast"></i>
+                        <p>Pengiriman</p>
+                        <span class="caret"></span>
+                    </a>
+                    <div class="collapse {{set_show(['pengiriman.index','pengiriman.form.tambah'])}}" id="pengiriman">
+                        <ul class="nav nav-collapse">
+                            <li class="{{set_active('pengiriman.index')}}">
+                                <a href="{{url('pengiriman/daftar')}}">
+                                    <span class="sub-item">Daftar Pengiriman</span>
+                                </a>
+                            </li>
+                            <li class="{{set_active('driver.index')}}">
+                                <a href="{{url('driver')}}">
+                                    <span class="sub-item">Daftar Supir</span>
+                                </a>
+                            </li>
+                            <li class="{{set_active('driver.form.tambah')}}">
+                                <a href="{{url('driver/create')}}">
+                                    <span class="sub-item">Tambah Supir</span>
                                 </a>
                             </li>
                         </ul>
@@ -95,7 +141,7 @@
                                 </ul>
                             </div>
                         </li> -->
-                <li class="nav-item">
+                <!-- <li class="nav-item">
                     <a data-toggle="collapse" href="#laporan">
                         <i class="fas fa-file"></i>
                         <p>Laporan</p>
@@ -125,7 +171,7 @@
                             </li>
                         </ul>
                     </div>
-                </li>
+                </li> -->
             </ul>
         </div>
     </div>

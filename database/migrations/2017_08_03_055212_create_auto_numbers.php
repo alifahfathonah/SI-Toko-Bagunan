@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateSalesTable extends Migration
+class CreateAutoNumbers extends Migration
 {
     /**
      * Run the migrations.
@@ -13,13 +13,11 @@ class CreateSalesTable extends Migration
      */
     public function up()
     {
-        Schema::create('sales', function (Blueprint $table) {
-            $table->id();
-            $table->foreignID('supplier_id');
-            $table->string('name',30);
-            $table->string('phone',15);
+        Schema::create('auto_numbers', function (Blueprint $table) {
+            $table->increments('id');
+            $table->string('name', 32);
+            $table->integer('number');
             $table->timestamps();
-            $table->softDeletes('deleted_at', 0);
         });
     }
 
@@ -30,6 +28,6 @@ class CreateSalesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('sales');
+        Schema::dropIfExists('auto_numbers');
     }
 }

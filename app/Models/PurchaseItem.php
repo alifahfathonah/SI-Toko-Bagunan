@@ -9,4 +9,8 @@ class PurchaseItem extends Model
     protected $guarded = [
         'created_at','updated_at','deleted_at','id'
     ];
+
+    public function unit(){
+        return $this->belongsTo(Unit::class);
+    }
 }

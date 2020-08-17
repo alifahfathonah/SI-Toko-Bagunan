@@ -28,8 +28,9 @@
     <!-- CSS Files -->
     <link rel="stylesheet" href="{{asset('/assets/css/bootstrap.min.css')}}">
     <link rel="stylesheet" href="{{asset('/assets/css/atlantis.min.css')}}">
-    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/dt-1.10.21/datatables.min.css"/>
- 
+    <!-- <link rel="stylesheet" href="{{asset('/assets/css/table-style.css')}}"> -->
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/dt-1.10.21/datatables.min.css" />
+
 
 </head>
 
@@ -66,7 +67,7 @@
     <!-- jQuery UI -->
     <script src="{{asset('/assets/js/plugin/jquery-ui-1.12.1.custom/jquery-ui.min.js')}}"></script>
     <script src="{{asset('/assets/js/plugin/jquery-ui-touch-punch/jquery.ui.touch-punch.min.js')}}"></script>
-    
+
     <!-- jQuery Scrollbar -->
     <script src="{{asset('/assets/js/plugin/jquery-scrollbar/jquery.scrollbar.min.js')}}"></script>
     <!-- Datatables -->

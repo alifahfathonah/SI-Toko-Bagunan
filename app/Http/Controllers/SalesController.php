@@ -11,6 +11,10 @@ use App\Models\Sales;
 
 class SalesController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
     /**
      * Display a listing of the resource.
      *
@@ -19,7 +23,7 @@ class SalesController extends Controller
     public function index()
     {
         $salers = Sales::all();
-        return view('supplier/daftar_sales',compact('salers'));
+        return view('supplier/daftar_sales', compact('salers'));
     }
 
     /**
@@ -30,7 +34,7 @@ class SalesController extends Controller
     public function create()
     {
         $suppliers = Supplier::all();
-        return view('supplier/tambah_sales',compact('suppliers'));
+        return view('supplier/tambah_sales', compact('suppliers'));
     }
 
     /**
@@ -59,6 +63,7 @@ class SalesController extends Controller
     public function show($id)
     {
         //
+
     }
 
     /**
@@ -70,6 +75,10 @@ class SalesController extends Controller
     public function edit($id)
     {
         //
+        $suppliers = Supplier::all();
+        $sales = Sales::find($id);
+
+        return view('supplier.edit_sales', compact('suppliers', 'sales'));
     }
 
     /**
@@ -82,6 +91,16 @@ class SalesController extends Controller
     public function update(Request $request, $id)
     {
         //
+
+        $sales = Sales::find($id);
+
+        $sales->supplier_id = $request->input('supplierEdit');
+        $sales->name = $request->input('namaSalesEdit');
+        $sales->phone = $request->input('phoneSalesEdit');
+
+        $sales->save();
+
+        return redirect()->route('sales.index');
     }
 
     /**
@@ -93,5 +112,16 @@ class SalesController extends Controller
     public function destroy($id)
     {
         //
+        $sales = Sales::find($id);
+
+        $sales->delete();
+
+        return redirect()->route('sales.index');
+    }
+
+    public function getSales($supplier_id)
+    {
+        $sales = Sales::where('supplier_id', $supplier_id)->get();
+        return $sales;
     }
 }

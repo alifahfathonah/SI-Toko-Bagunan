@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class AddForeignReferencePaymentsTable extends Migration
+class CreateDriversTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,9 +13,12 @@ class AddForeignReferencePaymentsTable extends Migration
      */
     public function up()
     {
-        Schema::table('payments', function (Blueprint $table) {
-            $table->foreign('purchase_id')->references('id')->on('purchases');
-            
+        Schema::create('drivers', function (Blueprint $table) {
+            $table->id();
+            $table->string('name', 50);
+            $table->string('phone', 15);
+            $table->timestamps();
+            $table->softDeletes('deleted_at', 0);
         });
     }
 
@@ -26,8 +29,6 @@ class AddForeignReferencePaymentsTable extends Migration
      */
     public function down()
     {
-        Schema::table('payments', function (Blueprint $table) {
-            $table->dropForeign('payments_purchase_id_foreign');
-        });
+        Schema::dropIfExists('drivers');
     }
 }

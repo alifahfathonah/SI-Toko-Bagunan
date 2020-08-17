@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateUnitsTable extends Migration
+class CreatePaymentsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,12 +13,14 @@ class CreateUnitsTable extends Migration
      */
     public function up()
     {
-        Schema::create('units', function (Blueprint $table) {
+        Schema::create('payments', function (Blueprint $table) {
             $table->id();
-            $table->string('name_unit',20);
+            $table->date('payment_date');
+            $table->foreignID('purchase_id')->references('id')->on('purchases');
+            $table->string('reference_no')->nullable();
+            $table->decimal('amount',25,2);
             $table->timestamps();
             $table->softDeletes('deleted_at', 0);
-
         });
     }
 
@@ -29,6 +31,6 @@ class CreateUnitsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('units');
+        Schema::dropIfExists('payments');
     }
 }
