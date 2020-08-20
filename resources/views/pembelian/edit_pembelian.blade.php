@@ -214,7 +214,7 @@
             </div>
             <div class="modal-footer no-bd">
                 <button type="button" class="btn btn-danger" data-dismiss="modal">Batal</button>
-                <button type="button" class="btn btn-success" id="simpan" data-dismiss="modal">Simpan</button>
+                <button type="button" class="btn btn-success" id="simpan" data-dismiss="modal" disabled>Simpan</button>
             </div>
 
         </div>
@@ -308,7 +308,7 @@
 @endsection
 
 @section('script')
-<script src="{{asset('assets/js/plugin/sweetalert/sweetalert.min.js')}}"></script>
+<script src="{{asset('assets/js/plugin/sweetalert/sweetalert2.all.min.js')}}"></script>
 <script>
     $(document).ready(function() {
         var listItem = $('#daftarItem').DataTable({
@@ -337,6 +337,30 @@
             ]
 
         });
+
+        var swalLoading = function() {
+            swal.fire({
+                title: "Loading....",
+                text: "Mohon Tunggu Sebentar",
+                allowOutsideClick: false,
+                onOpen: function() {
+                    Swal.showLoading()
+                }
+            })
+        }
+
+        var swalError = function(msg){
+            swal.fire({
+                text: msg,
+                icon: "error",
+                buttonsStyling: false,
+                confirmButtonText: "Ok",
+                customClass: {
+                    confirmButton: "btn font-weight-bold btn-light-primary"
+                }
+            });
+        }
+
         var counter = 1;
         $('#simpan').click(function() {
             dataItem = listItem.rows().data();
@@ -401,7 +425,7 @@
 
         $('#submitPurchase').click(function(event) {
             event.preventDefault();
-
+            swalLoading();
 
             var purchase = $('#purchaseForm').serializeArray().reduce(function(obj, item) {
                 obj[item.name] = item.value;
@@ -416,7 +440,6 @@
             for (let i = 0; i < dataItem.length; i++) {
                 purchase['dataItem'].push(dataItem[i]);
             }
-            console.log(purchase);
             var _url = "{{route('pembelian.edit',['pembelian'=>$purchase->id])}}"
             $.ajax({
                 data: purchase,
@@ -424,6 +447,7 @@
                 type: "POST",
                 dataType: 'json',
                 success: function(data) {
+                    swal.close();
                     swal("Sukses!", "Tambah data pembelian sukses 😀", {
                         buttons: {
                             confirm: {
@@ -434,7 +458,7 @@
                     window.location.href = "{!!route('pembelian.index')!!}";
                 },
                 error: function(data) {
-                    console.log('Error:', "error insert data");
+                    swalError('Error,tidak dapat menambah data');
 
                 }
             });
@@ -467,27 +491,14 @@
 
     });
 
-    function tambah_pembelian() {
-        var status = document.getElementById("status").value;
-        var jml_beli = 1000;
-        var jml_bayar = document.getElementById("jmlBayar").value;
-
-        if (status == 'lunas') {
-            if (jml_bayar < jml_beli || jml_bayar > jml_beli) {
-                alert("Jumlah pembayaran tidak sesuai !");
-            } else {
-                alert("Sukses !");
-            }
-        } else {
-            if (jml_bayar <= 0) {
-                alert("Jumlah pembayaran harus lebih dari 0 !");
-            } else if (jml_bayar == jml_beli) {
-                alert("Status pembayaran tidak sesuai !");
-            } else {
-                // window.location.href = "{{route('pembelian.tambah')}}";
-                alert("Sukses !");
-            }
+    $('#namaItem').change(function(){
+        if($(this).val() == "" ){
+            $('#simpan').attr("disabled", "disabled");
         }
-    }
+        else{
+            $('#simpan').removeAttr("disabled");
+            
+        }
+    })
 </script>
 @endsection

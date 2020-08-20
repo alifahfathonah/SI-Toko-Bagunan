@@ -290,7 +290,7 @@
 @endsection
 
 @section('script')
-<script src="{{asset('assets/js/plugin/sweetalert/sweetalert.min.js')}}"></script>
+<script src="{{asset('assets/js/plugin/sweetalert/sweetalert2.all.min.js')}}"></script>
 <script>
     $(document).ready(function() {
         var listItem = $('#daftarItem').DataTable({

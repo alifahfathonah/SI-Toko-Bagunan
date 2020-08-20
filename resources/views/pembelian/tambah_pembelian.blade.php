@@ -126,7 +126,7 @@
                         </div>
                         <div class="card-footer text-right">
                             <button type="reset" class="btn btn-info">Reset</button>&nbsp;
-                            <button type="submit" class="btn btn-success" id="submitPurchase">Simpan</button>
+                            <button type="submit" class="btn btn-success" id="submitPurchase" disabled>Simpan</button>
                         </div>
                     </form>
                 </div>
@@ -191,7 +191,7 @@
             </div>
             <div class="modal-footer no-bd">
                 <button type="button" class="btn btn-danger" data-dismiss="modal">Batal</button>
-                <button type="button" class="btn btn-success" id="simpan" data-dismiss="modal">Simpan</button>
+                <button type="button" class="btn btn-success" id="simpan" data-dismiss="modal" disabled>Simpan</button>
             </div>
 
         </div>
@@ -285,7 +285,7 @@
 @endsection
 
 @section('script')
-<script src="{{asset('assets/js/plugin/sweetalert/sweetalert.min.js')}}"></script>
+<script src="{{asset('assets/js/plugin/sweetalert/sweetalert2.all.min.js')}}"></script>
 <script>
     $(document).ready(function() {
         document.getElementById("tglPembelian").valueAsDate = new Date()
@@ -300,6 +300,19 @@
                 }
             })
         }
+
+        var swalError = function(msg){
+            swal.fire({
+                text: msg,
+                icon: "error",
+                buttonsStyling: false,
+                confirmButtonText: "Ok",
+                customClass: {
+                    confirmButton: "btn font-weight-bold btn-light-primary"
+                }
+            });
+        }
+
 
         var listItem = $('#daftarItem').DataTable({
             "pageLength": 7,
@@ -346,10 +359,14 @@
 
 
             listItem.row.add(data).draw();
-
+            $('#submitPurchase').removeAttr("disabled");
 
             $('#grandTotal').html(parseInt($('#grandTotal').html()) + parseInt($('#totalItem').val()));
+            
             counter++;
+
+            $('#tambahModal').modal('toggle');
+            $('#simpan').attr("disabled", "disabled");
             $('#tambahItem').trigger('reset');
         });
 
@@ -388,14 +405,22 @@
                     window.location.href = "{!!route('pembelian.index')!!}";
                 },
                 error: function(data) {
-                    console.log('Error:', "error insert data");
+                    swalError('Error,tidak dapat menambah data');
 
                 }
             });
 
         });
 
-        //tampil modal konfirmasi
+        $('#namaItem').change(function(){
+            if($(this).val() == ""){
+                $('#simpan').attr("disabled", "disabled");
+            }
+            else{
+                $('#simpan').removeAttr("disabled");
+                
+            }
+        })
 
 
     });
@@ -460,6 +485,11 @@
 
         }
 
+        if(dataItem.length <= 0 )
+        {
+            $('#submitPurchase').attr("disabled","disabled");
+        }
+
 
     });
 
@@ -503,27 +533,6 @@
 
 
 
-    function tambah_pembelian() {
-        var status = document.getElementById("status").value;
-        var jml_beli = 1000;
-        var jml_bayar = document.getElementById("jmlBayar").value;
-
-        if (status == 'lunas') {
-            if (jml_bayar < jml_beli || jml_bayar > jml_beli) {
-                alert("Jumlah pembayaran tidak sesuai !");
-            } else {
-                alert("Sukses !");
-            }
-        } else {
-            if (jml_bayar <= 0) {
-                alert("Jumlah pembayaran harus lebih dari 0 !");
-            } else if (jml_bayar == jml_beli) {
-                alert("Status pembayaran tidak sesuai !");
-            } else {
-                // window.location.href = "{{route('pembelian.tambah')}}";
-                alert("Sukses !");
-            }
-        }
-    }
+    
 </script>
 @endsection
