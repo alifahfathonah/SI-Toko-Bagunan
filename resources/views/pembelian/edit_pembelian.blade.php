@@ -58,7 +58,7 @@
                                 <div class="col-sm-4 pr-0">
                                     <div class="form-group">
                                         <label>Supplier</label>
-                                        <select class="form-control" id="supplier" name="supplier">
+                                        <select class="form-control" id="supplier" name="supp">
                                             <option>--Pilih Supplier</option>
                                             <option value="{{$purchase->supplier_id}}" selected>{{$purchase->supplier->name}}</option>
                                         </select>
@@ -194,6 +194,7 @@
                             <div class="form-group">
                                 <label>Unit</label>
                                 <input type="text" class="form-control form-control" id="unitItem">
+                                <small class="form-text text-muted">Contoh Unit : Sak, Kg, Meter</small>
                             </div>
                         </div>
                         <div class="col-md-6 pr-0">
@@ -309,6 +310,8 @@
 
 @section('script')
 <script src="{{asset('assets/js/plugin/sweetalert/sweetalert2.all.min.js')}}"></script>
+<script src="{{asset('assets/js/alert.js')}}"></script>
+
 <script>
     $(document).ready(function() {
         var listItem = $('#daftarItem').DataTable({
@@ -338,36 +341,13 @@
 
         });
 
-        var swalLoading = function() {
-            swal.fire({
-                title: "Loading....",
-                text: "Mohon Tunggu Sebentar",
-                allowOutsideClick: false,
-                onOpen: function() {
-                    Swal.showLoading()
-                }
-            })
-        }
+        
 
-        var swalError = function(msg){
-            swal.fire({
-                text: msg,
-                icon: "error",
-                buttonsStyling: false,
-                confirmButtonText: "Ok",
-                customClass: {
-                    confirmButton: "btn font-weight-bold btn-light-primary"
-                }
-            });
-        }
-
-        var counter = 1;
+        var counter = listItem.rows().data().length + 1;
         $('#simpan').click(function() {
             dataItem = listItem.rows().data();
 
-            if (dataItem.length == 0) {
-                $('#submitPurchase').removeAttr('disabled', 'disabled');
-            }
+           
             let data = {
                 'nomor': counter,
                 'nama': $('#namaItem').val(),
@@ -384,17 +364,21 @@
             };
 
             listItem.row.add(data).draw();
-
+            $('#submitPurchase').removeAttr("disabled"); 
 
             $('#grandTotal').html(parseInt($('#grandTotal').html()) + parseInt($('#totalItem').val()));
+
+
             counter++;
+            $('#tambahModal').modal('toggle');
+            $('#simpan').attr("disabled", "disabled");
             $('#tambahItem').trigger('reset');
 
         });
 
-        $('.editDaftarItem').click(function() {
+        $('#daftarItem').on('click', '.editDaftarItem', function() {
             index = parseInt($(this).data('row')) - 1;
-            let row = listItem.row(index).data();
+            let row = $('#daftarItem').DataTable().row(index).data();
 
             $('#idItemEdit').val(index);
             $('#namaItemEdit').val(row.nama);
@@ -432,7 +416,6 @@
                 return obj;
             }, {});
             purchase['grandTotal'] = parseInt($('#grandTotal').html());
-            purchase['jmlBayar'] = parseInt($('#jmlBayar').val());
             purchase['dataItem'] = [];
 
             dataItem = listItem.rows().data();
@@ -440,21 +423,16 @@
             for (let i = 0; i < dataItem.length; i++) {
                 purchase['dataItem'].push(dataItem[i]);
             }
-            var _url = "{{route('pembelian.edit',['pembelian'=>$purchase->id])}}"
+
+
             $.ajax({
                 data: purchase,
-                url: _url,
+                url: "{!!  route('pembelian.edit',['pembelian'=>$purchase->id]) !!}",
                 type: "POST",
                 dataType: 'json',
                 success: function(data) {
                     swal.close();
-                    swal("Sukses!", "Tambah data pembelian sukses 😀", {
-                        buttons: {
-                            confirm: {
-                                className: 'btn btn-success'
-                            }
-                        },
-                    });
+                    swalSuccess('Tambah data pembelian berhasil');
                     window.location.href = "{!!route('pembelian.index')!!}";
                 },
                 error: function(data) {
@@ -466,25 +444,37 @@
         });
 
         //tampil modal konfirmasi
-        $('.hapusDaftarItem').click(function() {
+        $('#daftarItem').on('click', '.hapusDaftarItem', function() {
             $('#hapusItemId').val($(this).data('row'));
         });
 
         $('#hapusItemBtn').click(function() {
             row = parseInt($('#hapusItemId').val()) - 1;
 
-            deletedRow = listItem.row(row).data();
-
+            deletedRow = $('#daftarItem').DataTable().row(row).data();
             grandtotal = parseInt($('#grandTotal').html());
             newgrandTotal = (grandtotal - parseInt(deletedRow.totalItem));
             $('#grandTotal').html(newgrandTotal);
 
-            listItem.row(row).remove().draw();
+            $('#daftarItem').DataTable().row(row).remove().draw();
 
-            dataItem = listItem.rows().data();
+            dataItem = $('#daftarItem').DataTable().rows().data();
+            for (let index = 0; index < dataItem.length; index++) {
 
-            if (dataItem.length == 0) {
-                $('#submitPurchase').attr('disabled', 'disabled');
+                dataItem[index].nomor = index + 1;
+                dataItem[index].action = `<button class="btn btn-primary btn-border dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Aksi</button>
+                                                                <div class="dropdown-menu">
+                                                                <span class="dropdown-item editDaftarItem" data-toggle="modal" data-target="#editModal"  data-row="${index+1}">Edit</span>
+                                                                <div role="separator" class="dropdown-divider"></div>
+                                                                <span class="dropdown-item hapusDaftarItem" data-toggle="modal" data-target="#hapusModal" data-row="${index+1}">Hapus</span>
+                                                            </div>`;
+                $('#daftarItem').DataTable().row(index).data(dataItem[index]);
+
+            }
+
+            if(dataItem.length <= 0 )
+            {
+                $('#submitPurchase').attr("disabled","disabled");
             }
         });
 
@@ -500,5 +490,16 @@
             
         }
     })
+
+    $('#hargaItem').change(function() {
+        if (parseInt($(this).val()) > 0) {
+            jumlah = parseInt($('#jumlahItem').val());
+
+            totalItem = jumlah * parseInt($(this).val());
+            $('#totalItem').val(totalItem);
+
+        }
+    });
+
 </script>
 @endsection

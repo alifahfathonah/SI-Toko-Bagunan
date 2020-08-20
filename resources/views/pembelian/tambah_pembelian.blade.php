@@ -286,32 +286,12 @@
 
 @section('script')
 <script src="{{asset('assets/js/plugin/sweetalert/sweetalert2.all.min.js')}}"></script>
+<script src="{{asset('assets/js/alert.js')}}"></script>
 <script>
     $(document).ready(function() {
         document.getElementById("tglPembelian").valueAsDate = new Date()
 
-        var swalLoading = function() {
-            swal.fire({
-                title: "Loading....",
-                text: "Mohon Tunggu Sebentar",
-                allowOutsideClick: false,
-                onOpen: function() {
-                    Swal.showLoading()
-                }
-            })
-        }
-
-        var swalError = function(msg){
-            swal.fire({
-                text: msg,
-                icon: "error",
-                buttonsStyling: false,
-                confirmButtonText: "Ok",
-                customClass: {
-                    confirmButton: "btn font-weight-bold btn-light-primary"
-                }
-            });
-        }
+        
 
 
         var listItem = $('#daftarItem').DataTable({
@@ -358,11 +338,16 @@
             };
 
 
-            listItem.row.add(data).draw();
-            $('#submitPurchase').removeAttr("disabled");
+            listItem.row.add(data).draw(); //add to datatable
+            $('#submitPurchase').removeAttr("disabled"); 
 
             $('#grandTotal').html(parseInt($('#grandTotal').html()) + parseInt($('#totalItem').val()));
-            
+
+            // auto tambah jml bayar ketika status bernilai Lunas
+            if($('#status').val() == 'Lunas'){
+                $('#jmlBayar').val($('#grandTotal').html());
+            }
+
             counter++;
 
             $('#tambahModal').modal('toggle');
@@ -395,13 +380,7 @@
                 dataType: 'json',
                 success: function(data) {
                     swal.close();
-                    swal("Sukses!", "Tambah data pembelian sukses 😀", {
-                        buttons: {
-                            confirm: {
-                                className: 'btn btn-success'
-                            }
-                        },
-                    });
+                    swalSuccess('Tambah data pembelian berhasil');
                     window.location.href = "{!!route('pembelian.index')!!}";
                 },
                 error: function(data) {
@@ -502,8 +481,8 @@
                     `<option value="${item.id}" selected> ${item.name} </option>`
                 );
             });
+            swal.close();
         });
-        swal.close();
     });
 
     $('#hargaItem').change(function() {
@@ -517,7 +496,6 @@
     });
 
     $('#jmlBayar').change(function() {
-        console.log("sda");
         jumlahBayar = parseInt($(this).val());
         grandTotal = parseInt($('#grandTotal').html());
 
@@ -531,6 +509,15 @@
 
     });
 
+    $('#status').change(function() {
+        if($(this).val() == 'Lunas'){
+            $('#jmlBayar').val($('#grandTotal').html());
+        }
+        else{
+            $('#jmlBayar').val(0);
+        }
+
+    });
 
 
     
