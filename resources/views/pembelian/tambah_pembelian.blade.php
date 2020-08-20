@@ -126,7 +126,7 @@
                         </div>
                         <div class="card-footer text-right">
                             <button type="reset" class="btn btn-info">Reset</button>&nbsp;
-                            <button type="submit" class="btn btn-success" id="submitPurchase">Simpan</button>
+                            <button type="submit" class="btn btn-success" id="submitPurchase" disabled>Simpan</button>
                         </div>
                     </form>
                 </div>
@@ -191,7 +191,7 @@
             </div>
             <div class="modal-footer no-bd">
                 <button type="button" class="btn btn-danger" data-dismiss="modal">Batal</button>
-                <button type="button" class="btn btn-success" id="simpan" data-dismiss="modal">Simpan</button>
+                <button type="button" class="btn btn-success" id="simpan" data-dismiss="modal" disabled>Simpan</button>
             </div>
 
         </div>
@@ -285,21 +285,14 @@
 @endsection
 
 @section('script')
-<script src="{{asset('assets/js/plugin/sweetalert/sweetalert.min.js')}}"></script>
+<script src="{{asset('assets/js/plugin/sweetalert/sweetalert2.all.min.js')}}"></script>
+<script src="{{asset('assets/js/alert.js')}}"></script>
 <script>
     $(document).ready(function() {
         document.getElementById("tglPembelian").valueAsDate = new Date()
 
-        var swalLoading = function() {
-            swal.fire({
-                title: "Loading....",
-                text: "Mohon Tunggu Sebentar",
-                allowOutsideClick: false,
-                onOpen: function() {
-                    Swal.showLoading()
-                }
-            })
-        }
+        
+
 
         var listItem = $('#daftarItem').DataTable({
             "pageLength": 7,
@@ -345,11 +338,20 @@
             };
 
 
-            listItem.row.add(data).draw();
-
+            listItem.row.add(data).draw(); //add to datatable
+            $('#submitPurchase').removeAttr("disabled"); 
 
             $('#grandTotal').html(parseInt($('#grandTotal').html()) + parseInt($('#totalItem').val()));
+
+            // auto tambah jml bayar ketika status bernilai Lunas
+            if($('#status').val() == 'Lunas'){
+                $('#jmlBayar').val($('#grandTotal').html());
+            }
+
             counter++;
+
+            $('#tambahModal').modal('toggle');
+            $('#simpan').attr("disabled", "disabled");
             $('#tambahItem').trigger('reset');
         });
 
@@ -378,24 +380,26 @@
                 dataType: 'json',
                 success: function(data) {
                     swal.close();
-                    swal("Sukses!", "Tambah data pembelian sukses 😀", {
-                        buttons: {
-                            confirm: {
-                                className: 'btn btn-success'
-                            }
-                        },
-                    });
+                    swalSuccess('Tambah data pembelian berhasil');
                     window.location.href = "{!!route('pembelian.index')!!}";
                 },
                 error: function(data) {
-                    console.log('Error:', "error insert data");
+                    swalError('Error,tidak dapat menambah data');
 
                 }
             });
 
         });
 
-        //tampil modal konfirmasi
+        $('#namaItem').change(function(){
+            if($(this).val() == ""){
+                $('#simpan').attr("disabled", "disabled");
+            }
+            else{
+                $('#simpan').removeAttr("disabled");
+                
+            }
+        })
 
 
     });
@@ -460,6 +464,11 @@
 
         }
 
+        if(dataItem.length <= 0 )
+        {
+            $('#submitPurchase').attr("disabled","disabled");
+        }
+
 
     });
 
@@ -472,8 +481,8 @@
                     `<option value="${item.id}" selected> ${item.name} </option>`
                 );
             });
+            swal.close();
         });
-        swal.close();
     });
 
     $('#hargaItem').change(function() {
@@ -487,7 +496,6 @@
     });
 
     $('#jmlBayar').change(function() {
-        console.log("sda");
         jumlahBayar = parseInt($(this).val());
         grandTotal = parseInt($('#grandTotal').html());
 
@@ -501,29 +509,17 @@
 
     });
 
-
-
-    function tambah_pembelian() {
-        var status = document.getElementById("status").value;
-        var jml_beli = 1000;
-        var jml_bayar = document.getElementById("jmlBayar").value;
-
-        if (status == 'lunas') {
-            if (jml_bayar < jml_beli || jml_bayar > jml_beli) {
-                alert("Jumlah pembayaran tidak sesuai !");
-            } else {
-                alert("Sukses !");
-            }
-        } else {
-            if (jml_bayar <= 0) {
-                alert("Jumlah pembayaran harus lebih dari 0 !");
-            } else if (jml_bayar == jml_beli) {
-                alert("Status pembayaran tidak sesuai !");
-            } else {
-                // window.location.href = "{{route('pembelian.tambah')}}";
-                alert("Sukses !");
-            }
+    $('#status').change(function() {
+        if($(this).val() == 'Lunas'){
+            $('#jmlBayar').val($('#grandTotal').html());
         }
-    }
+        else{
+            $('#jmlBayar').val(0);
+        }
+
+    });
+
+
+    
 </script>
 @endsection

@@ -1,5 +1,5 @@
 @extends('layout.main')
-@section('title', 'Edit Pembelian')
+@section('title', 'Detail Pembelian')
 
 
 @section('contain')
@@ -24,7 +24,7 @@
                     <i class="flaticon-right-arrow"></i>
                 </li>
                 <li class="nav-item">
-                    <a href="#">Edit Pembelian</a>
+                    <a href="#">Detail Pembelian</a>
                 </li>
             </ul>
         </div>
@@ -33,7 +33,7 @@
                 <div class="card">
                     <div class="card-header">
                         <div class="d-flex align-items-center">
-                            <h4 class="card-title">Edit Pembelian</h4>
+                            <h4 class="card-title">Detail Pembelian</h4>
                         </div>
                     </div>
                     <form id="purchaseForm" method="POST">
@@ -290,7 +290,7 @@
 @endsection
 
 @section('script')
-<script src="{{asset('assets/js/plugin/sweetalert/sweetalert.min.js')}}"></script>
+<script src="{{asset('assets/js/plugin/sweetalert/sweetalert2.all.min.js')}}"></script>
 <script>
     $(document).ready(function() {
         var listItem = $('#daftarItem').DataTable({
