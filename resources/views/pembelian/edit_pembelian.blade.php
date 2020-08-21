@@ -41,7 +41,7 @@
                         @method('PUT')
                         <div class="card-body">
                             <div class="row">
-                                <div class="col-sm-4 pr-0">
+                                <div class="col-sm-6 pr-0">
                                     <div class="form-group">
                                         <label>Nomor Refrensi</label>
                                         <input type="text" class="form-control form-control" name="nomorRefrensi" value="{{$purchase->reference_no}}" disabled>
@@ -49,13 +49,13 @@
                                 </div>
                             </div>
                             <div class="row">
-                                <div class="col-sm-4 pr-0">
+                                <div class="col-sm-6 pr-0">
                                     <div class="form-group">
                                         <label>Tanggal</label>
                                         <input type="date" class="form-control form-control" id="tglPembelian" name="tglPembelian" value="{{$purchase->purchase_date}}">
                                     </div>
                                 </div>
-                                <div class="col-sm-4 pr-0">
+                                <div class="col-sm-6 pr-0">
                                     <div class="form-group">
                                         <label>Supplier</label>
                                         <select class="form-control" id="supplier" name="supplier">
@@ -64,18 +64,9 @@
                                         </select>
                                     </div>
                                 </div>
-                                <div class="col-sm-4">
-                                    <div class="form-group">
-                                        <label>Sales</label>
-                                        <select class="form-control" id="sales" name="sales">
-                                            <option>--Pilih Sales--</option>
-                                            <option value="{{$purchase->sales_id}}" selected>{{$purchase->sales->name}}</option>
-                                        </select>
-                                    </div>
-                                </div>
                             </div>
                             <div class="row">
-                                <div class="col-sm-4 pr-0">
+                                <div class="col-sm-6 pr-0">
                                     <div class="form-group">
                                         <label>Status Pembayaran</label>
                                         <select class="form-control" id="status" name="paymentStatus">
@@ -85,7 +76,7 @@
                                         </select>
                                     </div>
                                 </div>
-                                <div class="col-sm-4 pr-0">
+                                <div class="col-sm-6 pr-0">
                                     <div class="form-group">
                                         <label>Jumlah yang telah dibayarkan</label>
                                         <input type="number" class="form-control form-control" id="jmlBayar" name="jmlBayar" value="{{$purchase->paid_amount}}" disabled>

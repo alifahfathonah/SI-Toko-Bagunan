@@ -40,13 +40,13 @@
                         @csrf
                         <div class="card-body">
                             <div class="row">
-                                <div class="col-sm-4 pr-0">
+                                <div class="col-sm-6 pr-0">
                                     <div class="form-group">
                                         <label>Tanggal</label>
                                         <input type="date" class="form-control form-control" id="tglPembelian" name="tglPembelian">
                                     </div>
                                 </div>
-                                <div class="col-sm-4 pr-0">
+                                <div class="col-sm-6 pr-0">
                                     <div class="form-group">
                                         <label>Supplier</label>
                                         <select class="form-control" id="supp" name="supp">
@@ -58,18 +58,9 @@
 
                                     </div>
                                 </div>
-                                <div class="col-sm-4">
-                                    <div class="form-group">
-                                        <label>Sales</label>
-                                        <select class="form-control" id="sales" name="sales">
-                                            <option selected disabled>--Pilih Sales--</option>
-
-                                        </select>
-                                    </div>
-                                </div>
                             </div>
                             <div class="row">
-                                <div class="col-sm-4 pr-0">
+                                <div class="col-sm-6 pr-0">
                                     <div class="form-group">
                                         <label>Status Pembayaran</label>
                                         <select class="form-control" id="status" name="paymentStatus">
@@ -79,7 +70,7 @@
                                         </select>
                                     </div>
                                 </div>
-                                <div class="col-sm-4 pr-0">
+                                <div class="col-sm-6 pr-0">
                                     <div class="form-group">
                                         <label>Jumlah yang Dibayarkan</label>
                                         <input type="number" class="form-control form-control" id="jmlBayar" name="jmlBayar" value="0">
@@ -466,13 +457,6 @@
     $('#supp').on('change', function() {
         swalLoading();
         var value = $(this).val();
-        $.get(`/supplier/${value}/sales`, function(data) {
-            data.forEach(function(item) {
-                $('#sales').append(
-                    `<option value="${item.id}" selected> ${item.name} </option>`
-                );
-            });
-        });
         swal.close();
     });
 

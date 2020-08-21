@@ -47,7 +47,6 @@
                                     <tr>
                                         <th>Tanggal</th>
                                         <th>Supplier</th>
-                                        <th>Sales</th>
                                         <th>No. Referensi</th>
                                         <th>Total</th>
                                         <th>Status Pembelian</th>
@@ -60,7 +59,6 @@
                                     <tr>
                                         <td>{{$purchase->purchase_date}}</td>
                                         <td>{{$purchase->supplier->name}}</td>
-                                        <td>{{$purchase->sales->name}}</td>
                                         <td>{{$purchase->reference_no}}</td>
                                         <td>{{currency($purchase->total)}}</td>
                                         <td>{!!badge($purchase->purchase_status)!!}</td>
