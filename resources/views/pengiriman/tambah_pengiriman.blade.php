@@ -95,7 +95,9 @@
                                                 <td>{{$loop->iteration}}</td>
                                                 <td>{{$penjualan->product->nama_produk}}</td>
                                                 <td>{{$penjualan->quantity}}</td>
-                                                <td><input type="number" class="form-control form-control" id="jmlDikirim" name="jmlDikirim"></input></td>
+                                                <td><input type="number" class="form-control form-control jmlDikirim" name="jmlDikirim[]"></input>
+                                                    <input type="hidden" name="idItem[]" value="{{$penjualan->id}}"></td>
+                                                <!-- <td></td> -->
                                             </tr>
                                             @endforeach
                                         </tbody>
@@ -116,57 +118,77 @@
 @endsection
 
 @section('script')
+<script src="{{asset('assets/js/plugin/sweetalert/sweetalert2.all.min.js')}}"></script>
+<script src="{{asset('assets/js/alert.js')}}"></script>
 <script>
     $(document).ready(function() {
 
-        $('#daftarItemPenjualan').DataTable({
-            "pageLength": 5,
+        // $('#daftarItemPenjualan').DataTable({
+        //     "pageLength": 5,
+        // });
+
+        var listItem = $('#daftarItemPenjualan').DataTable({
+            "pageLength": 4,
+            "columns": [{
+                    "data": "nomor"
+                },
+                {
+                    "data": "namaItem"
+                },
+                {
+                    "data": "jumlahDibeli"
+                },
+                {
+                    "data": "jumlahDikirim"
+                }
+            ]
+
         });
 
-        $('#submitShipping').click(function() {
-            // event.preventDefault();
+        $('#submitShipping').click(function(e) {
+
+            e.preventDefault();
+            swalLoading();
 
             var shipping = $('#shippingForm').serializeArray().reduce(function(obj, item) {
                 obj[item.name] = item.value;
                 return obj;
             }, {});
 
-            shipping['dataItem'] = [];
-
-            var getTable = document.getElementById('daftarItemPenjualan');
-            for (let i = 1; i < getTable.rows.length; i++) {
-                var oCells = getTable.rows.item(i).cells;
-
-                for (let j = 1; j < oCells.lengt - 1; j++) {
-                    var cellVal = oCells.item(j).innerHTML;
-                    // alert(cellVal);
-                    shipping['dataItem'].push(cellVal);
-                }
-                shipping['dataItem'].push($("#jmlDikirim").val());
-            }
+            console.log(shipping);
+            // var getTable = document.getElementById('daftarItemPenjualan');
+            // var listItem = [];
+            // for (let i = 1; i < getTable.rows.length; i++) {
+            //     var oCells = getTable.rows.item(i).cells;
+            //     for (let j = 1; j < oCells.length - 1; j++) {
+            //         var cellVal = oCells.item(j).innerHTML;
+            //         alert(cellVal);
+            //     }
+            //     alert($("#jmlDikirim").val());
+            // }
 
             // dataItem = listItem.rows().data();
 
             // for (let i = 1; i < dataItem.length - 1; i++) {
             //     shipping['dataItem'].push(dataItem[i]);
-            //     shipping['dataItem'].push($("#jmlDikirim").val());
+            //     // shipping['dataItem'].push($("#jmlDikirim").val());
             // }
 
             $.ajax({
                 data: shipping,
-                url: "{{route('pengiriman.tambah')}}",
+                url: "{{!!route('pengiriman.tambah')!!}}",
                 type: "POST",
                 dataType: 'json',
                 success: function(data) {
-                    // swal.close();
-                    // swal("Sukses!", "Tambah data pembelian sukses 😀", {
-                    //     buttons: {
-                    //         confirm: {
-                    //             className: 'btn btn-success'
-                    //         }
-                    //     },
-                    // });
-                    window.location.href = "{{route('pengiriman.index')}}";
+                    swal.close();
+                    swal("Sukses!", "Tambah data pembelian sukses 😀", {
+                        buttons: {
+                            confirm: {
+                                className: 'btn btn-success'
+                            }
+                        },
+                    });
+                    window.location.href = "{{!!route('pengiriman.index')!!}}";
                 },
                 error: function(data) {
                     console.log('Error:', "error insert data");
@@ -174,17 +196,6 @@
                 }
             });
 
-            // var getTable = document.getElementById('daftarItemPenjualan');
-            // var listItem = [];
-            // for (let i = 1; i < getTable.rows.length; i++) {
-            //     var oCells = getTable.rows.item(i).cells;
-
-            //     for (let j = 1; j < oCells.lengt - 1; j++) {
-            //         var cellVal = oCells.item(j).innerHTML;
-            //         alert(cellVal);
-            //     }
-            //     alert($("#jmlDikirim").val());
-            // }
         });
     });
 </script>

@@ -44,6 +44,7 @@ class ShippingController extends Controller
 
     public function store(Request $request)
     {
+
         // $data = [
         //     'penjualan_id' => $request->input('id_penjualan'),
         //     'driver_id'   => $request->input('driver'),

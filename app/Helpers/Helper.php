@@ -35,6 +35,9 @@ function badge($status){
     else if(strtolower($status) == 'proses' || strtolower($status) == 'sebagian'){
         return '<span class="badge badge-warning">'.strtoupper($status).'</span>';
     }
+    else if(strtolower($status) == 'belum'){
+        return '<span class="badge badge-danger">'.strtoupper($status).'</span>';
+    }
 
 }
 

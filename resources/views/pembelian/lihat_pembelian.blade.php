@@ -1,5 +1,5 @@
 @extends('layout.main')
-@section('title', 'Edit Pembelian')
+@section('title', 'Detail Pembelian')
 
 
 @section('contain')
@@ -40,7 +40,7 @@
                         @csrf
                         <div class="card-body">
                             <div class="row">
-                                <div class="col-sm-6 pr-0">
+                                <div class="col-sm-5 pr-0">
                                     <div class="form-group">
                                         <label>Nomor Refrensi</label>
                                         <input type="text" class="form-control form-control" name="nomorRefrensi" value="{{$purchase->reference_no}}" disabled>
@@ -48,13 +48,13 @@
                                 </div>
                             </div>
                             <div class="row">
-                                <div class="col-sm-6 pr-0">
+                                <div class="col-sm-5 pr-0">
                                     <div class="form-group">
                                         <label>Tanggal</label>
                                         <input type="date" class="form-control form-control" id="tglPembelian" name="tglPembelian" value="{{$purchase->purchase_date}}" disabled>
                                     </div>
                                 </div>
-                                <div class="col-sm-6 pr-0">
+                                <div class="col-sm-5 pr-0">
                                     <div class="form-group">
                                         <label>Supplier</label>
                                         <select class="form-control" id="supplier" name="supplier" disabled>
@@ -65,7 +65,7 @@
                                 </div>
                             </div>
                             <div class="row">
-                                <div class="col-sm-6 pr-0">
+                                <div class="col-sm-5 pr-0">
                                     <div class="form-group">
                                         <label>Status Pembayaran</label>
                                         <select class="form-control" id="status" name="paymentStatus" disabled>
@@ -75,7 +75,7 @@
                                         </select>
                                     </div>
                                 </div>
-                                <div class="col-sm-6 pr-0">
+                                <div class="col-sm-5 pr-0">
                                     <div class="form-group">
                                         <label>Jumlah yang Dibayarkan</label>
                                         <input type="number" class="form-control form-control" id="jmlBayar" name="jmlBayar" value="{{$purchase->paid_amount}}" disabled>
@@ -280,7 +280,7 @@
 @endsection
 
 @section('script')
-<script src="{{asset('assets/js/plugin/sweetalert/sweetalert.min.js')}}"></script>
+<script src="{{asset('assets/js/plugin/sweetalert/sweetalert2.all.min.js')}}"></script>
 <script>
     $(document).ready(function() {
         var listItem = $('#daftarItem').DataTable({

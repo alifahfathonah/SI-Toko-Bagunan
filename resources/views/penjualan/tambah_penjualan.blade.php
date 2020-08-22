@@ -1,5 +1,5 @@
 @extends('layout.main')
-@section('title', 'Tambah Pembelian')
+@section('title', 'Tambah Penjualan')
 
 
 @section('contain')
@@ -18,13 +18,13 @@
                     <i class="flaticon-right-arrow"></i>
                 </li>
                 <li class="nav-item">
-                    <a href="{{route('pembelian.index')}}">Pembelian</a>
+                    <a href="{{route('penjualan.index')}}">Penjualan</a>
                 </li>
                 <li class="separator">
                     <i class="flaticon-right-arrow"></i>
                 </li>
                 <li class="nav-item">
-                    <a href="#">Tambah Pembelian</a>
+                    <a href="#">Tambah Penjualan</a>
                 </li>
             </ul>
         </div>
@@ -33,40 +33,31 @@
                 <div class="card">
                     <div class="card-header">
                         <div class="d-flex align-items-center">
-                            <h4 class="card-title">Tambah Pembelian</h4>
+                            <h4 class="card-title">Tambah Penjualan</h4>
                         </div>
                     </div>
                     <form id="purchaseForm" method="POST">
                         @csrf
                         <div class="card-body">
                             <div class="row">
-                                <div class="col-sm-4 pr-0">
+                                <div class="col-sm-5 pr-0">
                                     <div class="form-group">
                                         <label>Tanggal</label>
                                         <input type="date" class="form-control form-control" id="tglPembelian" name="tglPembelian">
                                     </div>
                                 </div>
-                                <div class="col-sm-4 pr-0">
+                                <div class="col-sm-5 pr-0">
                                     <div class="form-group">
                                         <label>Supplier</label>
                                         <select class="form-control" id="supp" name="supp">
-                                           
-                                        </select>
-
-                                    </div>
-                                </div>
-                                <div class="col-sm-4">
-                                    <div class="form-group">
-                                        <label>Sales</label>
-                                        <select class="form-control" id="sales" name="sales">
-                                            <option selected disabled>--Pilih Sales--</option>
 
                                         </select>
+
                                     </div>
                                 </div>
                             </div>
                             <div class="row">
-                                <div class="col-sm-4 pr-0">
+                                <div class="col-sm-5 pr-0">
                                     <div class="form-group">
                                         <label>Status Pembayaran</label>
                                         <select class="form-control" id="status" name="paymentStatus">
@@ -76,7 +67,7 @@
                                         </select>
                                     </div>
                                 </div>
-                                <div class="col-sm-4 pr-0">
+                                <div class="col-sm-5 pr-0">
                                     <div class="form-group">
                                         <label>Jumlah yang Dibayarkan</label>
                                         <input type="number" class="form-control form-control" id="jmlBayar" name="jmlBayar" value="0">

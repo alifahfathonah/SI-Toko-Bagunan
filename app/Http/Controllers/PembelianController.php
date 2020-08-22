@@ -134,7 +134,6 @@ class PembelianController extends Controller
         // $purchase->sales_id       = $request->input('sales');
         $purchase->total          = $request->input('grandTotal');
         $purchase->payment_status = $request->input('paymentStatus');
-        $purchase->paid_amount    = $request->input('jmlBayar');
         $purchase->purchase_status = $request->input('grandTotal') - $request->input('jmlBayar') <= 0 ? "selesai" : "proses";
         $purchase->save();
 
@@ -170,6 +169,11 @@ class PembelianController extends Controller
     public function destroy($id)
     {
         //
+        $purchase = Purchase::find($id);
+
+        $purchase->delete();
+
+        return redirect()->route('pembelian.index');
     }
 
     public function payment_show($id)

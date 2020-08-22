@@ -16,9 +16,9 @@ class CreatePaymentsTable extends Migration
         Schema::create('payments', function (Blueprint $table) {
             $table->id();
             $table->date('payment_date');
-            $table->foreignID('purchase_id')->references('id')->on('purchases');
+            $table->foreignID('purchase_id')->references('id')->on('purchases')->onDelete('cascade');
             $table->string('reference_no')->nullable();
-            $table->decimal('amount',25,2);
+            $table->decimal('amount', 25, 2);
             $table->timestamps();
             $table->softDeletes('deleted_at', 0);
         });

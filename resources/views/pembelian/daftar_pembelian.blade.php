@@ -74,7 +74,7 @@
                                                 <div role="separator" class="dropdown-divider"></div>
                                                 <a class="dropdown-item" href="{{route('pembayaran.list', $purchase->id)}}">Detail Pembayaran</a>
                                                 <div role="separator" class="dropdown-divider"></div>
-                                                <a class="dropdown-item" data-toggle="modal" data-target="#hapusModal">Hapus</a>
+                                                <a class="dropdown-item" data-toggle="modal" data-target="#hapusModal{{$purchase->id}}">Hapus</a>
                                             </div>
                                         </td>
                                     </tr>
@@ -204,7 +204,8 @@
 </div>
 
 <!-- Hapus Modal -->
-<div class="modal fade" id="hapusModal" tabindex="-1" role="dialog" aria-hidden="true">
+@foreach ($purchases as $purchase)
+<div class="modal fade" id="hapusModal{{$purchase->id}}" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header no-bd">
@@ -216,9 +217,11 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <form action="{{url('pembelian/destroy')}}">
+            <form action="{{route('pembelian.hapus', $purchase->id)}}" method="POST">
+                @method ('DELETE')
+                @csrf
                 <div class="modal-body">
-                    <p>Yakin untuk menghapus data dengan nomor referensi . . . . . ?</p>
+                    <p>Yakin untuk menghapus data dengan nomor {{$purchase->reference_no}}?</p>
                 </div>
                 <div class="modal-footer no-bd">
                     <button type="button" class="btn btn-danger" data-dismiss="modal">Batal</button>
@@ -228,6 +231,7 @@
         </div>
     </div>
 </div>
+@endforeach
 @endsection
 
 @section('script')
