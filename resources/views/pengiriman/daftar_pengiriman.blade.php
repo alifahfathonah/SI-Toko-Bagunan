@@ -60,9 +60,9 @@
                                         <td>
                                             <button class="btn btn-primary btn-border dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Aksi</button>
                                             <div class="dropdown-menu">
-                                                <a class="dropdown-item" href="{{url('/pengiriman/cetak_invoice', $shipping->id)}}">Cetak Surat Jalan</a>
+                                                <a class="dropdown-item" href="{{route('cetak.invoice', $shipping->id)}}">Cetak Surat Jalan</a>
                                                 <div role="separator" class="dropdown-divider"></div>
-                                                <a class="dropdown-item" href="{{url('/pengiriman/cetak_invoice')}}">Edit</a>
+                                                <a class="dropdown-item" href="">Edit</a>
                                                 <div role="separator" class="dropdown-divider"></div>
                                                 <a class="dropdown-item" data-toggle="modal" data-target="#">Hapus</a>
                                             </div>
@@ -85,7 +85,7 @@
 <script>
     $(document).ready(function() {
         $('#daftarPengiriman').DataTable({
-            "pageLength": 5,
+            "pageLength": 10,
         });
     });
 </script>

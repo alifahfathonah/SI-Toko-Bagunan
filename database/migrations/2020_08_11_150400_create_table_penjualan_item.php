@@ -15,11 +15,11 @@ class CreateTablePenjualanItem extends Migration
     {
         Schema::create('penjualan_item', function (Blueprint $table) {
             $table->id();
-            $table->foreignID('penjualan_id')->references('id')->on('penjualan');
+            $table->foreignID('penjualan_id')->references('id')->on('penjualan')->onDelete('cascade');
             $table->foreignID('product_id')->references('id')->on('products');
             $table->integer('quantity');
             $table->string('unit_id')->references('id')->on('units');
-            $table->decimal('unit_price',25,2)->default(0.00);
+            $table->decimal('unit_price', 25, 2)->default(0.00);
             $table->integer('total');
             $table->integer('quantity_delivering')->default(0);
             $table->integer('quantity_delivered')->default(0);

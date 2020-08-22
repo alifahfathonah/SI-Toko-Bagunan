@@ -121,7 +121,7 @@
 <script>
     $(document).ready(function() {
         $('#daftarSupplier').DataTable({
-            "pageLength": 5,
+            "pageLength": 10,
         });
     });
 </script>

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Penjualan;
 
 class PenjualanController extends Controller
 {
@@ -14,6 +15,9 @@ class PenjualanController extends Controller
     public function index()
     {
         //
+        $penjualan_list = Penjualan::all();
+
+        return view('penjualan/daftar_penjualan', compact('penjualan_list'));
     }
 
     /**
@@ -80,5 +84,10 @@ class PenjualanController extends Controller
     public function destroy($id)
     {
         //
+        $penjualan = Penjualan::find($id);
+
+        $penjualan->delete();
+
+        return redirect()->route('penjualan.index');
     }
 }

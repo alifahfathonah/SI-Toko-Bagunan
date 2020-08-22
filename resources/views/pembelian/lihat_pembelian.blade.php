@@ -284,7 +284,7 @@
 <script>
     $(document).ready(function() {
         var listItem = $('#daftarItem').DataTable({
-            "pageLength": 7,
+            "pageLength": 10,
             "columns": [{
                     "data": "nomor"
                 },

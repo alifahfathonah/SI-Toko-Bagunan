@@ -239,7 +239,7 @@
     $(document).ready(function() {
         document.getElementById("tglPembayaran").valueAsDate = new Date()
         $('#daftarPembelian').DataTable({
-            "pageLength": 5,
+            "pageLength": 10,
             "order": [
                 [0, "desc"]
             ]
