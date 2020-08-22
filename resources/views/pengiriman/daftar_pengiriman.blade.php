@@ -34,10 +34,6 @@
                     <div class="card-header">
                         <div class="d-flex align-items-center">
                             <h4 class="card-title">Daftar Pengiriman</h4>
-                            <!-- <a class="btn btn-primary btn-round ml-auto" href="{{route('driver.form.tambah')}}">
-                                <i class="fa fa-plus"></i>
-                                Tambah
-                            </a> -->
                         </div>
                     </div>
                     <div class="card-body">
@@ -46,25 +42,33 @@
                                 <thead>
                                     <tr>
                                         <th>No.</th>
-                                        <th>Nama</th>
-                                        <th>Telephone</th>
+                                        <th>Tanggal</th>
+                                        <th>Nama Pembeli</th>
+                                        <th>Supir</th>
+                                        <th>Status</th>
                                         <th style="width: 10%">Aksi</th>
                                     </tr>
                                 </thead>
                                 <tbody>
+                                    @foreach($shippings as $shipping)
                                     <tr>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
+                                        <td>{{$loop->iteration}}</td>
+                                        <td>{{$shipping->tanggal_pengiriman}}</td>
+                                        <td>{{$shipping->penjualan->nama_pembeli}}</td>
+                                        <td>{{$shipping->driver->name}}</td>
+                                        <td>{{$shipping->status}}</td>
                                         <td>
                                             <button class="btn btn-primary btn-border dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Aksi</button>
                                             <div class="dropdown-menu">
-                                                <a class="dropdown-item" href="{{url('/pengiriman/cetak_invoice')}}">Cetak Surat Jalan</a>
+                                                <a class="dropdown-item" href="{{url('/pengiriman/cetak_invoice', $shipping->id)}}">Cetak Surat Jalan</a>
+                                                <div role="separator" class="dropdown-divider"></div>
+                                                <a class="dropdown-item" href="{{url('/pengiriman/cetak_invoice')}}">Edit</a>
                                                 <div role="separator" class="dropdown-divider"></div>
                                                 <a class="dropdown-item" data-toggle="modal" data-target="#">Hapus</a>
                                             </div>
                                         </td>
                                     </tr>
+                                    @endforeach
                                 </tbody>
                             </table>
                         </div>

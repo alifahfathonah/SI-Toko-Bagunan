@@ -19,7 +19,7 @@ class CreatePaymentsTable extends Migration
             $table->foreignID('purchase_id')->nullable();
             $table->foreignID('sale_id')->nullable();
             $table->string('reference_no')->nullable();
-            $table->decimal('amount',25,2);
+            $table->decimal('amount', 25, 2);
             $table->timestamps();
             $table->softDeletes('deleted_at', 0);
         });

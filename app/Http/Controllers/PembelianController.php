@@ -55,7 +55,7 @@ class PembelianController extends Controller
         $data = [
             'purchase_date' => $request->input('tglPembelian'),
             'supplier_id'   => $request->input('supp'),
-            'sales_id'      => $request->input('sales'),
+            // 'sales_id'      => $request->input('sales'),
             'total'         => $request->input('grandTotal'),
             'payment_status' => $request->input('paymentStatus'),
             'paid_amount'    => $request->input('jmlBayar'),
@@ -131,10 +131,9 @@ class PembelianController extends Controller
         $purchase = Purchase::find($id);
         $purchase->purchase_date  = $request->input('tglPembelian');
         $purchase->supplier_id    = $request->input('supp');
-        $purchase->sales_id       = $request->input('sales');
+        // $purchase->sales_id       = $request->input('sales');
         $purchase->total          = $request->input('grandTotal');
         $purchase->payment_status = $request->input('paymentStatus');
-        $purchase->paid_amount    = $request->input('jmlBayar');
         $purchase->purchase_status = $request->input('grandTotal') - $request->input('jmlBayar') <= 0 ? "selesai" : "proses";
         $purchase->save();
 
@@ -170,6 +169,11 @@ class PembelianController extends Controller
     public function destroy($id)
     {
         //
+        $purchase = Purchase::find($id);
+
+        $purchase->delete();
+
+        return redirect()->route('pembelian.index');
     }
 
     public function payment_show($id)

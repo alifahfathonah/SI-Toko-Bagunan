@@ -83,8 +83,17 @@ Route::resource('driver', 'DriverController')->names([
     'destroy' => 'driver.hapus'
 ]);
 
-Route::get('/pengiriman/daftar', 'ShippingController@index');
-Route::get('/pengiriman/cetak_invoice', 'ShippingController@cetak_invoice');
+Route::resource('pengiriman', 'ShippingController')->names([
+    'index' => 'pengiriman.index',
+    'create' => 'pengiriman.form.tambah',
+    'store' => 'pengiriman.tambah',
+    'destroy' => 'pengiriman.hapus',
+    'edit'    => 'pengiriman.form.edit',
+    'update'  => 'pengiriman.edit',
+]);
+
+Route::get('/pengiriman/cetak_invoice/{id}', 'ShippingController@cetak_invoice');
+Route::get('/pengiriman/{id}/create', 'ShippingController@create');
 
 Route::resource('penjualan', 'PenjualanController')->names([
     'index'  => 'penjualan.index',
@@ -95,4 +104,3 @@ Route::resource('penjualan', 'PenjualanController')->names([
     'update' => 'penjualan.update',
     'destroy' => 'penjualan.hapus'
 ]);
-

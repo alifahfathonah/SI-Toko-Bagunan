@@ -40,7 +40,7 @@
                         @csrf
                         <div class="card-body">
                             <div class="row">
-                                <div class="col-sm-4 pr-0">
+                                <div class="col-sm-5 pr-0">
                                     <div class="form-group">
                                         <label>Nomor Refrensi</label>
                                         <input type="text" class="form-control form-control" name="nomorRefrensi" value="{{$purchase->reference_no}}" disabled>
@@ -48,13 +48,13 @@
                                 </div>
                             </div>
                             <div class="row">
-                                <div class="col-sm-4 pr-0">
+                                <div class="col-sm-5 pr-0">
                                     <div class="form-group">
                                         <label>Tanggal</label>
                                         <input type="date" class="form-control form-control" id="tglPembelian" name="tglPembelian" value="{{$purchase->purchase_date}}" disabled>
                                     </div>
                                 </div>
-                                <div class="col-sm-4 pr-0">
+                                <div class="col-sm-5 pr-0">
                                     <div class="form-group">
                                         <label>Supplier</label>
                                         <select class="form-control" id="supplier" name="supplier" disabled>
@@ -63,18 +63,9 @@
                                         </select>
                                     </div>
                                 </div>
-                                <div class="col-sm-4">
-                                    <div class="form-group">
-                                        <label>Sales</label>
-                                        <select class="form-control" id="sales" name="sales" disabled>
-                                            <option>--Pilih Sales--</option>
-                                            <option value="{{$purchase->sales_id}}" selected>{{$purchase->sales->name}}</option>
-                                        </select>
-                                    </div>
-                                </div>
                             </div>
                             <div class="row">
-                                <div class="col-sm-4 pr-0">
+                                <div class="col-sm-5 pr-0">
                                     <div class="form-group">
                                         <label>Status Pembayaran</label>
                                         <select class="form-control" id="status" name="paymentStatus" disabled>
@@ -84,7 +75,7 @@
                                         </select>
                                     </div>
                                 </div>
-                                <div class="col-sm-4 pr-0">
+                                <div class="col-sm-5 pr-0">
                                     <div class="form-group">
                                         <label>Jumlah yang Dibayarkan</label>
                                         <input type="number" class="form-control form-control" id="jmlBayar" name="jmlBayar" value="{{$purchase->paid_amount}}" disabled>
@@ -95,7 +86,6 @@
                                 <div class="card-header">
                                     <div class="d-flex align-items-center">
                                         <a href="{{route('pembayaran.list', $purchase->id)}}" class="btn btn-primary btn-round ml-auto">Lihat Daftar Pembayaran</a>
-
                                     </div>
                                 </div>
                                 <div class="card-body">
@@ -290,7 +280,7 @@
 @endsection
 
 @section('script')
-<script src="{{asset('assets/js/plugin/sweetalert/sweetalert.min.js')}}"></script>
+<script src="{{asset('assets/js/plugin/sweetalert/sweetalert2.all.min.js')}}"></script>
 <script>
     $(document).ready(function() {
         var listItem = $('#daftarItem').DataTable({
