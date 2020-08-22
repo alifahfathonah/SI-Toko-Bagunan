@@ -25,9 +25,7 @@ class ShippingController extends Controller
         $shipping = Shipping::find($id);
         $shippingItem = PengirimanItem::where('pengiriman_id', $id)->get();
 
-        // echo ('<pre>');
-        // var_dump($shippingItem->PenjualanItem->unit->name_unit);
-        // echo ('</pre>');
+        
 
         return view('pengiriman/cetak_invoice', compact('shipping', 'shippingItem'));
     }
@@ -45,29 +43,30 @@ class ShippingController extends Controller
     public function store(Request $request)
     {
 
-        // $data = [
-        //     'penjualan_id' => $request->input('id_penjualan'),
-        //     'driver_id'   => $request->input('driver'),
-        //     'tanggal_pengiriman'      => $request->input('tglPengiriman'),
-        //     'status'         => '01',
-        //     'prioritas' => '02',
-        // ];
+        
+        $data = [
+            'penjualan_id'            => $request->input('id_penjualan'),
+            'driver_id'               => $request->input('driver'),
+            'tanggal_pengiriman'      => $request->input('tglPengiriman'),
+            'prioritas'               => '02',
+        ];
 
-        // $shipping = Shipping::create($data);
+        $idItem = $request->input('idItem');
+        $qtySend = $request->input('jmlDikirim');
+        
+        $shipping = Shipping::create($data);
+        $shippingItem = [];
+        
+        foreach ( $idItem as $i => $item) {
+            $shippingItem[] = [
+                "pengiriman_id"      => $shipping->id,
+                "penjualan_item_id"  => $item,
+                "quantity"           => $qtySend[$i],
+            ];
+        }
 
-        // $items = $request->input('dataItem');
-        // $shippingItem = [];
+        PengirimanItem::insert($shippingItem);
 
-        // foreach ($items as $item) {
-        //     $shippingItem[] = [
-        //         "pengiriman_id"   => $shipping->id,
-        //         "penjualan_item_id"  => '1',
-        //         "quantity"      => '40',
-        //     ];
-        // }
-
-        // PengirimanItem::insert($shippingItem);
-
-        // return json_encode("insert success");
+        return json_encode("insert success");
     }
 }
