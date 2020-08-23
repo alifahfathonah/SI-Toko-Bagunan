@@ -7,7 +7,7 @@
 <div class="content">
     <div class="page-inner">
         <div class="page-header">
-            <h4 class="page-title">Pembelian</h4>
+            <h4 class="page-title">Penjualan</h4>
             <ul class="breadcrumbs">
                 <li class="nav-home">
                     <a href="{{route('home')}}">
@@ -18,7 +18,7 @@
                     <i class="flaticon-right-arrow"></i>
                 </li>
                 <li class="nav-item">
-                    <a href="{{route('pembelian.index')}}">Pembelian</a>
+                    <a href="{{route('penjualan.index')}}">Penjualan</a>
                 </li>
                 <li class="separator">
                     <i class="flaticon-right-arrow"></i>
@@ -47,8 +47,6 @@
                                     <tr>
                                         <th>No.</th>
                                         <th>Tanggal</th>
-                                        <th>Nama Sales</th>
-                                        <th>Telephone</th>
                                         <th>Jumlah</th>
                                         <th style="width: 10%">Aksi</th>
                                     </tr>
@@ -58,13 +56,11 @@
                                     <tr>
                                         <td>{{$loop->iteration}}</td>
                                         <td>{{$payment->payment_date}}</td>
-                                        <td>{{$payment->sales_name}}</td>
-                                        <td>{{$payment->sales_phone}}</td>
                                         <td>{{number_format($payment->amount, 2)}}</td>
                                         <td>
                                             <button class="btn btn-primary btn-border dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Aksi</button>
                                             <div class="dropdown-menu">
-                                                <a class="dropdown-item" href="{{route('pembayaran.edit', ['id' => $payment->id, 'purchase_id' => $payment->purchase_id])}}">Edit</a>
+                                                <a class="dropdown-item" href="{{route('pembayaransale.edit', ['id' => $payment->id, 'sale_id' => $payment->sale_id])}}">Edit</a>
                                                 <div role="separator" class="dropdown-divider"></div>
                                                 <a class="dropdown-item" data-toggle="modal" data-target="#hapusModal{{$payment->id}}">Hapus</a>
                                             </div>
@@ -98,7 +94,7 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <form action="{{route('pembayaran.destroy', $payment->id)}}" method="GET">
+            <form action="{{route('pembayaransale.destroy', $payment->id)}}" method="GET">
                 {{ method_field('PUT') }}
                 @csrf
                 <div class="modal-body">

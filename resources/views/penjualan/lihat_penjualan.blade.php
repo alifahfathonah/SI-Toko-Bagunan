@@ -1,5 +1,5 @@
 @extends('layout.main')
-@section('title', 'Detail Pembelian')
+@section('title', 'Detail Penjualan')
 
 
 @section('contain')
@@ -7,7 +7,7 @@
 <div class="content">
     <div class="page-inner">
         <div class="page-header">
-            <h4 class="page-title">Pembelian</h4>
+            <h4 class="page-title">Penjualan</h4>
             <ul class="breadcrumbs">
                 <li class="nav-home">
                     <a href="{{route('home')}}">
@@ -18,13 +18,13 @@
                     <i class="flaticon-right-arrow"></i>
                 </li>
                 <li class="nav-item">
-                    <a href="{{route('pembelian.index')}}">Pembelian</a>
+                    <a href="{{route('penjualan.index')}}">Penjualan</a>
                 </li>
                 <li class="separator">
                     <i class="flaticon-right-arrow"></i>
                 </li>
                 <li class="nav-item">
-                    <a href="#">Detail Pembelian</a>
+                    <a href="#">Detail Penjualan</a>
                 </li>
             </ul>
         </div>
@@ -33,7 +33,7 @@
                 <div class="card">
                     <div class="card-header">
                         <div class="d-flex align-items-center">
-                            <h4 class="card-title">Detail Pembelian</h4>
+                            <h4 class="card-title">Detail Penjualan</h4>
                         </div>
                     </div>
                     <form id="purchaseForm" method="POST">
@@ -43,24 +43,27 @@
                                 <div class="col-sm-5 pr-0">
                                     <div class="form-group">
                                         <label>Nomor Refrensi</label>
-                                        <input type="text" class="form-control form-control" name="nomorRefrensi" value="{{$purchase->reference_no}}" disabled>
+                                        <input type="text" class="form-control form-control" name="nomorRefrensi" value="{{$penjualan->reference_no}}" disabled>
+                                    </div>
+                                </div>
+                                <div class="col-sm-5 pr-0">
+                                    <div class="form-group">
+                                        <label>Tanggal</label>
+                                        <input type="date" class="form-control form-control" id="tglPembelian" name="tglPembelian" value="{{$penjualan->date}}" disabled>
                                     </div>
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="col-sm-5 pr-0">
                                     <div class="form-group">
-                                        <label>Tanggal</label>
-                                        <input type="date" class="form-control form-control" id="tglPembelian" name="tglPembelian" value="{{$purchase->purchase_date}}" disabled>
+                                        <label>Pembeli</label>
+                                        <input type="text" class="form-control form-control" id="" name="tglPembelian" value="{{$penjualan->nama_pembeli}}" disabled>
                                     </div>
                                 </div>
                                 <div class="col-sm-5 pr-0">
                                     <div class="form-group">
-                                        <label>Supplier</label>
-                                        <select class="form-control" id="supplier" name="supplier" disabled>
-                                            <option>--Pilih Supplier</option>
-                                            <option value="{{$purchase->supplier_id}}" selected>{{$purchase->supplier->name}}</option>
-                                        </select>
+                                        <label>Alamat</label>
+                                        <input type="text" class="form-control form-control" id="" name="tglPembelian" value="{{$penjualan->alamat_pembeli}}" disabled>
                                     </div>
                                 </div>
                             </div>
@@ -69,23 +72,24 @@
                                     <div class="form-group">
                                         <label>Status Pembayaran</label>
                                         <select class="form-control" id="status" name="paymentStatus" disabled>
-                                            <option value="{{$purchase->purchase_status}} == Lunas? 'selected' : '' ">Lunas</option>
-                                            <option value="{{$purchase->purchase_status}} == Lunas? 'selected' : '' ">Sebagian</option>
-                                            <option value="{{$purchase->purchase_status}} == Lunas? 'selected' : '' ">Belum</option>
+                                            <option>Lunas</option>
+                                            <option>Sebagian</option>
+                                            <option>Belum</option>
                                         </select>
                                     </div>
                                 </div>
                                 <div class="col-sm-5 pr-0">
                                     <div class="form-group">
                                         <label>Jumlah yang Dibayarkan</label>
-                                        <input type="text" class="form-control form-control" id="jmlBayar" name="jmlBayar" value="{{number_format($purchase->paid_amount, 2)}}" disabled>
+                                        <input type="text" class="form-control form-control" id="jmlBayar" name="jmlBayar" value="{{number_format($penjualan->paid_amount, 2)}}" disabled>
                                     </div>
                                 </div>
                             </div>
                             <div class="col-md-12">
                                 <div class="card-header">
                                     <div class="d-flex align-items-center">
-                                        <a href="{{route('pembayaran.list', $purchase->id)}}" class="btn btn-primary btn-round ml-auto">Lihat Daftar Pembayaran</a>
+                                        <a href="" class="btn btn-primary btn-round ml-auto">Lihat Daftar Pembayaran</a>
+
                                     </div>
                                 </div>
                                 <div class="card-body">
@@ -102,10 +106,11 @@
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                @foreach ($purchase->purchase_items as $item)
+
+                                                @foreach ($penjualan->items as $item)
                                                 <tr>
                                                     <td>{{$loop->iteration}}</td>
-                                                    <td>{{$item->product_name}}</td>
+                                                    <td>{{$item->product->nama_produk}}</td>
                                                     <td>{{$item->quantity}}</td>
                                                     <td>{{$item->unit->name_unit}}</td>
                                                     <td>{{number_format($item->unit_price, 2)}}</td>
@@ -116,7 +121,7 @@
                                             <tfoot>
                                                 <tr>
                                                     <td colspan="5" style="text-align: center;"><b>Total</b></td>
-                                                    <td><b><span id="grandTotal">{{number_format($purchase->total, 2)}}</span></b></td>
+                                                    <td><b><span id="grandTotal">{{number_format($penjualan->grandtotal, 2)}}</span></b></td>
                                                     <td></td>
                                                 </tr>
                                             </tfoot>
@@ -280,11 +285,11 @@
 @endsection
 
 @section('script')
-<script src="{{asset('assets/js/plugin/sweetalert/sweetalert2.all.min.js')}}"></script>
+<script src="{{asset('assets/js/plugin/sweetalert/sweetalert.min.js')}}"></script>
 <script>
     $(document).ready(function() {
         var listItem = $('#daftarItem').DataTable({
-            "pageLength": 10,
+            "pageLength": 7,
             "columns": [{
                     "data": "nomor"
                 },
@@ -309,96 +314,6 @@
             ]
 
         });
-        var counter = 1;
-        $('#simpan').click(function() {
-            let data = {
-                'nomor': counter,
-                'nama': $('#namaItem').val(),
-                'jumlahItem': $('#jumlahItem').val(),
-                'unitItem': $('#unitItem').val(),
-                'hargaItem': $('#hargaItem').val(),
-                'totalItem': $('#totalItem').val(),
-                'action': `<button class="btn btn-primary btn-border dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Aksi</button>\
-                                                            <div class="dropdown-menu">\
-                                                            <span class="dropdown-item editDaftarItem" data-toggle="modal" data-target="#editModal"  data-row="${counter}">Edit</span>\
-                                                            <div role="separator" class="dropdown-divider"></div>\
-                                                            <span class="dropdown-item editDaftarItem" data-toggle="modal" data-target="#hapusModal" data-row="${counter}">Hapus</span>\
-                                                        </div>`
-            };
-
-            listItem.row.add(data).draw();
-
-
-            $('#grandTotal').html(parseInt($('#grandTotal').html()) + parseInt($('#totalItem').val()));
-            counter++;
-            $('#tambahItem').trigger('reset');
-        });
-
-        $('#submitPurchase').click(function(event) {
-            event.preventDefault();
-
-
-            var purchase = $('#purchaseForm').serializeArray().reduce(function(obj, item) {
-                obj[item.name] = item.value;
-                return obj;
-            }, {});
-            purchase['grandTotal'] = parseInt($('#grandTotal').html());
-            purchase['dataItem'] = [];
-
-            dataItem = listItem.rows().data();
-
-            for (let i = 0; i < dataItem.length; i++) {
-                purchase['dataItem'].push(dataItem[i]);
-            }
-
-
-            $.ajax({
-                data: purchase,
-                url: "{!!  route('pembelian.tambah') !!}",
-                type: "POST",
-                dataType: 'json',
-                success: function(data) {
-                    swal("Sukses!", "Tambah data pembelian sukses 😀", {
-                        buttons: {
-                            confirm: {
-                                className: 'btn btn-success'
-                            }
-                        },
-                    });
-                    window.location.href = "{!!route('pembelian.index')!!}";
-                },
-                error: function(data) {
-                    console.log('Error:', "error insert data");
-
-                }
-            });
-
-        });
-
-
     });
-
-    function tambah_pembelian() {
-        var status = document.getElementById("status").value;
-        var jml_beli = 1000;
-        var jml_bayar = document.getElementById("jmlBayar").value;
-
-        if (status == 'lunas') {
-            if (jml_bayar < jml_beli || jml_bayar > jml_beli) {
-                alert("Jumlah pembayaran tidak sesuai !");
-            } else {
-                alert("Sukses !");
-            }
-        } else {
-            if (jml_bayar <= 0) {
-                alert("Jumlah pembayaran harus lebih dari 0 !");
-            } else if (jml_bayar == jml_beli) {
-                alert("Status pembayaran tidak sesuai !");
-            } else {
-                // window.location.href = "{{route('pembelian.tambah')}}";
-                alert("Sukses !");
-            }
-        }
-    }
 </script>
 @endsection

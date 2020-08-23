@@ -9,4 +9,9 @@ class Penjualan extends Model
     protected $table = 'penjualan';
     
     protected $guarded = [];
+
+    public function items()
+    {
+        return $this->hasMany(PenjualanItem::class);
+    }
 }

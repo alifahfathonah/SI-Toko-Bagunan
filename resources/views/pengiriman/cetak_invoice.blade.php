@@ -29,7 +29,7 @@
         <div id="print" class="col-md-12">
             <div class="card">
                 <div class="card card-dark bg-primary-gradient">
-                    <div class="card-body bubble-shadow">
+                    <div class="card-body">
                         <div class="row">
                             <div class="col-md-6 b-b1 pb-2">
                                 <h2 class="mt-3 pb-2 fw-bold">SURAT JALAN</h2>

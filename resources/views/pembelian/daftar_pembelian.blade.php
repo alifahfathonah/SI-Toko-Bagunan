@@ -51,7 +51,7 @@
                                         <th>Total</th>
                                         <th>Status Pembelian</th>
                                         <th>Status Pembayaran</th>
-                                        <th style="width: 10%"></th>
+                                        <th style="width: 10%">Aksi</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -60,7 +60,7 @@
                                         <td>{{$purchase->purchase_date}}</td>
                                         <td>{{$purchase->supplier->name}}</td>
                                         <td>{{$purchase->reference_no}}</td>
-                                        <td>{{currency($purchase->total)}}</td>
+                                        <td>{{number_format($purchase->total, 2)}}</td>
                                         <td>{!!badge($purchase->purchase_status)!!}</td>
                                         <td>{!!badge($purchase->payment_status)!!}</td>
                                         <td>
@@ -111,26 +111,48 @@
                 <input type="hidden" name="purchase_id">
                 <div class="modal-body">
                     <div class="row">
-                        <div class="col-sm-12">
+                        <div class="col-sm-6">
                             <div class="form-group">
                                 <label>Tanggal</label>
                                 <input type="date" class="form-control form-control" id="tglPembayaran" name="tglPembayaran">
                             </div>
+                        </div>
+                        <div class="col-sm-6">
                             <div class="form-group">
                                 <label>Jumlah yang Harus Dibayar</label>
                                 <input type="number" class="form-control form-control" id="totalTagihan" value="" disabled>
                             </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-6">
                             <div class="form-group">
                                 <label>Jenis Pembayaran</label>
                                 <select class="form-control" id="jenisPembayaran" disabled>
-                                    <option>--Pilih Jenis--</option>
+                                    <option>- Pilih Jenis -</option>
                                     <option value="lunas">Bayar Lunas</option>
                                     <option value="sebagian">Bayar Sebagian</option>
                                 </select>
                             </div>
+                        </div>
+                        <div class="col-sm-6">
                             <div class="form-group">
                                 <label>Jumlah Pembayaran</label>
                                 <input type="number" class="form-control form-control" id="totalPembayaran" name="totalPembayaran">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label>Nama Sales</label>
+                                <input type="text" class="form-control form-control" id="namaSales" name="namaSales">
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label>Telephone</label>
+                                <input type="number" class="form-control form-control" id="phoneSales" name="phoneSales">
                             </div>
                         </div>
                     </div>
@@ -259,7 +281,7 @@
 
     $('.tambahPembayaran').click(function() {
         var purchase_id = $(this).data('purchase');
-        // console.log(purchase_id);
+
         $('#formPembayaran').attr("action", "{{route('pembayaran.tambah',['id'=>':id'])}}".replace(':id', purchase_id));
         var _url = "{{route('pembayaran.form.tambah',['id'=>':id'])}}".replace(':id', purchase_id);
         $.ajax({
@@ -290,8 +312,6 @@
     $('#totalPembayaran').blur(function() {
         $totalTagihan = parseInt($('#totalTagihan').val());
         $totalPembayaran = parseInt($(this).val());
-
-
     });
 
     function tambah_pembayaran() {

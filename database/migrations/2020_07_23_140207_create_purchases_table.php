@@ -18,6 +18,7 @@ class CreatePurchasesTable extends Migration
             $table->date('purchase_date');
             $table->foreignID('supplier_id')->references('id')->on('suppliers');
             $table->string('reference_no')->nullable();
+            $table->string('nota_no')->nullable();
             $table->decimal('total', 25, 2)->default(0.00);
             $table->string('purchase_status', 20);
             $table->string('payment_status', 20);

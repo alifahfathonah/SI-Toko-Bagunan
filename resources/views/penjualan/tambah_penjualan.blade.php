@@ -36,28 +36,31 @@
                             <h4 class="card-title">Tambah Penjualan</h4>
                         </div>
                     </div>
-                    <form id="purchaseForm" method="POST">
+                    <form id="purchaseForm" action="{{route('penjualan.tambah')}}" method="POST">
                         @csrf
                         <div class="card-body">
                             <div class="row">
-                                <div class="col-sm-5 pr-0">
+                                <div class="col-sm-4 pr-0">
                                     <div class="form-group">
                                         <label>Tanggal</label>
                                         <input type="date" class="form-control form-control" id="tglPembelian" name="tglPembelian">
                                     </div>
                                 </div>
-                                <div class="col-sm-5 pr-0">
+                                <div class="col-sm-4">
                                     <div class="form-group">
-                                        <label>Supplier</label>
-                                        <select class="form-control" id="supp" name="supp">
-
-                                        </select>
-
+                                        <label>Nama Pembeli</label>
+                                        <input type="text" class="form-control form-control" id="" name="namaPembeli">
+                                    </div>
+                                </div>
+                                <div class="col-sm-4">
+                                    <div class="form-group">
+                                        <label>Alamat</label>
+                                        <textarea class="form-control" id="" name="alamatPembeli" rows="3"></textarea>
                                     </div>
                                 </div>
                             </div>
                             <div class="row">
-                                <div class="col-sm-5 pr-0">
+                                <div class="col-sm-4 pr-0">
                                     <div class="form-group">
                                         <label>Status Pembayaran</label>
                                         <select class="form-control" id="status" name="paymentStatus">
@@ -67,7 +70,7 @@
                                         </select>
                                     </div>
                                 </div>
-                                <div class="col-sm-5 pr-0">
+                                <div class="col-sm-4 pr-0">
                                     <div class="form-group">
                                         <label>Jumlah yang Dibayarkan</label>
                                         <input type="number" class="form-control form-control" id="jmlBayar" name="jmlBayar" value="0">
@@ -273,7 +276,7 @@
 @endsection
 
 @section('script')
-<script src="{{asset('assets/js/plugin/sweetalert/sweetalert.min.js')}}"></script>
+<script src="{{asset('assets/js/plugin/sweetalert/sweetalert2.js')}}"></script>
 <script>
     $(document).ready(function() {
         document.getElementById("tglPembelian").valueAsDate = new Date()
@@ -288,6 +291,7 @@
                 }
             })
         }
+        swalLoading();
 
         var listItem = $('#daftarItem').DataTable({
             "pageLength": 7,
@@ -343,7 +347,7 @@
 
         $('#submitPurchase').click(function(event) {
             event.preventDefault();
-            swalLoading();
+            // swalLoading();
 
             var purchase = $('#purchaseForm').serializeArray().reduce(function(obj, item) {
                 obj[item.name] = item.value;
@@ -361,19 +365,19 @@
 
             $.ajax({
                 data: purchase,
-                url: "{!!  route('pembelian.tambah') !!}",
+                url: "{!!  route('penjualan.tambah') !!}",
                 type: "POST",
                 dataType: 'json',
                 success: function(data) {
-                    swal.close();
-                    swal("Sukses!", "Tambah data pembelian sukses 😀", {
+                    // swal.close();
+                    swal("Sukses!", "Tambah data penjualan sukses 😀", {
                         buttons: {
                             confirm: {
                                 className: 'btn btn-success'
                             }
                         },
                     });
-                    window.location.href = "{!!route('pembelian.index')!!}";
+                    window.location.href = "{!!route('penjualan.index')!!}";
                 },
                 error: function(data) {
                     console.log('Error:', "error insert data");
@@ -387,6 +391,7 @@
 
 
     });
+
 
     $('#daftarItem').on('click', '.hapusDaftarItem', function() {
 

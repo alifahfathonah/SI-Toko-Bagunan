@@ -10,6 +10,8 @@ use App\Models\Purchase;
 use App\Models\PurchaseItem;
 use App\Models\Unit;
 use App\Models\Payment;
+use App\Models\Provinsi;
+use App\Models\Kabupaten;
 
 
 
@@ -55,7 +57,7 @@ class PembelianController extends Controller
         $data = [
             'purchase_date' => $request->input('tglPembelian'),
             'supplier_id'   => $request->input('supp'),
-            // 'sales_id'      => $request->input('sales'),
+            'nota_no'      => $request->input('nota'),
             'total'         => $request->input('grandTotal'),
             'payment_status' => $request->input('paymentStatus'),
             'paid_amount'    => $request->input('jmlBayar'),
@@ -131,10 +133,10 @@ class PembelianController extends Controller
         $purchase = Purchase::find($id);
         $purchase->purchase_date  = $request->input('tglPembelian');
         $purchase->supplier_id    = $request->input('supp');
-        // $purchase->sales_id       = $request->input('sales');
+        $purchase->nota_no       = $request->input('nota');
         $purchase->total          = $request->input('grandTotal');
         $purchase->payment_status = $request->input('paymentStatus');
-        $purchase->purchase_status = $request->input('grandTotal') - $request->input('jmlBayar') <= 0 ? "selesai" : "proses";
+        $purchase->purchase_status = $request->input('grandTotal') - $request->input('jmlBayar') == 0 ? "selesai" : "proses";
         $purchase->save();
 
         PurchaseItem::where('purchase_id', $purchase->id)->delete();
@@ -200,6 +202,8 @@ class PembelianController extends Controller
         $payPurchase = [
             'payment_date' => $request->input('tglPembayaran'),
             'purchase_id' => $id,
+            'sales_name' => $request->input('namaSales'),
+            'sales_phone' => $request->input('phoneSales'),
             'amount' => $request->input('totalPembayaran'),
         ];
 
@@ -241,11 +245,13 @@ class PembelianController extends Controller
     {
         $payment = Payment::find($id);
 
-        $purchase = Purchase::find($payment->id);
+        $purchase = Purchase::find($payment->purchase_id);
+
         $purchase->paid_amount = ($purchase->paid_amount - $payment->amount) + $request->input('jmlPembayaranEdit');
 
         $balance = $purchase->paid_amount - $purchase->total;
-        if ($balance <= 0) {
+
+        if ($balance == 0) {
             $purchase->purchase_status = 'selesai';
             $purchase->payment_status  = 'lunas';
         } else {
@@ -256,6 +262,8 @@ class PembelianController extends Controller
         $purchase->save();
 
         $payment->payment_date = $request->input('tglPembayaranEdit');
+        $payment->sales_name = $request->input('namaSales');
+        $payment->sales_phone = $request->input('phoneSales');
         $payment->amount       = $request->input('jmlPembayaranEdit');
         $payment->save();
 
@@ -266,10 +274,12 @@ class PembelianController extends Controller
     {
         //
         $payment = Payment::find($id);
-        $purchase = Purchase::find($payment->id);
+        $purchase = Purchase::find($payment->purchase_id);
+
         $purchase->paid_amount = ($purchase->paid_amount - $payment->amount);
         $balance = $purchase->paid_amount - $purchase->total;
-        if ($balance <= 0) {
+
+        if ($balance == 0) {
             $purchase->purchase_status = 'selesai';
             $purchase->payment_status  = 'lunas';
         } else {
@@ -289,5 +299,27 @@ class PembelianController extends Controller
         $purchase = Purchase::find($id);
 
         return view('pembelian.lihat_pembelian', compact('purchase'));
+    }
+
+    public function supplier_store(Request $request)
+    {
+        $id_prov = $request->input('provSupplier');
+        $id_kab = $request->input('kotaSupplier');
+
+
+        $prov = Provinsi::where('id_prov', $id_prov)->first();
+        $kab = Kabupaten::where('id_kab', $id_kab)->first();
+
+        $data = [
+            'name'          => $request->input('namaSupplier'),
+            'address'       => $request->input('alamatSupplier'),
+            'city'          => $kab->nama,
+            'province'      => $prov->nama,
+            'phone'         => $request->input('phoneSupplier'),
+        ];
+
+        Supplier::create($data);
+
+        return json_encode("insert success");
     }
 }
