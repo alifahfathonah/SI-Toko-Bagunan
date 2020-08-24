@@ -218,10 +218,12 @@ class PembelianController extends Controller
             'amount' => $request->input('totalPembayaran'),
         ];
 
+        
+
         Payment::create($payPurchase);
 
         $newPaidAmount = $purchase->paid_amount + $payPurchase['amount'];
-
+        
         if ($newPaidAmount == $purchase->total) {
             $purchaseStatus = "selesai";
             $paymentStatus  = "lunas";
@@ -232,13 +234,13 @@ class PembelianController extends Controller
             $paymentStatus  = "sebagian";
         }
 
-
+        
         $purchase->purchase_status = $purchaseStatus;
         $purchase->payment_status  = $paymentStatus;
         $purchase->paid_amount = $newPaidAmount;
         $purchase->save();
 
-        return redirect()->route('pembelian.index');
+        return response()->json('success');
     }
 
     public function payment_edit($id, $purchase_id)

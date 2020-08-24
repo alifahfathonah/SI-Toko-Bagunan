@@ -21,8 +21,7 @@ class CreateTablePenjualanItem extends Migration
             $table->string('unit_id')->references('id')->on('units');
             $table->decimal('unit_price', 25, 2)->default(0.00);
             $table->integer('total');
-            $table->integer('quantity_delivering')->default(0);
-            $table->integer('quantity_delivered')->default(0);
+            $table->integer('quantity_sent')->default(0);
             $table->timestamps();
         });
     }

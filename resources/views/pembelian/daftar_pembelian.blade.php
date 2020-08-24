@@ -108,7 +108,7 @@
 
             <form id="formPembayaran" method="POST">
                 @csrf
-                <input type="hidden" name="purchase_id">
+                <input type="hidden" name="purchase_id" id="purchase_id">
                 <div class="modal-body">
                     <div class="row">
                         <div class="col-sm-6">
@@ -159,7 +159,7 @@
                 </div>
                 <div class="modal-footer no-bd">
                     <button type="button" class="btn btn-danger close-pembayaran" data-dismiss="modal">Batal</button>
-                    <button type="submit" class="btn btn-success">Simpan</button>
+                    <button type="submit" id="simpanPembayaranBtn" class="btn btn-success" disabled >Simpan</button>
                 </div>
             </form>
         </div>
@@ -257,6 +257,8 @@
 @endsection
 
 @section('script')
+<script src="{{asset('assets/js/plugin/sweetalert/sweetalert2.all.min.js')}}"></script>
+<script src="{{asset('assets/js/alert.js')}}"></script>
 <script>
     $(document).ready(function() {
         document.getElementById("tglPembayaran").valueAsDate = new Date()
@@ -284,6 +286,7 @@
 
         $('#formPembayaran').attr("action", "{{route('pembayaran.tambah',['id'=>':id'])}}".replace(':id', purchase_id));
         var _url = "{{route('pembayaran.form.tambah',['id'=>':id'])}}".replace(':id', purchase_id);
+        // console.log($('#formPembayaran').serializeArray());
         $.ajax({
             url: _url,
             type: "GET",
@@ -292,6 +295,7 @@
                 $('#purchase_id').val(purchase_id);
                 $('#totalTagihan').val(data.must_pay);
                 $('#jenisPembayaran').removeAttr("disabled");
+                $('#simpanPembayaranBtn').removeAttr("disabled");
 
             },
             error: function(data) {
@@ -300,6 +304,28 @@
         });
 
     })
+
+    $('#formPembayaran').submit(function(e){
+        e.preventDefault();
+        swalLoading();
+        var data = $(this).serializeArray();
+        var _url = $(this).attr('action');
+        $.ajax({
+            data: data,
+            url: _url,
+            type: "POST",
+            dataType: 'json',
+            success: function(data) {
+                swal.close();
+                swalSuccess("Tambah Pembayaran Berhasil")
+                window.location.href = "{!!route('pembayaran.list',['id'=>':id'])!!}".replace(':id',$('#purchase_id').val());
+            },
+            error: function(data) {
+                swalError('Maaf Terjadi Error');
+
+            }
+        });
+    });
 
     $('#jenisPembayaran').change(function() {
         if ($(this).val() == 'lunas') {
