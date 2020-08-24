@@ -117,6 +117,7 @@
                             </div>
                         </div>
                         <div class="card-footer text-right">
+                            <a href="{{route('pengiriman.index')}}" class="btn btn-danger">Batal</a>&nbsp;
                             <button type="reset" class="btn btn-info">Reset</button>&nbsp;
                             <button type="submit" class="btn btn-success" id="submitShipping">Simpan</button>
                         </div>

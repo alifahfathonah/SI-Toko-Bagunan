@@ -35,6 +35,9 @@ Route::resource('pembelian', 'PembelianController')->names([
     'edit'    => 'pembelian.form.edit',
     'update'  => 'pembelian.edit',
 ]);
+
+Route::get('/pembelian/nonaktif/list', 'PembelianController@nonaktif')->name('pembelian.non.aktif');
+
 Route::get('/pembelian/detail/{id}', 'PembelianController@detail')->name('pembelian.detail');
 Route::get('/pembelian/{id}/pembayaran/create', 'PembelianController@payment_show')->name('pembayaran.form.tambah');
 Route::post('/pembelian/{id}/pembayaran/store', 'PembelianController@payment_store')->name('pembayaran.tambah');

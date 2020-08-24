@@ -126,6 +126,7 @@
                             </div>
                         </div>
                         <div class="card-footer text-right">
+                            <a href="{{route('pembelian.index')}}" class="btn btn-danger">Batal</a>&nbsp;
                             <button type="reset" class="btn btn-info">Reset</button>&nbsp;
                             <button type="submit" class="btn btn-success" id="submitPurchase" disabled>Simpan</button>
                         </div>
