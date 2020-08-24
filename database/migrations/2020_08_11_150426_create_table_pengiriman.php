@@ -16,7 +16,7 @@ class CreateTablePengiriman extends Migration
         Schema::create('pengiriman', function (Blueprint $table) {
             $table->id();
             $table->foreignID('penjualan_id')->references('id')->on('penjualan');
-            $table->foreignID('driver_id')->references('id')->on('drivers');
+            $table->foreignID('driver_id')->nullable();
             $table->date('tanggal_pengiriman');
             $table->string('status',20);
             $table->string('prioritas',20);

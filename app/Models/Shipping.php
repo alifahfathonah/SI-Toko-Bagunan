@@ -8,7 +8,7 @@ class Shipping extends Model
 {
     protected $table = 'pengiriman';
     protected $fillable = [
-        'penjualan_id', 'driver_id', 'tanggal_pengiriman', 'status'
+        'penjualan_id', 'tanggal_pengiriman', 'status','prioritas'
     ];
 
     public function penjualan()
@@ -18,5 +18,10 @@ class Shipping extends Model
     public function driver()
     {
         return $this->belongsTo(Driver::class);
+    }
+
+    public function items()
+    {
+        return $this->hasMany(PengirimanItem::class,'pengiriman_id','id');
     }
 }

@@ -90,10 +90,14 @@ Route::resource('pengiriman', 'ShippingController')->names([
     'destroy' => 'pengiriman.hapus',
     'edit'    => 'pengiriman.form.edit',
     'update'  => 'pengiriman.edit',
+    'show'    => 'pengiriman.detail',
+
 ]);
 
-Route::get('/pengiriman/cetak_invoice/{id}', 'ShippingController@cetak_invoice');
+Route::get('/pengiriman/cetak_invoice/{id}', 'ShippingController@cetak_invoice')->name('pengiriman.cetak-invoice');
 Route::get('/pengiriman/{id}/create', 'ShippingController@create');
+Route::post('pengiriman/{pengiriman}/send', 'ShippingController@sendShipping')->name('pengiriman.kirim');
+
 
 Route::resource('penjualan', 'PenjualanController')->names([
     'index'  => 'penjualan.index',

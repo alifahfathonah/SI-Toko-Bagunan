@@ -1,5 +1,5 @@
 @extends('layout.main')
-@section('title', 'Tambah Pengiriman')
+@section('title', 'Edit Pengiriman')
 
 
 @section('contain')
@@ -24,7 +24,7 @@
                     <i class="flaticon-right-arrow"></i>
                 </li>
                 <li class="nav-item">
-                    <a href="#">Tambah Pengiriman</a>
+                    <a href="#">Edit Pengiriman</a>
                 </li>
             </ul>
         </div>
@@ -33,11 +33,12 @@
                 <div class="card">
                     <div class="card-header">
                         <div class="d-flex align-items-center">
-                            <h4 class="card-title">Tambah Pengiriman</h4>
+                            <h4 class="card-title">Edit Pengiriman</h4>
                         </div>
                     </div>
-                    <form id="shippingForm" method="POST">
+                    <form id="shippingForm" action="{{route('pengiriman.edit',['pengiriman'=>$pengiriman])}}" method="POST">
                         @csrf
+                        @method('PUT')
                         <div class="card-body">
                             <div class="row">
                                 <div class="col-sm-6 pr-0">
@@ -58,20 +59,31 @@
                                 <div class="col-sm-4 pr-0">
                                     <div class="form-group">
                                         <label>Tanggal</label>
-                                        <input type="date" class="form-control form-control" id="tglPengiriman" name="tglPengiriman">
+                                    <input type="date" class="form-control form-control" id="tglPengiriman" name="tglPengiriman" value="{{$pengiriman->tanggal_pengiriman}}">
                                     </div>
                                 </div>
                                 <div class="col-sm-4 pr-0">
                                     <div class="form-group">
                                         <label>Prioritas Pengiriman</label>
                                         <select class="form-control" name="prioritas">
-                                            <option value="penting">Penting</option>
-                                            <option value="sedang">Sedang</option>
-                                            <option value="normal" selected>Normal</option>
+                                            <option value="penting" {{$pengiriman->prioritas == 'penting' ? 'selected' : ''}}>Penting</option>
+                                            <option value="sedang"  {{$pengiriman->prioritas == 'sedang' ? 'selected' : ''}}>Sedang</option>
+                                            <option value="normal"  {{$pengiriman->prioritas == 'penting' ? 'selected' : ''}}>Normal</option>
                                         </select>
                                     </div>
                                 </div>
-                                
+                                @isset($pengiriman->driver_id)
+                                    <div class="col-sm-4 pr-0">
+                                        <div class="form-group">
+                                            <label>Supir</label>
+                                            <select class="form-control" name="driver">
+                                                @foreach ($drivers as $driver)
+                                                    <option value="{{$driver->id}}" {{$driver->id == $pengiriman->driver_id ? 'selected' : ''}}>{{$driver->name}}</option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                    </div>
+                                @endisset
                             </div>
                             <div class="col-md-12">
                                 <div class="card-header">
@@ -92,16 +104,17 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            @foreach($penjualanItem as $penjualan)
+                                            @foreach($pengiriman->items as $item)
                                             <tr>
                                                 <td>{{$loop->iteration}}</td>
-                                                <td>{{$penjualan->product->nama_produk}}</td>
-                                                <td>{{$penjualan->quantity}}</td>
-                                                <td>{{$penjualan->unit->name_unit}}</td>
-                                                <td><input type="number"  value="{{$penjualan->quantity - $penjualan->quantity_sent}}" disabled></td>
-                                                <td><input type="number"  class="jmlDikirim" name="jmlDikirim" data-sisaqty="{{$penjualan->quantity - $penjualan->quantity_sent}}"
-                                                    value="0">
-                                                    <input type="hidden" name="idItem" value="{{$penjualan->id}}">
+                                                <td>{{$item->penjualanItem->product->nama_produk}}</td>
+                                                <td>{{$item->penjualanItem->quantity}}</td>
+                                                <td>{{$item->penjualanItem->unit->name_unit}}</td>
+                                                <td><input type="number"  value="{{$item->penjualanItem->quantity - $item->penjualanItem->quantity_sent}}" disabled></td>
+                                                <td><input type="number"  class="jmlDikirim" name="jmlDikirim" 
+                                                    data-sisaqty="{{($item->penjualanItem->quantity - $item->penjualanItem->quantity_sent)+$item->quantity}}"
+                                                    value="{{$item->quantity}}">
+                                                    <input type="hidden" name="idItem" value="{{$item->penjualan_item_id}}">
                                                 </td>
                                                 
                                             </tr>
@@ -163,12 +176,12 @@
 
             $.ajax({
                 data: data,
-                url: "{!!route('pengiriman.tambah')!!}",
+                url: $('#shippingForm').attr('action'),
                 type: "POST",
                 dataType: 'json',
                 success: function(data) {
                     swal.close();
-                    swalSuccess("Tambah Pengiriman Berhasil")
+                    swalSuccess("Edit Pengiriman Berhasil")
                     window.location.href = "{!!route('pengiriman.index')!!}";
                 },
                 error: function(data) {
@@ -185,8 +198,8 @@
             if(qtysent > remaining){
                 $(this).val(remaining);
             }
-            else if(qtysent < 1){
-                $(this).val(1);
+            else if(qtysent < 0){
+                $(this).val(0);
             }
 
 
