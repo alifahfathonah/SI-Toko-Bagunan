@@ -76,7 +76,7 @@
                                                 <div role="separator" class="dropdown-divider"></div>
                                                 <a class="dropdown-item" href="{{route('pembayaransale.list', $sale->id)}}">Detail Pembayaran</a>
                                                 <div role="separator" class="dropdown-divider"></div>
-                                                <a class="dropdown-item" href="{{route('pengiriman.form.tambah', $sale->id)}}">Tambah Pengiriman</a>
+                                                <a class="dropdown-item" href="{{route('pengiriman.tambah.form', $sale->id)}}">Tambah Pengiriman</a>
                                                 <div role="separator" class="dropdown-divider"></div>
                                                 <a class="dropdown-item" data-toggle="modal" data-target="#hapusModal{{$sale->id}}">Hapus</a>
                                             </div>

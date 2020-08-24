@@ -15,7 +15,7 @@
                 </div>
             </div>
             <ul class="nav nav-primary">
-                <li class="nav-item" {{set_active('home')}}>
+                <li class="nav-item {{set_active('home')}}">
                     <a href="{{url('/dashboard')}}" aria-expanded="false">
                         <i class="fas fa-home"></i>
                         <p>Dashboard</p>

@@ -88,7 +88,7 @@
                             <div class="col-md-12">
                                 <div class="card-header">
                                     <div class="d-flex align-items-center">
-                                        <a href="" class="btn btn-primary btn-round ml-auto">Lihat Daftar Pembayaran</a>
+                                        <a href="{{route('pembayaransale.list', $penjualan->id)}}" class="btn btn-primary btn-round ml-auto">Lihat Daftar Pembayaran</a>
 
                                     </div>
                                 </div>
@@ -129,6 +129,9 @@
                                     </div>
                                 </div>
                             </div>
+                        </div>
+                        <div class="card-footer text-right">
+                            <a href="{{route('penjualan.index')}}" class="btn btn-info">Kembali</a>
                         </div>
                     </form>
                 </div>

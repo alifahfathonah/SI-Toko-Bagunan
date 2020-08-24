@@ -125,6 +125,9 @@
                                 </div>
                             </div>
                         </div>
+                        <div class="card-footer text-right">
+                            <a href="{{route('pengiriman.index')}}" class="btn btn-info">Kembali</a>
+                        </div>
                     </form>
                 </div>
             </div>

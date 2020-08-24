@@ -18,14 +18,12 @@ class ShippingController extends Controller
         //
         $shippings = Shipping::all();
         $drivers   = Driver::all();
-        return view('pengiriman/daftar_pengiriman', compact('shippings','drivers'));
+        return view('pengiriman/daftar_pengiriman', compact('shippings', 'drivers'));
     }
     public function cetak_invoice($id)
     {
         $shipping = Shipping::find($id);
         $shippingItem = PengirimanItem::where('pengiriman_id', $id)->get();
-
-
 
         return view('pengiriman/cetak_invoice', compact('shipping', 'shippingItem'));
     }
@@ -57,9 +55,9 @@ class ShippingController extends Controller
         $idItem = $request->input('idItem');
         $qtySend = $request->input('jmlDikirim');
         $shippingItem = [];
-        
-        foreach ( $idItem as $i => $item) {
-            if($qtySend[$i] > 0 ){
+
+        foreach ($idItem as $i => $item) {
+            if ($qtySend[$i] > 0) {
                 $shippingItem[] = [
                     "penjualan_item_id"  => $item,
                     "quantity"           => $qtySend[$i],
@@ -67,7 +65,7 @@ class ShippingController extends Controller
             }
         }
 
-        if(count($shippingItem) == 0){
+        if (count($shippingItem) == 0) {
             return response(422);
         }
 
@@ -75,9 +73,8 @@ class ShippingController extends Controller
 
         foreach ($shippingItem as $i => $item) {
             $shippingItem[$i]["pengiriman_id"] = $shipping->id;
-
         }
-        
+
         $pengirimanItem = PengirimanItem::insert($shippingItem);
 
         foreach ($shippingItem as $item) {
@@ -95,28 +92,27 @@ class ShippingController extends Controller
     {
         $penjualan = $pengiriman->penjualan;
         $drivers = Driver::all();
-        return view('pengiriman/detail_pengiriman', compact('pengiriman', 'penjualan','drivers'));
+        return view('pengiriman/detail_pengiriman', compact('pengiriman', 'penjualan', 'drivers'));
     }
 
     public function edit(Shipping $pengiriman)
     {
         $penjualan = $pengiriman->penjualan;
         $drivers = Driver::all();
-        return view('pengiriman/edit_pengiriman', compact('pengiriman', 'penjualan','drivers'));
-
+        return view('pengiriman/edit_pengiriman', compact('pengiriman', 'penjualan', 'drivers'));
     }
 
-    public function update(Request $request,Shipping $pengiriman)
+    public function update(Request $request, Shipping $pengiriman)
     {
         //edit pengiriman
         $pengiriman->penjualan_id            = $request->input('id_penjualan');
         $pengiriman->tanggal_pengiriman      = $request->input('tglPengiriman');
         $pengiriman->prioritas               = $request->input('prioritas');
-        
-        $driver_id = $request->input('driver'); 
-        
+
+        $driver_id = $request->input('driver');
+
         //cek jika sudah melakaukan pemilihan driver
-        if(isset($driver_id)){
+        if (isset($driver_id)) {
             $pengiriman->driver_id   = $driver_id;
         }
 
@@ -124,9 +120,9 @@ class ShippingController extends Controller
         $idItem = $request->input('idItem');
         $qtySend = $request->input('jmlDikirim');
         $shippingItem = [];
-        
-        foreach ( $idItem as $i => $item) {
-            if($qtySend[$i] > 0 ){
+
+        foreach ($idItem as $i => $item) {
+            if ($qtySend[$i] > 0) {
                 $shippingItem[] = [
                     "pengiriman_id"      => $pengiriman->id,
                     "penjualan_item_id"  => $item,
@@ -136,13 +132,13 @@ class ShippingController extends Controller
         }
 
         //cek jika semua qty send 0 maka tidak ada barang yang dikirim dan error
-        if(count($shippingItem) == 0){
+        if (count($shippingItem) == 0) {
             return response(422);
         }
 
         $pengiriman->save(); //save hasil editan pengiriman
 
-        
+
         //delete pengiriman item lama 
         $pengirimanItem = $pengiriman->items;
 
@@ -167,14 +163,14 @@ class ShippingController extends Controller
         return json_encode("insert success");
     }
 
-    public function sendShipping(Request $request,Shipping  $pengiriman)
+    public function sendShipping(Request $request, Shipping  $pengiriman)
     {
-        if($pengiriman->status == "dikirim"){
+        if ($pengiriman->status == "dikirim") {
             $response = [
                 'success' => false,
                 'message' => "Pengiriman sudah dikirim sebelumnya",
             ];
-            return response()->json($response);    
+            return response()->json($response);
         }
         $pengiriman->driver_id = $request->input('driver');
         $pengiriman->status    = 'dikirim';
