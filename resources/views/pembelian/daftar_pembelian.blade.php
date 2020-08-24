@@ -47,12 +47,11 @@
                                     <tr>
                                         <th>Tanggal</th>
                                         <th>Supplier</th>
-                                        <th>Sales</th>
                                         <th>No. Referensi</th>
                                         <th>Total</th>
                                         <th>Status Pembelian</th>
                                         <th>Status Pembayaran</th>
-                                        <th style="width: 10%"></th>
+                                        <th style="width: 10%">Aksi</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -60,9 +59,8 @@
                                     <tr>
                                         <td>{{$purchase->purchase_date}}</td>
                                         <td>{{$purchase->supplier->name}}</td>
-                                        <td>{{$purchase->sales->name}}</td>
                                         <td>{{$purchase->reference_no}}</td>
-                                        <td>{{currency($purchase->total)}}</td>
+                                        <td>{{number_format($purchase->total, 2)}}</td>
                                         <td>{!!badge($purchase->purchase_status)!!}</td>
                                         <td>{!!badge($purchase->payment_status)!!}</td>
                                         <td>
@@ -76,7 +74,7 @@
                                                 <div role="separator" class="dropdown-divider"></div>
                                                 <a class="dropdown-item" href="{{route('pembayaran.list', $purchase->id)}}">Detail Pembayaran</a>
                                                 <div role="separator" class="dropdown-divider"></div>
-                                                <a class="dropdown-item" data-toggle="modal" data-target="#hapusModal">Hapus</a>
+                                                <a class="dropdown-item" data-toggle="modal" data-target="#hapusModal{{$purchase->id}}">Hapus</a>
                                             </div>
                                         </td>
                                     </tr>
@@ -110,36 +108,58 @@
 
             <form id="formPembayaran" method="POST">
                 @csrf
-                <input type="hidden" name="purchase_id">
+                <input type="hidden" name="purchase_id" id="purchase_id">
                 <div class="modal-body">
                     <div class="row">
-                        <div class="col-sm-12">
+                        <div class="col-sm-6">
                             <div class="form-group">
                                 <label>Tanggal</label>
                                 <input type="date" class="form-control form-control" id="tglPembayaran" name="tglPembayaran">
                             </div>
+                        </div>
+                        <div class="col-sm-6">
                             <div class="form-group">
                                 <label>Jumlah yang Harus Dibayar</label>
                                 <input type="number" class="form-control form-control" id="totalTagihan" value="" disabled>
                             </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-6">
                             <div class="form-group">
                                 <label>Jenis Pembayaran</label>
                                 <select class="form-control" id="jenisPembayaran" disabled>
-                                    <option>--Pilih Jenis--</option>
+                                    <option>- Pilih Jenis -</option>
                                     <option value="lunas">Bayar Lunas</option>
                                     <option value="sebagian">Bayar Sebagian</option>
                                 </select>
                             </div>
+                        </div>
+                        <div class="col-sm-6">
                             <div class="form-group">
                                 <label>Jumlah Pembayaran</label>
                                 <input type="number" class="form-control form-control" id="totalPembayaran" name="totalPembayaran">
                             </div>
                         </div>
                     </div>
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label>Nama Sales</label>
+                                <input type="text" class="form-control form-control" id="namaSales" name="namaSales">
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label>Telephone</label>
+                                <input type="number" class="form-control form-control" id="phoneSales" name="phoneSales">
+                            </div>
+                        </div>
+                    </div>
                 </div>
                 <div class="modal-footer no-bd">
                     <button type="button" class="btn btn-danger close-pembayaran" data-dismiss="modal">Batal</button>
-                    <button type="submit" class="btn btn-success">Simpan</button>
+                    <button type="submit" id="simpanPembayaranBtn" class="btn btn-success" disabled >Simpan</button>
                 </div>
             </form>
         </div>
@@ -206,7 +226,8 @@
 </div>
 
 <!-- Hapus Modal -->
-<div class="modal fade" id="hapusModal" tabindex="-1" role="dialog" aria-hidden="true">
+@foreach ($purchases as $purchase)
+<div class="modal fade" id="hapusModal{{$purchase->id}}" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header no-bd">
@@ -218,9 +239,11 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <form action="{{url('pembelian/destroy')}}">
+            <form action="{{route('pembelian.hapus', $purchase->id)}}" method="POST">
+                @method ('DELETE')
+                @csrf
                 <div class="modal-body">
-                    <p>Yakin untuk menghapus data dengan nomor referensi . . . . . ?</p>
+                    <p>Yakin untuk menghapus data dengan nomor {{$purchase->reference_no}}?</p>
                 </div>
                 <div class="modal-footer no-bd">
                     <button type="button" class="btn btn-danger" data-dismiss="modal">Batal</button>
@@ -230,14 +253,17 @@
         </div>
     </div>
 </div>
+@endforeach
 @endsection
 
 @section('script')
+<script src="{{asset('assets/js/plugin/sweetalert/sweetalert2.all.min.js')}}"></script>
+<script src="{{asset('assets/js/alert.js')}}"></script>
 <script>
     $(document).ready(function() {
         document.getElementById("tglPembayaran").valueAsDate = new Date()
         $('#daftarPembelian').DataTable({
-            "pageLength": 5,
+            "pageLength": 10,
             "order": [
                 [0, "desc"]
             ]
@@ -257,9 +283,10 @@
 
     $('.tambahPembayaran').click(function() {
         var purchase_id = $(this).data('purchase');
-        // console.log(purchase_id);
+
         $('#formPembayaran').attr("action", "{{route('pembayaran.tambah',['id'=>':id'])}}".replace(':id', purchase_id));
         var _url = "{{route('pembayaran.form.tambah',['id'=>':id'])}}".replace(':id', purchase_id);
+        // console.log($('#formPembayaran').serializeArray());
         $.ajax({
             url: _url,
             type: "GET",
@@ -268,6 +295,7 @@
                 $('#purchase_id').val(purchase_id);
                 $('#totalTagihan').val(data.must_pay);
                 $('#jenisPembayaran').removeAttr("disabled");
+                $('#simpanPembayaranBtn').removeAttr("disabled");
 
             },
             error: function(data) {
@@ -276,6 +304,28 @@
         });
 
     })
+
+    $('#formPembayaran').submit(function(e){
+        e.preventDefault();
+        swalLoading();
+        var data = $(this).serializeArray();
+        var _url = $(this).attr('action');
+        $.ajax({
+            data: data,
+            url: _url,
+            type: "POST",
+            dataType: 'json',
+            success: function(data) {
+                swal.close();
+                swalSuccess("Tambah Pembayaran Berhasil")
+                window.location.href = "{!!route('pembayaran.list',['id'=>':id'])!!}".replace(':id',$('#purchase_id').val());
+            },
+            error: function(data) {
+                swalError('Maaf Terjadi Error');
+
+            }
+        });
+    });
 
     $('#jenisPembayaran').change(function() {
         if ($(this).val() == 'lunas') {
@@ -288,8 +338,6 @@
     $('#totalPembayaran').blur(function() {
         $totalTagihan = parseInt($('#totalTagihan').val());
         $totalPembayaran = parseInt($(this).val());
-
-
     });
 
     function tambah_pembayaran() {

@@ -1,5 +1,5 @@
 @extends('layout.main')
-@section('title', 'Detail Pembelian')
+@section('title', 'Tambah Penjualan')
 
 
 @section('contain')
@@ -7,7 +7,7 @@
 <div class="content">
     <div class="page-inner">
         <div class="page-header">
-            <h4 class="page-title">Pembelian</h4>
+            <h4 class="page-title">Penjualan</h4>
             <ul class="breadcrumbs">
                 <li class="nav-home">
                     <a href="{{route('home')}}">
@@ -18,13 +18,13 @@
                     <i class="flaticon-right-arrow"></i>
                 </li>
                 <li class="nav-item">
-                    <a href="{{route('pembelian.index')}}">Pembelian</a>
+                    <a href="{{route('penjualan.index')}}">Penjualan</a>
                 </li>
                 <li class="separator">
                     <i class="flaticon-right-arrow"></i>
                 </li>
                 <li class="nav-item">
-                    <a href="#">Detail Pembelian</a>
+                    <a href="#">Tambah Penjualan</a>
                 </li>
             </ul>
         </div>
@@ -33,59 +33,57 @@
                 <div class="card">
                     <div class="card-header">
                         <div class="d-flex align-items-center">
-                            <h4 class="card-title">Detail Pembelian</h4>
+                            <h4 class="card-title">Tambah Penjualan</h4>
                         </div>
                     </div>
-                    <form id="purchaseForm" method="POST">
+                    <form id="purchaseForm" action="{{route('penjualan.tambah')}}" method="POST">
                         @csrf
                         <div class="card-body">
                             <div class="row">
-                                <div class="col-sm-5 pr-0">
-                                    <div class="form-group">
-                                        <label>Nomor Refrensi</label>
-                                        <input type="text" class="form-control form-control" name="nomorRefrensi" value="{{$purchase->reference_no}}" disabled>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-sm-5 pr-0">
+                                <div class="col-sm-4 pr-0">
                                     <div class="form-group">
                                         <label>Tanggal</label>
-                                        <input type="date" class="form-control form-control" id="tglPembelian" name="tglPembelian" value="{{$purchase->purchase_date}}" disabled>
+                                        <input type="date" class="form-control form-control" id="tglPembelian" name="tglPembelian">
                                     </div>
                                 </div>
-                                <div class="col-sm-5 pr-0">
+                                <div class="col-sm-4">
                                     <div class="form-group">
-                                        <label>Supplier</label>
-                                        <select class="form-control" id="supplier" name="supplier" disabled>
-                                            <option>--Pilih Supplier</option>
-                                            <option value="{{$purchase->supplier_id}}" selected>{{$purchase->supplier->name}}</option>
-                                        </select>
+                                        <label>Nama Pembeli</label>
+                                        <input type="text" class="form-control form-control" id="" name="namaPembeli">
+                                    </div>
+                                </div>
+                                <div class="col-sm-4">
+                                    <div class="form-group">
+                                        <label>Alamat</label>
+                                        <textarea class="form-control" id="" name="alamatPembeli" rows="3"></textarea>
                                     </div>
                                 </div>
                             </div>
                             <div class="row">
-                                <div class="col-sm-5 pr-0">
+                                <div class="col-sm-4 pr-0">
                                     <div class="form-group">
                                         <label>Status Pembayaran</label>
-                                        <select class="form-control" id="status" name="paymentStatus" disabled>
-                                            <option value="{{$purchase->purchase_status}} == Lunas? 'selected' : '' ">Lunas</option>
-                                            <option value="{{$purchase->purchase_status}} == Lunas? 'selected' : '' ">Sebagian</option>
-                                            <option value="{{$purchase->purchase_status}} == Lunas? 'selected' : '' ">Belum</option>
+                                        <select class="form-control" id="status" name="paymentStatus">
+                                            <option value="Lunas">Lunas</option>
+                                            <option value="Sebagian">Sebagian</option>
+                                            <option value="Belum" selected>Belum</option>
                                         </select>
                                     </div>
                                 </div>
-                                <div class="col-sm-5 pr-0">
+                                <div class="col-sm-4 pr-0">
                                     <div class="form-group">
                                         <label>Jumlah yang Dibayarkan</label>
-                                        <input type="text" class="form-control form-control" id="jmlBayar" name="jmlBayar" value="{{number_format($purchase->paid_amount, 2)}}" disabled>
+                                        <input type="number" class="form-control form-control" id="jmlBayar" name="jmlBayar" value="0">
                                     </div>
                                 </div>
                             </div>
                             <div class="col-md-12">
                                 <div class="card-header">
                                     <div class="d-flex align-items-center">
-                                        <a href="{{route('pembayaran.list', $purchase->id)}}" class="btn btn-primary btn-round ml-auto">Lihat Daftar Pembayaran</a>
+                                        <span class="btn btn-primary btn-round ml-auto" data-toggle="modal" data-target="#tambahModal">
+                                            <i class="fa fa-plus"></i>
+                                            Tambah Item
+                                        </span>
                                     </div>
                                 </div>
                                 <div class="card-body">
@@ -99,24 +97,16 @@
                                                     <th>Unit</th>
                                                     <th>Harga Satuan</th>
                                                     <th>Total</th>
+                                                    <th style="width: 10%">Aksi</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                @foreach ($purchase->purchase_items as $item)
-                                                <tr>
-                                                    <td>{{$loop->iteration}}</td>
-                                                    <td>{{$item->product_name}}</td>
-                                                    <td>{{$item->quantity}}</td>
-                                                    <td>{{$item->unit->name_unit}}</td>
-                                                    <td>{{number_format($item->unit_price, 2)}}</td>
-                                                    <td>{{number_format($item->total, 2)}}</td>
-                                                </tr>
-                                                @endforeach
+
                                             </tbody>
                                             <tfoot>
                                                 <tr>
                                                     <td colspan="5" style="text-align: center;"><b>Total</b></td>
-                                                    <td><b><span id="grandTotal">{{number_format($purchase->total, 2)}}</span></b></td>
+                                                    <td><b><span id="grandTotal">0</span></b></td>
                                                     <td></td>
                                                 </tr>
                                             </tfoot>
@@ -124,6 +114,10 @@
                                     </div>
                                 </div>
                             </div>
+                        </div>
+                        <div class="card-footer text-right">
+                            <button type="reset" class="btn btn-info">Reset</button>&nbsp;
+                            <button type="submit" class="btn btn-success" id="submitPurchase">Simpan</button>
                         </div>
                     </form>
                 </div>
@@ -167,6 +161,7 @@
                             <div class="form-group">
                                 <label>Unit</label>
                                 <input type="text" class="form-control form-control" id="unitItem">
+                                <small class="form-text text-muted">Contoh Unit : Sak, Kg, Meter</small>
                             </div>
                         </div>
                         <div class="col-md-6 pr-0">
@@ -209,6 +204,7 @@
             </div>
             <form action="{{url('/')}}">
                 <div class="modal-body">
+                    <input type="hidden" id="idItemEdit">
                     <div class="row">
                         <div class="col-sm-12">
                             <div class="form-group">
@@ -239,13 +235,14 @@
                             <div class="form-group">
                                 <label>Total</label>
                                 <input type="number" class="form-control form-control" id="totalItemEdit">
+                                <input type="hidden" id="totalItemEditHidden">
                             </div>
                         </div>
                     </div>
                 </div>
                 <div class="modal-footer no-bd">
                     <button type="button" class="btn btn-danger" data-dismiss="modal">Batal</button>
-                    <button type="submit" class="btn btn-success">Simpan</button>
+                    <button class="btn btn-success" id="simpanEdit" data-dismiss="modal">Simpan</button>
                 </div>
             </form>
         </div>
@@ -264,15 +261,14 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <form action="{{url('/')}}">
-                <div class="modal-body">
-                    <p>Yakin untuk menghapus data ini ?</p>
-                </div>
-                <div class="modal-footer no-bd">
-                    <button type="button" class="btn btn-danger" data-dismiss="modal">Batal</button>
-                    <button type="submit" class="btn btn-success">Hapus</button>
-                </div>
-            </form>
+            <div class="modal-body">
+                <p>Yakin untuk menghapus data ini ?</p>
+                <input type="hidden" id="hapusItemId">
+            </div>
+            <div class="modal-footer no-bd">
+                <button type="button" class="btn btn-danger" data-dismiss="modal">Batal</button>
+                <button id="hapusItemBtn" class="btn btn-success" data-dismiss="modal">Hapus</button>
+            </div>
         </div>
     </div>
 </div>
@@ -280,11 +276,25 @@
 @endsection
 
 @section('script')
-<script src="{{asset('assets/js/plugin/sweetalert/sweetalert2.all.min.js')}}"></script>
+<script src="{{asset('assets/js/plugin/sweetalert/sweetalert2.js')}}"></script>
 <script>
     $(document).ready(function() {
+        document.getElementById("tglPembelian").valueAsDate = new Date()
+
+        var swalLoading = function() {
+            swal.fire({
+                title: "Loading....",
+                text: "Mohon Tunggu Sebentar",
+                allowOutsideClick: false,
+                onOpen: function() {
+                    Swal.showLoading()
+                }
+            })
+        }
+        swalLoading();
+
         var listItem = $('#daftarItem').DataTable({
-            "pageLength": 10,
+            "pageLength": 7,
             "columns": [{
                     "data": "nomor"
                 },
@@ -318,13 +328,14 @@
                 'unitItem': $('#unitItem').val(),
                 'hargaItem': $('#hargaItem').val(),
                 'totalItem': $('#totalItem').val(),
-                'action': `<button class="btn btn-primary btn-border dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Aksi</button>\
-                                                            <div class="dropdown-menu">\
-                                                            <span class="dropdown-item editDaftarItem" data-toggle="modal" data-target="#editModal"  data-row="${counter}">Edit</span>\
-                                                            <div role="separator" class="dropdown-divider"></div>\
-                                                            <span class="dropdown-item editDaftarItem" data-toggle="modal" data-target="#hapusModal" data-row="${counter}">Hapus</span>\
+                'action': `<button class="btn btn-primary btn-border dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Aksi</button>
+                                                            <div class="dropdown-menu">
+                                                            <span class="dropdown-item editDaftarItem" data-toggle="modal" data-target="#editModal"  data-row="${counter}">Edit</span>
+                                                            <div role="separator" class="dropdown-divider"></div>
+                                                            <span class="dropdown-item hapusDaftarItem" data-toggle="modal" data-target="#hapusModal" data-row="${counter}">Hapus</span>
                                                         </div>`
             };
+
 
             listItem.row.add(data).draw();
 
@@ -336,7 +347,7 @@
 
         $('#submitPurchase').click(function(event) {
             event.preventDefault();
-
+            // swalLoading();
 
             var purchase = $('#purchaseForm').serializeArray().reduce(function(obj, item) {
                 obj[item.name] = item.value;
@@ -354,18 +365,19 @@
 
             $.ajax({
                 data: purchase,
-                url: "{!!  route('pembelian.tambah') !!}",
+                url: "{!!  route('penjualan.tambah') !!}",
                 type: "POST",
                 dataType: 'json',
                 success: function(data) {
-                    swal("Sukses!", "Tambah data pembelian sukses 😀", {
+                    // swal.close();
+                    swal("Sukses!", "Tambah data penjualan sukses 😀", {
                         buttons: {
                             confirm: {
                                 className: 'btn btn-success'
                             }
                         },
                     });
-                    window.location.href = "{!!route('pembelian.index')!!}";
+                    window.location.href = "{!!route('penjualan.index')!!}";
                 },
                 error: function(data) {
                     console.log('Error:', "error insert data");
@@ -375,8 +387,114 @@
 
         });
 
+        //tampil modal konfirmasi
+
 
     });
+
+
+    $('#daftarItem').on('click', '.hapusDaftarItem', function() {
+
+        $('#hapusItemId').val($(this).data('row'));
+    });
+
+    $('#daftarItem').on('click', '.editDaftarItem', function() {
+        index = parseInt($(this).data('row')) - 1;
+        let row = $('#daftarItem').DataTable().row(index).data();
+
+        $('#idItemEdit').val(index);
+        $('#namaItemEdit').val(row.nama);
+        $('#jumlahItemEdit').val(row.jumlahItem);
+        $('#unitItemEdit').val(row.unitItem);
+        $('#hargaItemEdit').val(row.hargaItem);
+        $('#totalItemEdit').val(row.totalItem);
+        $('#totalItemEditHidden').val(row.totalItem)
+
+    });
+
+    $('#simpanEdit').click(function(e) {
+        e.preventDefault();
+        id = parseInt($('#idItemEdit').val());
+        temp = $('#daftarItem').DataTable().row(id).data();
+        temp.nama = $('#namaItemEdit').val();
+        temp.jumlahItem = $('#jumlahItemEdit').val();
+        temp.unitItem = $('#unitItemEdit').val();
+        temp.hargaItem = $('#hargaItemEdit').val();
+        temp.totalItem = $('#totalItemEdit').val();
+        $('#daftarItem').DataTable().row(id).data(temp);
+
+        grandtotal = parseInt($('#grandTotal').html());
+        newgrandTotal = (grandtotal - parseInt($('#totalItemEditHidden').val())) + parseInt($('#totalItemEdit').val());
+        $('#grandTotal').html(newgrandTotal);
+
+    })
+
+    $('#hapusItemBtn').click(function() {
+        row = parseInt($('#hapusItemId').val()) - 1;
+
+        deletedRow = $('#daftarItem').DataTable().row(row).data();
+        grandtotal = parseInt($('#grandTotal').html());
+        newgrandTotal = (grandtotal - parseInt(deletedRow.totalItem));
+        $('#grandTotal').html(newgrandTotal);
+
+        $('#daftarItem').DataTable().row(row).remove().draw();
+
+        dataItem = $('#daftarItem').DataTable().rows().data();
+        for (let index = 0; index < dataItem.length; index++) {
+
+            dataItem[index].nomor = index + 1;
+            dataItem[index].action = `<button class="btn btn-primary btn-border dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Aksi</button>
+                                                            <div class="dropdown-menu">
+                                                            <span class="dropdown-item editDaftarItem" data-toggle="modal" data-target="#editModal"  data-row="${index+1}">Edit</span>
+                                                            <div role="separator" class="dropdown-divider"></div>
+                                                            <span class="dropdown-item hapusDaftarItem" data-toggle="modal" data-target="#hapusModal" data-row="${index+1}">Hapus</span>
+                                                        </div>`;
+            $('#daftarItem').DataTable().row(index).data(dataItem[index]);
+
+        }
+
+
+    });
+
+    $('#supp').on('change', function() {
+        swalLoading();
+        var value = $(this).val();
+        $.get(`/supplier/${value}/sales`, function(data) {
+            data.forEach(function(item) {
+                $('#sales').append(
+                    `<option value="${item.id}" selected> ${item.name} </option>`
+                );
+            });
+        });
+        swal.close();
+    });
+
+    $('#hargaItem').change(function() {
+        if (parseInt($(this).val()) > 0) {
+            jumlah = parseInt($('#jumlahItem').val());
+
+            totalItem = jumlah * parseInt($(this).val());
+            $('#totalItem').val(totalItem);
+
+        }
+    });
+
+    $('#jmlBayar').change(function() {
+        console.log("sda");
+        jumlahBayar = parseInt($(this).val());
+        grandTotal = parseInt($('#grandTotal').html());
+
+        if (jumlahBayar >= grandTotal) {
+            $('#status').val('Lunas').change();
+        } else if (jumlahBayar < grandTotal && jumlahBayar > 0) {
+            $('#status').val('Sebagian').change();
+        } else if (jumlahBayar <= 0) {
+            $('#status').val('Belum').change();
+        }
+
+    });
+
+
 
     function tambah_pembelian() {
         var status = document.getElementById("status").value;

@@ -43,7 +43,7 @@
                                 <div class="col-sm-6">
                                     <div class="form-group">
                                         <label>Nama</label>
-                                        <input type="text" class="form-control form-control" id="namaSupplier" name="namaSupplier">
+                                        <input type="text" class="form-control form-control" id="namaSupplier" name="namaSupplier" autofocus>
                                     </div>
                                     <div class="form-group">
                                         <label>Telephone</label>
@@ -72,6 +72,7 @@
                             </div>
                         </div>
                         <div class="card-footer text-right">
+                            <a href="{{route('supplier.index')}}" class="btn btn-danger">Batal</a>&nbsp;
                             <button type="reset" class="btn btn-info">Reset</button>&nbsp;
                             <button type="submit" class="btn btn-success">Simpan</button>
                         </div>

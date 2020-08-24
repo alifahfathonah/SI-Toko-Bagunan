@@ -4,9 +4,8 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Unit extends Model
+class Product extends Model
 {
-    protected $table = 'units';
-    protected $fillable = ['name_unit'];
+    protected $table = 'products';
     protected $guarded = [];
 }

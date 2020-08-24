@@ -41,51 +41,48 @@
                         @method('PUT')
                         <div class="card-body">
                             <div class="row">
-                                <div class="col-sm-4 pr-0">
+                                <div class="col-sm-5 pr-0">
                                     <div class="form-group">
                                         <label>Nomor Refrensi</label>
                                         <input type="text" class="form-control form-control" name="nomorRefrensi" value="{{$purchase->reference_no}}" disabled>
                                     </div>
                                 </div>
+                                <div class="col-sm-5 pr-0">
+                                    <div class="form-group">
+                                        <label>Nomor Nota</label>
+                                        <input type="text" class="form-control form-control" id="nota" name="nota" value="{{$purchase->nota_no}}">
+                                    </div>
+                                </div>
                             </div>
                             <div class="row">
-                                <div class="col-sm-4 pr-0">
+                                <div class="col-sm-5 pr-0">
                                     <div class="form-group">
                                         <label>Tanggal</label>
                                         <input type="date" class="form-control form-control" id="tglPembelian" name="tglPembelian" value="{{$purchase->purchase_date}}">
                                     </div>
                                 </div>
-                                <div class="col-sm-4 pr-0">
+                                <div class="col-sm-5 pr-0">
                                     <div class="form-group">
                                         <label>Supplier</label>
                                         <select class="form-control" id="supplier" name="supp">
-                                            <option>--Pilih Supplier</option>
+                                            <option>- Pilih Supplier -</option>
                                             <option value="{{$purchase->supplier_id}}" selected>{{$purchase->supplier->name}}</option>
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="col-sm-4">
-                                    <div class="form-group">
-                                        <label>Sales</label>
-                                        <select class="form-control" id="sales" name="sales">
-                                            <option>--Pilih Sales--</option>
-                                            <option value="{{$purchase->sales_id}}" selected>{{$purchase->sales->name}}</option>
                                         </select>
                                     </div>
                                 </div>
                             </div>
                             <div class="row">
-                                <div class="col-sm-4 pr-0">
+                                <div class="col-sm-5 pr-0">
                                     <div class="form-group">
                                         <label>Status Pembayaran</label>
                                         <select class="form-control" id="status" name="paymentStatus">
-                                            <option value="lunas" {{$purchase->payment_status == 'lunas'? 'selected': '' }}>Lunas</option>
-                                            <option value="sebagian" {{$purchase->payment_status == 'sebagian'? 'selected': '' }}>Sebagian</option>
-                                            <option value="belum" {{$purchase->payment_status == 'belum' ? 'selected': '' }}>Belum</option>
+                                            <option value="Lunas" {{$purchase->payment_status == 'Lunas'? 'selected': '' }}>Lunas</option>
+                                            <option value="Sebagian" {{$purchase->payment_status == 'Sebagian'? 'selected': '' }}>Sebagian</option>
+                                            <option value="Belum" {{$purchase->payment_status == 'Belum' ? 'selected': '' }}>Belum</option>
                                         </select>
                                     </div>
                                 </div>
-                                <div class="col-sm-4 pr-0">
+                                <div class="col-sm-5 pr-0">
                                     <div class="form-group">
                                         <label>Jumlah yang telah dibayarkan</label>
                                         <input type="number" class="form-control form-control" id="jmlBayar" name="jmlBayar" value="{{$purchase->paid_amount}}" disabled>
@@ -315,7 +312,7 @@
 <script>
     $(document).ready(function() {
         var listItem = $('#daftarItem').DataTable({
-            "pageLength": 7,
+            "pageLength": 10,
             "columns": [{
                     "data": "nomor"
                 },
@@ -341,13 +338,13 @@
 
         });
 
-        
+
 
         var counter = listItem.rows().data().length + 1;
         $('#simpan').click(function() {
             dataItem = listItem.rows().data();
 
-           
+
             let data = {
                 'nomor': counter,
                 'nama': $('#namaItem').val(),
@@ -364,7 +361,7 @@
             };
 
             listItem.row.add(data).draw();
-            $('#submitPurchase').removeAttr("disabled"); 
+            $('#submitPurchase').removeAttr("disabled");
 
             $('#grandTotal').html(parseInt($('#grandTotal').html()) + parseInt($('#totalItem').val()));
 
@@ -472,22 +469,20 @@
 
             }
 
-            if(dataItem.length <= 0 )
-            {
-                $('#submitPurchase').attr("disabled","disabled");
+            if (dataItem.length <= 0) {
+                $('#submitPurchase').attr("disabled", "disabled");
             }
         });
 
 
     });
 
-    $('#namaItem').change(function(){
-        if($(this).val() == "" ){
+    $('#namaItem').change(function() {
+        if ($(this).val() == "") {
             $('#simpan').attr("disabled", "disabled");
-        }
-        else{
+        } else {
             $('#simpan').removeAttr("disabled");
-            
+
         }
     })
 
@@ -500,6 +495,5 @@
 
         }
     });
-
 </script>
 @endsection

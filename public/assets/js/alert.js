@@ -31,3 +31,27 @@ var swalSuccess = function(messageSuccess){
         }
     })
 }
+
+var swalSend = function(){
+    return Swal.fire({
+        text: 'Pengiriman Berhasil',
+        icon: 'success',
+        allowOutsideClick: false,
+        showCancelButton: true,
+        confirmButtonText: 'Cetak surat jalan',
+        cancelButtonText:'Tidak'
+    });
+}
+
+var swalDelete = function(message){      
+    return Swal.fire({
+        text: message,
+        icon: 'warning',
+        allowOutsideClick: false,
+        showCancelButton: true,
+        focusConfirm : false,
+        focusCancel : false,
+        confirmButtonText: 'Ya',
+        cancelButtonText: 'tidak',
+    });
+}

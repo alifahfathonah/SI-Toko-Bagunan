@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreatePurchaseItemsTable extends Migration
+class CreateTablePenjualanItem extends Migration
 {
     /**
      * Run the migrations.
@@ -13,16 +13,16 @@ class CreatePurchaseItemsTable extends Migration
      */
     public function up()
     {
-        Schema::create('purchase_items', function (Blueprint $table) {
+        Schema::create('penjualan_item', function (Blueprint $table) {
             $table->id();
-            $table->foreignID('purchase_id')->references('id')->on('purchases')->onDelete('cascade');
-            $table->string('product_name', 100);
-            $table->string('unit_id')->references('id')->on('units');
+            $table->foreignID('penjualan_id')->references('id')->on('penjualan')->onDelete('cascade');
+            $table->foreignID('product_id')->references('id')->on('products');
             $table->integer('quantity');
+            $table->string('unit_id')->references('id')->on('units');
             $table->decimal('unit_price', 25, 2)->default(0.00);
             $table->integer('total');
+            $table->integer('quantity_sent')->default(0);
             $table->timestamps();
-            $table->softDeletes('deleted_at', 0);
         });
     }
 
@@ -33,6 +33,6 @@ class CreatePurchaseItemsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('purchase_items');
+        Schema::dropIfExists('penjualan_item');
     }
 }
