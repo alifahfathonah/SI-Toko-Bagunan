@@ -40,7 +40,7 @@
                         @csrf
                         <div class="card-body">
                             <div class="row">
-                                <div class="col-sm-5 pr-0">
+                                <div class="col-sm-4 pr-0">
                                     <div class="form-group">
                                         <label>Tanggal</label>
                                         <input type="date" class="form-control form-control" id="tglPembelian" name="tglPembelian">
@@ -60,7 +60,7 @@
                                 </div>
                             </div>
                             <div class="row">
-                                <div class="col-sm-5 pr-0">
+                                <div class="col-sm-4 pr-0">
                                     <div class="form-group">
                                         <label>Status Pembayaran</label>
                                         <select class="form-control" id="status" name="paymentStatus">
@@ -70,7 +70,7 @@
                                         </select>
                                     </div>
                                 </div>
-                                <div class="col-sm-5 pr-0">
+                                <div class="col-sm-4 pr-0">
                                     <div class="form-group">
                                         <label>Jumlah yang Dibayarkan</label>
                                         <input type="number" class="form-control form-control" id="jmlBayar" name="jmlBayar" value="0">
@@ -391,6 +391,7 @@
 
 
     });
+
 
     $('#daftarItem').on('click', '.hapusDaftarItem', function() {
 

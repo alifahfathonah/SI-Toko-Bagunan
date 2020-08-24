@@ -47,6 +47,12 @@
                                         <input type="text" class="form-control form-control" name="nomorRefrensi" value="{{$purchase->reference_no}}" disabled>
                                     </div>
                                 </div>
+                                <div class="col-sm-5 pr-0">
+                                    <div class="form-group">
+                                        <label>Nomor Nota</label>
+                                        <input type="text" class="form-control form-control" id="nota" name="nota" value="{{$purchase->nota_no}}">
+                                    </div>
+                                </div>
                             </div>
                             <div class="row">
                                 <div class="col-sm-5 pr-0">
@@ -59,7 +65,7 @@
                                     <div class="form-group">
                                         <label>Supplier</label>
                                         <select class="form-control" id="supplier" name="supp">
-                                            <option>--Pilih Supplier</option>
+                                            <option>- Pilih Supplier -</option>
                                             <option value="{{$purchase->supplier_id}}" selected>{{$purchase->supplier->name}}</option>
                                         </select>
                                     </div>
@@ -70,9 +76,9 @@
                                     <div class="form-group">
                                         <label>Status Pembayaran</label>
                                         <select class="form-control" id="status" name="paymentStatus">
-                                            <option value="lunas" {{$purchase->payment_status == 'lunas'? 'selected': '' }}>Lunas</option>
-                                            <option value="sebagian" {{$purchase->payment_status == 'sebagian'? 'selected': '' }}>Sebagian</option>
-                                            <option value="belum" {{$purchase->payment_status == 'belum' ? 'selected': '' }}>Belum</option>
+                                            <option value="Lunas" {{$purchase->payment_status == 'Lunas'? 'selected': '' }}>Lunas</option>
+                                            <option value="Sebagian" {{$purchase->payment_status == 'Sebagian'? 'selected': '' }}>Sebagian</option>
+                                            <option value="Belum" {{$purchase->payment_status == 'Belum' ? 'selected': '' }}>Belum</option>
                                         </select>
                                     </div>
                                 </div>
@@ -306,7 +312,7 @@
 <script>
     $(document).ready(function() {
         var listItem = $('#daftarItem').DataTable({
-            "pageLength": 7,
+            "pageLength": 10,
             "columns": [{
                     "data": "nomor"
                 },

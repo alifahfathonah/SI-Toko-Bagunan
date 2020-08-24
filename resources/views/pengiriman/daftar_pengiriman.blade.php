@@ -138,7 +138,7 @@
 <script>
     $(document).ready(function() {
         $('#daftarPengiriman').DataTable({
-            "pageLength": 5,
+            "pageLength": 10,
         });
 
         $('#sendPengiriman').submit(function(e){

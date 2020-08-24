@@ -18,7 +18,7 @@
                     <i class="flaticon-right-arrow"></i>
                 </li>
                 <li class="nav-item">
-                    <a href="{{route('pembelian.index')}}">Pembelian</a>
+                    <a href="{{route('penjualan.index')}}">Penjualan</a>
                 </li>
                 <li class="separator">
                     <i class="flaticon-right-arrow"></i>
@@ -40,27 +40,27 @@
                         @csrf
                         <div class="card-body">
                             <div class="row">
-                                <div class="col-sm-4 pr-0">
+                                <div class="col-sm-5 pr-0">
                                     <div class="form-group">
                                         <label>Nomor Refrensi</label>
-                                        <input type="text" class="form-control form-control" name="nomorRefrensi" value="" disabled>
+                                        <input type="text" class="form-control form-control" name="nomorRefrensi" value="{{$penjualan->reference_no}}" disabled>
+                                    </div>
+                                </div>
+                                <div class="col-sm-5 pr-0">
+                                    <div class="form-group">
+                                        <label>Tanggal</label>
+                                        <input type="date" class="form-control form-control" id="tglPembelian" name="tglPembelian" value="{{$penjualan->date}}" disabled>
                                     </div>
                                 </div>
                             </div>
                             <div class="row">
-                                <div class="col-sm-4 pr-0">
-                                    <div class="form-group">
-                                        <label>Tanggal</label>
-                                    <input type="date" class="form-control form-control" id="tglPembelian" name="tglPembelian" value="{{$penjualan->date}}" disabled>
-                                    </div>
-                                </div>
-                                <div class="col-sm-4 pr-0">
+                                <div class="col-sm-5 pr-0">
                                     <div class="form-group">
                                         <label>Pembeli</label>
                                         <input type="text" class="form-control form-control" id="" name="tglPembelian" value="{{$penjualan->nama_pembeli}}" disabled>
                                     </div>
                                 </div>
-                                <div class="col-sm-4">
+                                <div class="col-sm-5 pr-0">
                                     <div class="form-group">
                                         <label>Alamat</label>
                                         <input type="text" class="form-control form-control" id="" name="tglPembelian" value="{{$penjualan->alamat_pembeli}}" disabled>
@@ -68,20 +68,20 @@
                                 </div>
                             </div>
                             <div class="row">
-                                <div class="col-sm-4 pr-0">
+                                <div class="col-sm-5 pr-0">
                                     <div class="form-group">
                                         <label>Status Pembayaran</label>
                                         <select class="form-control" id="status" name="paymentStatus" disabled>
-                                            <option >Lunas</option>
-                                            <option >Sebagian</option>
-                                            <option >Belum</option>
+                                            <option>Lunas</option>
+                                            <option>Sebagian</option>
+                                            <option>Belum</option>
                                         </select>
                                     </div>
                                 </div>
-                                <div class="col-sm-4 pr-0">
+                                <div class="col-sm-5 pr-0">
                                     <div class="form-group">
                                         <label>Jumlah yang Dibayarkan</label>
-                                    <input type="number" class="form-control form-control" id="jmlBayar" name="jmlBayar" value="{{$penjualan->paid_amount}}" >
+                                        <input type="text" class="form-control form-control" id="jmlBayar" name="jmlBayar" value="{{number_format($penjualan->paid_amount, 2)}}" disabled>
                                     </div>
                                 </div>
                             </div>
@@ -106,22 +106,22 @@
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                
+
                                                 @foreach ($penjualan->items as $item)
                                                 <tr>
                                                     <td>{{$loop->iteration}}</td>
                                                     <td>{{$item->product->nama_produk}}</td>
                                                     <td>{{$item->quantity}}</td>
                                                     <td>{{$item->unit->name_unit}}</td>
-                                                    <td>{{$item->unit_price}}</td>
-                                                    <td>{{$item->total}}</td>
+                                                    <td>{{number_format($item->unit_price, 2)}}</td>
+                                                    <td>{{number_format($item->total, 2)}}</td>
                                                 </tr>
                                                 @endforeach
                                             </tbody>
                                             <tfoot>
                                                 <tr>
                                                     <td colspan="5" style="text-align: center;"><b>Total</b></td>
-                                                    <td><b><span id="grandTotal">{{$penjualan->grandtotal}}</span></b></td>
+                                                    <td><b><span id="grandTotal">{{number_format($penjualan->grandtotal, 2)}}</span></b></td>
                                                     <td></td>
                                                 </tr>
                                             </tfoot>
@@ -313,7 +313,7 @@
                 }
             ]
 
+        });
     });
-
 </script>
 @endsection

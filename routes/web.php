@@ -39,6 +39,8 @@ Route::get('/pembelian/detail/{id}', 'PembelianController@detail')->name('pembel
 Route::get('/pembelian/{id}/pembayaran/create', 'PembelianController@payment_show')->name('pembayaran.form.tambah');
 Route::post('/pembelian/{id}/pembayaran/store', 'PembelianController@payment_store')->name('pembayaran.tambah');
 
+Route::post('/pembelian/supplier/store', 'PembelianController@supplier_store')->name('pembelian.supplier.tambah');
+
 Route::get('/pembelian/{id}/pembayaran/list', 'PembelianController@payment_list')->name('pembayaran.list');
 Route::get('/pembelian/pembayaran/edit/{id}/{purchase_id}', 'PembelianController@payment_edit')->name('pembayaran.edit');
 Route::get('/pembelian/pembayaran/update/{id}', 'PembelianController@payment_update')->name('pembayaran.update');
@@ -87,10 +89,11 @@ Route::resource('pengiriman', 'ShippingController')->names([
     'index' => 'pengiriman.index',
     'create' => 'pengiriman.form.tambah',
     'store' => 'pengiriman.tambah',
-    'destroy' => 'pengiriman.hapus',
     'edit'    => 'pengiriman.form.edit',
     'update'  => 'pengiriman.edit',
     'show'    => 'pengiriman.detail',
+    'destroy'    => 'pengiriman.hapus',
+
 
 ]);
 
@@ -104,7 +107,15 @@ Route::resource('penjualan', 'PenjualanController')->names([
     'create' => 'penjualan.form.tambah',
     'show' => 'penjualan.detail',
     'store' => 'penjualan.tambah',
-    'edit' => 'penjualan.edit',
-    'update' => 'penjualan.update',
+    'edit' => 'penjualan.form.edit',
+    'update' => 'penjualan.edit',
     'destroy' => 'penjualan.hapus'
 ]);
+
+Route::get('/penjualan/{id}/pembayaran/create', 'PenjualanController@payment_show')->name('pembayaransale.form.tambah');
+Route::post('/penjualan/{id}/pembayaran/store', 'PenjualanController@payment_store')->name('pembayaransale.tambah');
+
+Route::get('/penjualan/{id}/pembayaran/list', 'PenjualanController@payment_list')->name('pembayaransale.list');
+Route::get('/penjualan/pembayaran/edit/{id}/{sale_id}', 'PenjualanController@payment_edit')->name('pembayaransale.edit');
+Route::get('/penjualan/pembayaran/update/{id}', 'PenjualanController@payment_update')->name('pembayaransale.update');
+Route::get('/penjualan/pembayaran/delete/{id}', 'PenjualanController@payment_destroy')->name('pembayaransale.destroy');

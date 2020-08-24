@@ -34,23 +34,27 @@
                     <div class="card-header">
                         <div class="d-flex align-items-center">
                             <h4 class="card-title">Tambah Pembelian</h4>
+                            <span class="btn btn-primary btn-round ml-auto" data-toggle="modal" data-target="#tambahSupplierModal">
+                                <i class="fa fa-plus"></i>
+                                Tambah Supplier
+                            </span>
                         </div>
                     </div>
                     <form id="purchaseForm" method="POST">
                         @csrf
                         <div class="card-body">
                             <div class="row">
-                                <div class="col-sm-5 pr-0">
+                                <div class="col-sm-4 pr-0">
                                     <div class="form-group">
                                         <label>Tanggal</label>
                                         <input type="date" class="form-control form-control" id="tglPembelian" name="tglPembelian">
                                     </div>
                                 </div>
-                                <div class="col-sm-5 pr-0">
+                                <div class="col-sm-4 pr-0">
                                     <div class="form-group">
                                         <label>Supplier</label>
                                         <select class="form-control" id="supp" name="supp">
-                                            <option selected disabled>--Pilih Supplier--</option>
+                                            <option selected disabled>- Pilih Supplier -</option>
                                             @foreach ($suppliers as $item)
                                             <option value="{{$item->id}}">{{$item->name}}</option>
                                             @endforeach
@@ -58,9 +62,15 @@
 
                                     </div>
                                 </div>
+                                <div class="col-sm-4 pr-0">
+                                    <div class="form-group">
+                                        <label>Nomor Nota</label>
+                                        <input type="text" class="form-control form-control" id="nota" name="nota">
+                                    </div>
+                                </div>
                             </div>
                             <div class="row">
-                                <div class="col-sm-5 pr-0">
+                                <div class="col-sm-4 pr-0">
                                     <div class="form-group">
                                         <label>Status Pembayaran</label>
                                         <select class="form-control" id="status" name="paymentStatus">
@@ -70,7 +80,7 @@
                                         </select>
                                     </div>
                                 </div>
-                                <div class="col-sm-5 pr-0">
+                                <div class="col-sm-4 pr-0">
                                     <div class="form-group">
                                         <label>Jumlah yang Dibayarkan</label>
                                         <input type="number" class="form-control form-control" id="jmlBayar" name="jmlBayar" value="0">
@@ -129,6 +139,76 @@
 @endsection
 
 @section('modal')
+<!-- Tambah Supplier -->
+<div class="modal fade" id="tambahSupplierModal" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header no-bd">
+                <h5 class="modal-title">
+                    <span class="fw-mediumbold">
+                        Tambah Data Supplier</span>
+                </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form method="POST">
+                    @csrf
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <label>Nama</label>
+                                        <input type="text" class="form-control form-control" id="namaSupplier" name="namaSupplier" autofocus>
+                                    </div>
+                                </div>
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <label>Telephone</label>
+                                        <input type="number" class="form-control form-control" id="phoneSupplier" name="phoneSupplier" autofocus>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-12">
+                            <div class="form-group">
+                                <label>Alamat</label>
+                                <input type="text" class="form-control form-control" id="alamatSupplier" name="alamatSupplier" autofocus>
+                            </div>
+                        </div>
+                        <div class="col-sm-12">
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <label>Provinsi</label>
+                                        <select class="form-control" id="provSupplier" name="provSupplier">
+
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <label>Kota</label>
+                                        <select class="form-control" id="kotaSupplier" name="kotaSupplier">
+
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+                <div class="modal-footer no-bd">
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">Batal</button>
+                    <button type="button" class="btn btn-success" id="simpanSupplier" data-dismiss="modal">Simpan</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
 <!-- Tambal Modal -->
 <div class="modal fade" id="tambahModal" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog" role="document">
@@ -282,8 +362,101 @@
     $(document).ready(function() {
         document.getElementById("tglPembelian").valueAsDate = new Date()
 
+        $('#provSupplier').change(function() {
+            $('#kotaSupplier').empty().append(
+                '<option selected disabled>- Pilih Kabupaten -</option>'
+            );
 
+            let url = `/lokasi/provinsi/${$(this).val()}/kabupaten`;
 
+            $.get(url, function(data, status) {
+                data.forEach(function(item, index) {
+                    $('#kotaSupplier').append(
+                        `<option value="${item.id_kab}"> ${item.nama} </option>`);
+                });
+            });
+        });
+
+        if ($('#provSupplier').val() !== null) {
+            var id_prov = $('#provSupplier').val();
+
+            $('#provSupplier').empty().append(
+                '<option selected disabled>- Pilih Provinsi -</option>'
+            );
+            $.get("/lokasi/provinsi", function(data, status) {
+                data.forEach(function(item, index) {
+
+                    if (item.id_prov == id_prov) {
+                        $('#provSupplier').append(
+                            `<option value="${item.id_prov}" selected> ${item.nama} </option>`
+                        );
+                    } else {
+                        $('#provSupplier').append(
+                            `<option value="${item.id_prov}"> ${item.nama} </option>`
+                        );
+                    }
+                });
+            });
+        } else {
+            $.get("/lokasi/provinsi", function(data, status) {
+                data.forEach(function(item, index) {
+                    $('#provSupplier').append(
+                        `<option value="${item.id_prov}"> ${item.nama} </option>`);
+                });
+            });
+        }
+
+        if ($('#kotaSupplier').val() !== null) {
+            var id_kab = $('#kotaSupplier').val();
+
+            $('#kotaSupplier').empty().append(
+                '<option selected disabled>- Pilih Kabupaten -</option>'
+            );
+            let url = '/lokasi/provinsi/${id_prov}/kabupaten';
+            $.get(url, function(data, status) {
+                data.forEach(function(item, index) {
+
+                    if (item.id_kab == id_kab) {
+                        $('#kotaSupplier').append(
+                            `<option value="${item.id_kab}" selected> ${item.nama} </option>`
+                        );
+                    } else {
+                        $('#kotaSupplier').append(
+                            `<option value="${item.id_kab}"> ${item.nama} </option>`
+                        );
+                    }
+                });
+            });
+        }
+
+        $('#simpanSupplier').click(function(event) {
+            event.preventDefault();
+            swalLoading();
+
+            $.ajax({
+                data: {
+                    "_token": "{{ csrf_token() }}",
+                    'namaSupplier': $('#namaSupplier').val(),
+                    'alamatSupplier': $('#alamatSupplier').val(),
+                    'phoneSupplier': $('#phoneSupplier').val(),
+                    'provSupplier': $('#provSupplier').val(),
+                    'kotaSupplier': $('#kotaSupplier').val(),
+                },
+                url: "{!!  route('pembelian.supplier.tambah') !!}",
+                type: "POST",
+                dataType: 'json',
+                success: function(data) {
+                    swal.close();
+                    swalSuccess('Tambah data supplier berhasil');
+                    window.location.href = "{!!route('pembelian.form.tambah')!!}";
+                },
+                error: function(data) {
+                    swalError('Error,tidak dapat menambah data');
+
+                }
+            });
+
+        });
 
         var listItem = $('#daftarItem').DataTable({
             "pageLength": 7,
@@ -390,7 +563,6 @@
 
             }
         })
-
 
     });
 

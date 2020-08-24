@@ -13,7 +13,7 @@ class Payment extends Model
     protected $table = 'payments';
 
     protected $fillable = [
-        'payment_date', 'purchase_id', 'reference_no', 'amount'
+        'payment_date', 'purchase_id', 'sale_id', 'reference_no', 'amount'
     ];
 
     /**

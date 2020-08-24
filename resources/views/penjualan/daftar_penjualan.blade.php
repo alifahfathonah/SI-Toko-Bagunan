@@ -1,5 +1,5 @@
 @extends('layout.main')
-@section('title', 'Daftar Pembelian')
+@section('title', 'Daftar Penjualan')
 
 
 @section('contain')
@@ -7,7 +7,7 @@
 <div class="content">
     <div class="page-inner">
         <div class="page-header">
-            <h4 class="page-title">Pembelian</h4>
+            <h4 class="page-title">Penjualan</h4>
             <ul class="breadcrumbs">
                 <li class="nav-home">
                     <a href="{{route('home')}}">
@@ -18,13 +18,13 @@
                     <i class="flaticon-right-arrow"></i>
                 </li>
                 <li class="nav-item">
-                    <a href="{{route('pembelian.index')}}">Pembelian</a>
+                    <a href="{{route('penjualan.index')}}">Penjualan</a>
                 </li>
                 <li class="separator">
                     <i class="flaticon-right-arrow"></i>
                 </li>
                 <li class="nav-item">
-                    <a href="#">Daftar Pembelian</a>
+                    <a href="#">Daftar Penjualan</a>
                 </li>
             </ul>
         </div>
@@ -33,8 +33,8 @@
                 <div class="card">
                     <div class="card-header">
                         <div class="d-flex align-items-center">
-                            <h4 class="card-title">Daftar Pembelian</h4>
-                            <a class="btn btn-primary btn-round ml-auto" href="{{route('pembelian.form.tambah')}}">
+                            <h4 class="card-title">Daftar Penjualan</h4>
+                            <a class="btn btn-primary btn-round ml-auto" href="{{route('penjualan.form.tambah')}}">
                                 <i class="fa fa-plus"></i>
                                 Tambah
                             </a>
@@ -42,40 +42,43 @@
                     </div>
                     <div class="card-body">
                         <div class="table-responsive">
-                            <table id="daftarPembelian" class="display table table-striped table-hover">
+                            <table id="daftarPenjualan" class="display table table-striped table-hover">
                                 <thead>
                                     <tr>
                                         <th>Tanggal</th>
                                         <th>No. Referensi</th>
                                         <th>Nama Pembeli</th>
                                         <th>Alamat Pembeli</th>
-                                        <th>Status Pembelian</th>
                                         <th>Total</th>
-                                        <th style="width: 10%"></th>
+                                        <th>Status Pembelian</th>
+                                        <th>Status Pembayaran</th>
+                                        <th style="width: 10%">Aksi</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     @foreach ($sales as $sale)
                                     <tr>
                                         <td>{{$sale->date}}</td>
-                                        <th>000000</th>
+                                        <td>{{$sale->reference_no}}</td>
                                         <td>{{$sale->nama_pembeli}}</td>
                                         <td>{{$sale->alamat_pembeli}}</td>
-                                        <td>{!!badge('selesai')!!}</td>
-                                        <td>{{$sale->grandtotal}}</td>
-
+                                        <td>{{number_format($sale->grandtotal, 2)}}</td>
+                                        <td>{!!badge($sale->sale_status)!!}</td>
+                                        <td>{!!badge($sale->payment_status)!!}</td>
                                         <td>
                                             <button class="btn btn-primary btn-border dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Aksi</button>
                                             <div class="dropdown-menu">
-                                            <a class="dropdown-item" href="{{route('penjualan.detail',['penjualan'=>$sale])}}">Detail</a>
+                                                <a class="dropdown-item" href="{{route('penjualan.detail',['penjualan'=>$sale])}}">Detail Penjualan</a>
                                                 <div role="separator" class="dropdown-divider"></div>
-                                                <a class="dropdown-item" href="">Edit</a>
+                                                <a class="dropdown-item" href="{{route('penjualan.form.edit', $sale->id)}}">Edit Penjualan</a>
                                                 <div role="separator" class="dropdown-divider"></div>
-                                                <a class="dropdown-item tambahPembayaran" id="tambahPembayaran" data-toggle="modal" data-target="#tambahModal" data-purchase="1">Tambah Pembayaran</a>
+                                                <a class="dropdown-item tambahPembayaran" id="tambahPembayaran" data-toggle="modal" data-target="#tambahModal" data-sale="{{$sale->id}}">Tambah Pembayaran</a>
                                                 <div role="separator" class="dropdown-divider"></div>
-                                                <a class="dropdown-item" href="">Detail Pembayaran</a>
+                                                <a class="dropdown-item" href="{{route('pembayaransale.list', $sale->id)}}">Detail Pembayaran</a>
                                                 <div role="separator" class="dropdown-divider"></div>
-                                                <a class="dropdown-item" data-toggle="modal" data-target="#hapusModal">Hapus</a>
+                                                <a class="dropdown-item" href="{{route('pengiriman.form.tambah', $sale->id)}}">Tambah Pengiriman</a>
+                                                <div role="separator" class="dropdown-divider"></div>
+                                                <a class="dropdown-item" data-toggle="modal" data-target="#hapusModal{{$sale->id}}">Hapus</a>
                                             </div>
                                         </td>
                                     </tr>
@@ -109,7 +112,7 @@
 
             <form id="formPembayaran" method="POST">
                 @csrf
-                <input type="hidden" name="purchase_id">
+                <input type="hidden" name="sale_id">
                 <div class="modal-body">
                     <div class="row">
                         <div class="col-sm-12">
@@ -145,81 +148,25 @@
     </div>
 </div>
 
-<!-- Edit Modal -->
-<div class=" modal fade" id="editModal" tabindex="-1" role="dialog" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header no-bd">
-                <h5 class="modal-title">
-                    <span class="fw-mediumbold">
-                        Edit Data Pembelian</span>
-                </h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <form action="{{url('/')}}">
-                <div class="modal-body">
-                    <div class="row">
-                        <div class="col-sm-12">
-                            <div class="form-group">
-                                <label>Tanggal</label>
-                                <input type="date" class="form-control form-control" id="tglPembelianEdit">
-                            </div>
-                        </div>
-                        <div class="col-md-6 pr-0">
-                            <div class="form-group">
-                                <label>Supplier</label>
-                                <select class="form-control" id="supplierEdit">
-                                    <option>--Pilih Supplier--</option>
-                                    <option>Dimas</option>
-                                    <option>Icha</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label>Sales</label>
-                                <select class="form-control" id="salesEdit">
-                                    <option>--Pilih Sales</option>
-                                    <option>Dimas</option>
-                                    <option>Icha</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="col-sm-12">
-                            <div class="form-group">
-                                <label>Total</label>
-                                <input type="number" class="form-control form-control" id="totalEdit">
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="modal-footer no-bd">
-                    <button type="button" class="btn btn-danger" data-dismiss="modal">Batal</button>
-                    <button type="submit" class="btn btn-success">Simpan</button>
-                </div>
-            </form>
-        </div>
-    </div>
-</div>
-
 <!-- Hapus Modal -->
-<div class="modal fade" id="hapusModal" tabindex="-1" role="dialog" aria-hidden="true">
+@foreach ($sales as $sale)
+<div class="modal fade" id="hapusModal{{$sale->id}}" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header no-bd">
                 <h5 class="modal-title">
                     <span class="fw-mediumbold">
-                        Hapus Data Pembelian</span>
+                        Hapus Data Penjualan</span>
                 </h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <form action="{{url('pembelian/destroy')}}">
+            <form action="{{route('penjualan.hapus', $sale->id)}}" method="POST">
+                @method ('DELETE')
+                @csrf
                 <div class="modal-body">
-                    <p>Yakin untuk menghapus data dengan nomor referensi . . . . . ?</p>
+                    <p>Yakin untuk menghapus data ini ?</p>
                 </div>
                 <div class="modal-footer no-bd">
                     <button type="button" class="btn btn-danger" data-dismiss="modal">Batal</button>
@@ -229,22 +176,19 @@
         </div>
     </div>
 </div>
+@endforeach
 @endsection
 
 @section('script')
 <script>
     $(document).ready(function() {
-        document.getElementById("tglPembayaran").valueAsDate = new Date()
-        $('#daftarPembelian').DataTable({
-            "pageLength": 5,
+        $('#daftarPenjualan').DataTable({
+            "pageLength": 10,
             "order": [
                 [0, "desc"]
             ]
         });
-
-
     });
-
     $('.close-pembayaran').click(function() {
         $('#formPembayaran').trigger('reset');
         $('#jenisPembayaran').attr("disabled", "disabled");
@@ -255,16 +199,16 @@
     })
 
     $('.tambahPembayaran').click(function() {
-        var purchase_id = $(this).data('purchase');
+        var sale_id = $(this).data('sale');
         // console.log(purchase_id);
-        $('#formPembayaran').attr("action", "{{route('pembayaran.tambah',['id'=>':id'])}}".replace(':id', purchase_id));
-        var _url = "{{route('pembayaran.form.tambah',['id'=>':id'])}}".replace(':id', purchase_id);
+        $('#formPembayaran').attr("action", "{{route('pembayaransale.tambah',['id'=>':id'])}}".replace(':id', sale_id));
+        var _url = "{{route('pembayaransale.form.tambah',['id'=>':id'])}}".replace(':id', sale_id);
         $.ajax({
             url: _url,
             type: "GET",
             dataType: 'json',
             success: function(data) {
-                $('#purchase_id').val(purchase_id);
+                $('#sale_id').val(sale_id);
                 $('#totalTagihan').val(data.must_pay);
                 $('#jenisPembayaran').removeAttr("disabled");
 

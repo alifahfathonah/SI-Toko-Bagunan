@@ -40,14 +40,14 @@
                         @csrf
                         <div class="card-body">
                             <div class="row">
-                                <div class="col-sm-6 pr-0">
+                                <div class="col-sm-4 pr-0">
                                     <input type="hidden" id="id_penjualan" name="id_penjualan" value="{{$penjualan->id}}">
                                     <div class="form-group">
                                         <label>Nama Pembeli</label>
                                         <input type="text" class="form-control form-control" id="namaPembeli" name="namaPembeli" value="{{$penjualan->nama_pembeli}}" disabled>
                                     </div>
                                 </div>
-                                <div class="col-sm-6">
+                                <div class="col-sm-4">
                                     <div class="form-group">
                                         <label>ALamat</label>
                                         <input type="text" class="form-control form-control" id="alamat" name="alamat" value="{{$penjualan->alamat_pembeli}}" disabled>
@@ -71,7 +71,17 @@
                                         </select>
                                     </div>
                                 </div>
-                                
+                                <div class="col-sm-4">
+                                    <div class="form-group">
+                                        <label>Prioritas</label>
+                                        <select class="form-control" id="prioritas" name="prioritas">
+                                            <option selected disabled>--Pilih Prioritas--</option>
+                                            <option value="normal">Normal</option>
+                                            <option value="sedang">Sedang</option>
+                                            <option value="utama">Utama</option>
+                                        </select>
+                                    </div>
+                                </div>
                             </div>
                             <div class="col-md-12">
                                 <div class="card-header">
@@ -138,12 +148,12 @@
 
             var zeroQty = true;
             var data = {
-                'jmlDikirim' : [],
-                'idItem'     : [],
+                'jmlDikirim': [],
+                'idItem': [],
             }
 
             $('#shippingForm').serializeArray().forEach(element => {
-                if(element.name == 'jmlDikirim' || element.name == 'idItem'){
+                if (element.name == 'jmlDikirim' || element.name == 'idItem') {
                     data[element.name].push(element.value);
                     if(element.name == 'jmlDikirim' && parseInt(element.value) > 0){
                         zeroQty = false;
