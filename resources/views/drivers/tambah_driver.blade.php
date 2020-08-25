@@ -17,13 +17,13 @@
                     <i class="flaticon-right-arrow"></i>
                 </li>
                 <li class="nav-item">
-                    <a href="{{route('driver.index')}}">Supir</a>
+                    <a href="{{route('driver.index')}}">Driver</a>
                 </li>
                 <li class="separator">
                     <i class="flaticon-right-arrow"></i>
                 </li>
                 <li class="nav-item">
-                    <a href="#">Tambah Supir</a>
+                    <a href="#">Tambah Driver</a>
                 </li>
             </ul>
         </div>
@@ -32,7 +32,7 @@
                 <div class="card">
                     <div class="card-header">
                         <div class="d-flex align-items-center">
-                            <h4 class="card-title">Tambah Supir</h4>
+                            <h4 class="card-title">Tambah Driver</h4>
                         </div>
                     </div>
                     <form action="{{route('driver.tambah')}}" method="POST">

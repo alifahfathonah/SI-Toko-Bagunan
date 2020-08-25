@@ -1,5 +1,5 @@
 @extends('layout.main')
-@section('title', 'Daftar Antrian Pengiriman')
+@section('title', 'Riwayat Pengiriman')
 
 
 @section('contain')
@@ -24,7 +24,7 @@
                     <i class="flaticon-right-arrow"></i>
                 </li>
                 <li class="nav-item">
-                    <a href="#">Daftar Antrian Pengiriman</a>
+                    <a href="#">Riwayat Pengiriman</a>
                 </li>
             </ul>
         </div>
@@ -33,7 +33,7 @@
                 <div class="card">
                     <div class="card-header">
                         <div class="d-flex align-items-center">
-                            <h4 class="card-title">Daftar Antrian Pengiriman</h4>
+                            <h4 class="card-title">Daftar Riwayat Pengiriman</h4>
                         </div>
                     </div>
                     <div class="card-body">

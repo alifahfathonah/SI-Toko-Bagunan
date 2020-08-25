@@ -24,7 +24,7 @@
                     <i class="flaticon-right-arrow"></i>
                 </li>
                 <li class="nav-item">
-                    <a href="#">Daftar Pembelian Aktif</a>
+                    <a href="#">Daftar Pembelian</a>
                 </li>
             </ul>
         </div>
@@ -33,7 +33,7 @@
                 <div class="card">
                     <div class="card-header">
                         <div class="d-flex align-items-center">
-                            <h4 class="card-title">Daftar Pembelian Aktif</h4>
+                            <h4 class="card-title">Daftar Pembelian</h4>
                             <a class="btn btn-primary btn-round ml-auto" href="{{route('pembelian.form.tambah')}}">
                                 <i class="fa fa-plus"></i>
                                 Tambah
@@ -159,7 +159,7 @@
                 </div>
                 <div class="modal-footer no-bd">
                     <button type="button" class="btn btn-danger close-pembayaran" data-dismiss="modal">Batal</button>
-                    <button type="submit" id="simpanPembayaranBtn" class="btn btn-success" disabled >Simpan</button>
+                    <button type="submit" id="simpanPembayaranBtn" class="btn btn-success" disabled>Simpan</button>
                 </div>
             </form>
         </div>
@@ -305,7 +305,7 @@
 
     })
 
-    $('#formPembayaran').submit(function(e){
+    $('#formPembayaran').submit(function(e) {
         e.preventDefault();
         swalLoading();
         var data = $(this).serializeArray();
@@ -318,7 +318,7 @@
             success: function(data) {
                 swal.close();
                 swalSuccess("Tambah Pembayaran Berhasil")
-                window.location.href = "{!!route('pembayaran.list',['id'=>':id'])!!}".replace(':id',$('#purchase_id').val());
+                window.location.href = "{!!route('pembayaran.list',['id'=>':id'])!!}".replace(':id', $('#purchase_id').val());
             },
             error: function(data) {
                 swalError('Maaf Terjadi Error');

@@ -38,7 +38,7 @@ class PembelianController extends Controller
     }
 
 
-    public function nonaktif()
+    public function riwayat()
     {
         $purchases = Purchase::where('purchase_status', 'selesai')->get();
         return view('pembelian/daftar_pembelian_non_aktif', compact('purchases'));
@@ -218,12 +218,12 @@ class PembelianController extends Controller
             'amount' => $request->input('totalPembayaran'),
         ];
 
-        
+
 
         Payment::create($payPurchase);
 
         $newPaidAmount = $purchase->paid_amount + $payPurchase['amount'];
-        
+
         if ($newPaidAmount == $purchase->total) {
             $purchaseStatus = "selesai";
             $paymentStatus  = "lunas";
@@ -234,7 +234,7 @@ class PembelianController extends Controller
             $paymentStatus  = "sebagian";
         }
 
-        
+
         $purchase->purchase_status = $purchaseStatus;
         $purchase->payment_status  = $paymentStatus;
         $purchase->paid_amount = $newPaidAmount;

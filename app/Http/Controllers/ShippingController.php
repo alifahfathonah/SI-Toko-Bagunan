@@ -16,9 +16,17 @@ class ShippingController extends Controller
     public function index()
     {
         //
-        $shippings = Shipping::all();
+        $shippings = Shipping::where('status', 'pending')->get();
         $drivers   = Driver::all();
         return view('pengiriman/daftar_pengiriman', compact('shippings', 'drivers'));
+    }
+
+    public function riwayat()
+    {
+        //
+        $shippings = Shipping::where('status', 'dikirim')->get();
+        $drivers   = Driver::all();
+        return view('pengiriman/riwayat_pengiriman', compact('shippings', 'drivers'));
     }
     public function cetak_invoice($id)
     {

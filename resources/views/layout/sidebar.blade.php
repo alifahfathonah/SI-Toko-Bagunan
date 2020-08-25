@@ -31,16 +31,16 @@
                         <ul class="nav nav-collapse">
                             <li class="{{set_active('pembelian.index')}}">
                                 <a href="{{route('pembelian.index')}}">
-                                    <span class="sub-item">Daftar Pembelian Aktif</span>
+                                    <span class="sub-item">Daftar Pembelian</span>
                                 </a>
                             </li>
-                            <li class="{{set_active('pembelian.non.aktif')}}">
-                                <a href="{{route('pembelian.non.aktif')}}">
-                                    <span class="sub-item">Daftar Pembelian Non Aktif</span>
+                            <li class="{{set_active('pembelian.riwayat')}}">
+                                <a href="{{route('pembelian.riwayat')}}">
+                                    <span class="sub-item">Riwayat Pembelian</span>
                                 </a>
                             </li>
                             <li class="{{set_active('pembelian.form.tambah')}}">
-                                <a href="{{url('pembelian/create')}}">
+                                <a href="{{route('pembelian.form.tambah')}}">
                                     <span class="sub-item">Tambah Pembelian</span>
                                 </a>
                             </li>
@@ -89,27 +89,43 @@
                         </ul>
                     </div>
                 </li>
-                <li class="nav-item {{set_active(['pengiriman.index','pengiriman.form.tambah'])}}">
+                <li class="nav-item {{set_active(['driver.index','driver.form.tambah'])}}">
+                    <a data-toggle="collapse" href="#driver">
+                        <i class="fas fa-user-tie"></i>
+                        <p>Driver</p>
+                        <span class="caret"></span>
+                    </a>
+                    <div class="collapse {{set_show(['driver.index','driver.form.tambah'])}}" id="driver">
+                        <ul class="nav nav-collapse">
+                            <li class="{{set_active('driver.index')}}">
+                                <a href="{{route('driver.index')}}">
+                                    <span class="sub-item">Daftar Driver</span>
+                                </a>
+                            </li>
+                            <li class="{{set_active('driver.form.tambah')}}">
+                                <a href="{{route('driver.form.tambah')}}">
+                                    <span class="sub-item">Tambah Driver</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </li>
+                <li class="nav-item {{set_active(['pengiriman.index','pengiriman.riwayat','pengiriman.form.tambah'])}}">
                     <a data-toggle="collapse" href="#pengiriman">
                         <i class="fas fa-shipping-fast"></i>
                         <p>Pengiriman</p>
                         <span class="caret"></span>
                     </a>
-                    <div class="collapse {{set_show(['pengiriman.index','pengiriman.form.tambah'])}}" id="pengiriman">
+                    <div class="collapse {{set_show(['pengiriman.index','pengiriman.riwayat','pengiriman.form.tambah'])}}" id="pengiriman">
                         <ul class="nav nav-collapse">
                             <li class="{{set_active('pengiriman.index')}}">
                                 <a href="{{route('pengiriman.index')}}">
                                     <span class="sub-item">Daftar Pengiriman</span>
                                 </a>
                             </li>
-                            <li class="{{set_active('driver.index')}}">
-                                <a href="{{route('driver.index')}}">
-                                    <span class="sub-item">Daftar Supir</span>
-                                </a>
-                            </li>
-                            <li class="{{set_active('driver.form.tambah')}}">
-                                <a href="{{route('driver.form.tambah')}}">
-                                    <span class="sub-item">Tambah Supir</span>
+                            <li class="{{set_active('pengiriman.riwayat')}}">
+                                <a href="{{route('pengiriman.riwayat')}}">
+                                    <span class="sub-item">Riwayat Pengiriman</span>
                                 </a>
                             </li>
                         </ul>
