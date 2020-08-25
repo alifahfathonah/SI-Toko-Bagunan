@@ -112,8 +112,8 @@
                         <div class="col-md-12 pr-0">
                             <div class="form-group">
                                 <label>Supir</label>
-                                <select class="form-control" name="driver">
-                                    <option selected disabled>- Pilih Supir -</option>
+                                <select class="form-control" name="driver" id="optionDriver">
+                                    <option value="" selected disabled>- Pilih Supir -</option>
                                     @foreach ($drivers as $driver)
                                     <option value="{{$driver->id}}">{{$driver->name}}</option>
                                     @endforeach
@@ -124,7 +124,7 @@
                 </div>
                 <div class="modal-footer no-bd">
                     <button type="button" class="btn btn-danger" data-dismiss="modal">Batal</button>
-                    <button type="submit" class="btn btn-success">Kirim</button>
+                    <button type="submit" class="btn btn-success" id="kirimPesananBtn" disabled>Kirim</button>
                 </div>
             </form>
         </div>
@@ -173,6 +173,7 @@
 
         $('#kirimPesanan').on('hidden.bs.modal', function() {
             $("#sendPengiriman").trigger("reset");
+            $('#kirimPesananBtn').attr('disabled','disabled');
         })
 
         $('.formDelete').on('submit', function(e) {
@@ -190,10 +191,22 @@
                                 swalSuccess('Hapus data berhasil');
                                 location.reload();
                             }
+                            else{
+                                swalError('Pilih supir terlebih dahulu');
+                            }
                         })
                     }
                 })
 
+        })
+
+        $('#optionDriver').change(function(){
+            if($(this).val() == ""){
+                $('#kirimPesananBtn').attr('disabled','disabled');
+            }
+            else{
+                $('#kirimPesananBtn').removeAttr('disabled');
+            }
         })
     });
 </script>
