@@ -18,7 +18,7 @@
                     <i class="flaticon-right-arrow"></i>
                 </li>
                 <li class="nav-item">
-                    <a href="{{route('pembelian.index')}}">Pengiriman</a>
+                    <a href="{{route('pengiriman.index')}}">Pengiriman</a>
                 </li>
                 <li class="separator">
                     <i class="flaticon-right-arrow"></i>
@@ -41,14 +41,14 @@
                         @method('PUT')
                         <div class="card-body">
                             <div class="row">
-                                <div class="col-sm-6 pr-0">
+                                <div class="col-sm-4 pr-0">
                                     <input type="hidden" id="id_penjualan" name="id_penjualan" value="{{$penjualan->id}}">
                                     <div class="form-group">
                                         <label>Nama Pembeli</label>
                                         <input type="text" class="form-control form-control" id="namaPembeli" name="namaPembeli" value="{{$penjualan->nama_pembeli}}" disabled>
                                     </div>
                                 </div>
-                                <div class="col-sm-6">
+                                <div class="col-sm-4">
                                     <div class="form-group">
                                         <label>ALamat</label>
                                         <input type="text" class="form-control form-control" id="alamat" name="alamat" value="{{$penjualan->alamat_pembeli}}" disabled>
@@ -59,7 +59,7 @@
                                 <div class="col-sm-4 pr-0">
                                     <div class="form-group">
                                         <label>Tanggal</label>
-                                    <input type="date" class="form-control form-control" id="tglPengiriman" name="tglPengiriman" value="{{$pengiriman->tanggal_pengiriman}}">
+                                        <input type="date" class="form-control form-control" id="tglPengiriman" name="tglPengiriman" value="{{$pengiriman->tanggal_pengiriman}}">
                                     </div>
                                 </div>
                                 <div class="col-sm-4 pr-0">
@@ -67,22 +67,22 @@
                                         <label>Prioritas Pengiriman</label>
                                         <select class="form-control" name="prioritas">
                                             <option value="penting" {{$pengiriman->prioritas == 'penting' ? 'selected' : ''}}>Penting</option>
-                                            <option value="sedang"  {{$pengiriman->prioritas == 'sedang' ? 'selected' : ''}}>Sedang</option>
-                                            <option value="normal"  {{$pengiriman->prioritas == 'penting' ? 'selected' : ''}}>Normal</option>
+                                            <option value="sedang" {{$pengiriman->prioritas == 'sedang' ? 'selected' : ''}}>Sedang</option>
+                                            <option value="normal" {{$pengiriman->prioritas == 'penting' ? 'selected' : ''}}>Normal</option>
                                         </select>
                                     </div>
                                 </div>
                                 @isset($pengiriman->driver_id)
-                                    <div class="col-sm-4 pr-0">
-                                        <div class="form-group">
-                                            <label>Supir</label>
-                                            <select class="form-control" name="driver">
-                                                @foreach ($drivers as $driver)
-                                                    <option value="{{$driver->id}}" {{$driver->id == $pengiriman->driver_id ? 'selected' : ''}}>{{$driver->name}}</option>
-                                                @endforeach
-                                            </select>
-                                        </div>
+                                <div class="col-sm-4 pr-0">
+                                    <div class="form-group">
+                                        <label>Supir</label>
+                                        <select class="form-control" name="driver">
+                                            @foreach ($drivers as $driver)
+                                            <option value="{{$driver->id}}" {{$driver->id == $pengiriman->driver_id ? 'selected' : ''}}>{{$driver->name}}</option>
+                                            @endforeach
+                                        </select>
                                     </div>
+                                </div>
                                 @endisset
                             </div>
                             <div class="col-md-12">
@@ -110,13 +110,11 @@
                                                 <td>{{$item->penjualanItem->product->nama_produk}}</td>
                                                 <td>{{$item->penjualanItem->quantity}}</td>
                                                 <td>{{$item->penjualanItem->unit->name_unit}}</td>
-                                                <td><input type="number"  value="{{$item->penjualanItem->quantity - $item->penjualanItem->quantity_sent}}" disabled></td>
-                                                <td><input type="number"  class="jmlDikirim" name="jmlDikirim" 
-                                                    data-sisaqty="{{($item->penjualanItem->quantity - $item->penjualanItem->quantity_sent)+$item->quantity}}"
-                                                    value="{{$item->quantity}}">
+                                                <td><input type="number" value="{{$item->penjualanItem->quantity - $item->penjualanItem->quantity_sent}}" disabled></td>
+                                                <td><input type="number" class="jmlDikirim" name="jmlDikirim" data-sisaqty="{{($item->penjualanItem->quantity - $item->penjualanItem->quantity_sent)+$item->quantity}}" value="{{$item->quantity}}">
                                                     <input type="hidden" name="idItem" value="{{$item->penjualan_item_id}}">
                                                 </td>
-                                                
+
                                             </tr>
                                             @endforeach
                                         </tbody>
@@ -142,7 +140,7 @@
 <script>
     $(document).ready(function() {
         document.getElementById("tglPengiriman").valueAsDate = new Date()
-        
+
 
         $('#submitShipping').click(function(e) {
 
@@ -151,24 +149,23 @@
 
             var zeroQty = true;
             var data = {
-                'jmlDikirim' : [],
-                'idItem'     : [],
+                'jmlDikirim': [],
+                'idItem': [],
             }
 
             $('#shippingForm').serializeArray().forEach(element => {
-                if(element.name == 'jmlDikirim' || element.name == 'idItem'){
+                if (element.name == 'jmlDikirim' || element.name == 'idItem') {
                     data[element.name].push(element.value);
-                    if(element.name == 'jmlDikirim' && parseInt(element.value) > 0){
+                    if (element.name == 'jmlDikirim' && parseInt(element.value) > 0) {
                         zeroQty = false;
                     }
 
-                }
-                else{
+                } else {
                     data[element.name] = element.value;
                 }
             });
 
-            if(zeroQty){
+            if (zeroQty) {
                 swal.close();
                 swalError('Jumlah item yang dikirim tidak boleh kosong semua');
                 return false;
@@ -192,13 +189,12 @@
 
         });
 
-        $('.jmlDikirim').change(function(e){
+        $('.jmlDikirim').change(function(e) {
             var remaining = parseInt($(this).data('sisaqty'));
-            var qtysent   = parseInt($(this).val());
-            if(qtysent > remaining){
+            var qtysent = parseInt($(this).val());
+            if (qtysent > remaining) {
                 $(this).val(remaining);
-            }
-            else if(qtysent < 0){
+            } else if (qtysent < 0) {
                 $(this).val(0);
             }
 

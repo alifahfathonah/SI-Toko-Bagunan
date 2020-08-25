@@ -35,6 +35,9 @@ Route::resource('pembelian', 'PembelianController')->names([
     'edit'    => 'pembelian.form.edit',
     'update'  => 'pembelian.edit',
 ]);
+
+Route::get('/pembelian/nonaktif/list', 'PembelianController@nonaktif')->name('pembelian.non.aktif');
+
 Route::get('/pembelian/detail/{id}', 'PembelianController@detail')->name('pembelian.detail');
 Route::get('/pembelian/{id}/pembayaran/create', 'PembelianController@payment_show')->name('pembayaran.form.tambah');
 Route::post('/pembelian/{id}/pembayaran/store', 'PembelianController@payment_store')->name('pembayaran.tambah');
@@ -93,12 +96,10 @@ Route::resource('pengiriman', 'ShippingController')->names([
     'update'  => 'pengiriman.edit',
     'show'    => 'pengiriman.detail',
     'destroy'    => 'pengiriman.hapus',
-
-
 ]);
 
 Route::get('/pengiriman/cetak_invoice/{id}', 'ShippingController@cetak_invoice')->name('pengiriman.cetak-invoice');
-Route::get('/pengiriman/{id}/create', 'ShippingController@create');
+Route::get('/pengiriman/{id}/create', 'ShippingController@create')->name('pengiriman.tambah.form');
 Route::post('pengiriman/{pengiriman}/send', 'ShippingController@sendShipping')->name('pengiriman.kirim');
 
 

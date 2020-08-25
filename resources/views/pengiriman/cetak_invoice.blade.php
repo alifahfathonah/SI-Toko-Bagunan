@@ -73,7 +73,17 @@
                             </tr>
                         </thead>
                         <tbody>
+
+                            @php
+                            $grandTotal = 0;
+                            @endphp
+
                             @foreach($shippingItem as $item)
+
+                            @php
+                            $grandTotal = $grandTotal + ($item->quantity * $item->PenjualanItem->unit_price);
+                            @endphp
+
                             <tr>
                                 <td class="text-center" style="height:30px;">{{$loop->iteration}}</td>
                                 <td style="height:30px;">{{$item->PenjualanItem->product->nama_produk}}</td>
@@ -84,8 +94,8 @@
                             </tr>
                             @endforeach
                             <tr>
-                                <td style="height:30px;"><b>Terbilang</b></td>
-                                <td colspan="5" style="height:30px;"><b>: Tiga Juta Seratus Tujuh Puluh Lima Ribu Rupiah</b></td>
+                                <td class="text-center" colspan="5" style="height:30px;"><b>Total</b></td>
+                                <td class="text-right" style="height:30px;"><b>{{number_format($grandTotal, 2)}}</b></td>
                             </tr>
                         </tbody>
                     </table>
@@ -97,7 +107,7 @@
                         <div class="col-md-2">
                             <p class="text-center" style="height: 70px;">Dikirim Oleh :</p>
                             <div role="separator" class="dropdown-divider"></div>
-                            <p class="text-center" style="height: 70px;">{{$shipping->driver->name}}</p>
+                            <p class="text-center" style="height: 70px;">{{@$shipping->driver->name??'-'}}</p>
                         </div>
                         <div class="col-md-2">
                             <p class="text-center" style="height: 70px;">Diterima Oleh :</p>

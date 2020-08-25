@@ -40,14 +40,14 @@
                         @csrf
                         <div class="card-body">
                             <div class="row">
-                                <div class="col-sm-4 pr-0">
+                                <div class="col-sm-5 pr-0">
                                     <input type="hidden" id="id_penjualan" name="id_penjualan" value="{{$penjualan->id}}">
                                     <div class="form-group">
                                         <label>Nama Pembeli</label>
                                         <input type="text" class="form-control form-control" id="namaPembeli" name="namaPembeli" value="{{$penjualan->nama_pembeli}}" disabled>
                                     </div>
                                 </div>
-                                <div class="col-sm-4">
+                                <div class="col-sm-5">
                                     <div class="form-group">
                                         <label>ALamat</label>
                                         <input type="text" class="form-control form-control" id="alamat" name="alamat" value="{{$penjualan->alamat_pembeli}}" disabled>
@@ -55,30 +55,19 @@
                                 </div>
                             </div>
                             <div class="row">
-                                <div class="col-sm-4 pr-0">
+                                <div class="col-sm-5 pr-0">
                                     <div class="form-group">
                                         <label>Tanggal</label>
                                         <input type="date" class="form-control form-control" id="tglPengiriman" name="tglPengiriman">
                                     </div>
                                 </div>
-                                <div class="col-sm-4 pr-0">
+                                <div class="col-sm-5 pr-0">
                                     <div class="form-group">
                                         <label>Prioritas Pengiriman</label>
                                         <select class="form-control" name="prioritas">
                                             <option value="penting">Penting</option>
                                             <option value="sedang">Sedang</option>
                                             <option value="normal" selected>Normal</option>
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="col-sm-4">
-                                    <div class="form-group">
-                                        <label>Prioritas</label>
-                                        <select class="form-control" id="prioritas" name="prioritas">
-                                            <option selected disabled>--Pilih Prioritas--</option>
-                                            <option value="normal">Normal</option>
-                                            <option value="sedang">Sedang</option>
-                                            <option value="utama">Utama</option>
                                         </select>
                                     </div>
                                 </div>
@@ -108,12 +97,11 @@
                                                 <td>{{$penjualan->product->nama_produk}}</td>
                                                 <td>{{$penjualan->quantity}}</td>
                                                 <td>{{$penjualan->unit->name_unit}}</td>
-                                                <td><input type="number"  value="{{$penjualan->quantity - $penjualan->quantity_sent}}" disabled></td>
-                                                <td><input type="number"  class="jmlDikirim" name="jmlDikirim" data-sisaqty="{{$penjualan->quantity - $penjualan->quantity_sent}}"
-                                                    value="0">
+                                                <td><input type="number" value="{{$penjualan->quantity - $penjualan->quantity_sent}}" disabled></td>
+                                                <td><input type="number" class="jmlDikirim" name="jmlDikirim" data-sisaqty="{{$penjualan->quantity - $penjualan->quantity_sent}}" value="0">
                                                     <input type="hidden" name="idItem" value="{{$penjualan->id}}">
                                                 </td>
-                                                
+
                                             </tr>
                                             @endforeach
                                         </tbody>
@@ -122,6 +110,7 @@
                             </div>
                         </div>
                         <div class="card-footer text-right">
+                            <a href="{{route('pengiriman.index')}}" class="btn btn-danger">Batal</a>&nbsp;
                             <button type="reset" class="btn btn-info">Reset</button>&nbsp;
                             <button type="submit" class="btn btn-success" id="submitShipping">Simpan</button>
                         </div>
@@ -139,7 +128,7 @@
 <script>
     $(document).ready(function() {
         document.getElementById("tglPengiriman").valueAsDate = new Date()
-        
+
 
         $('#submitShipping').click(function(e) {
 
@@ -155,17 +144,16 @@
             $('#shippingForm').serializeArray().forEach(element => {
                 if (element.name == 'jmlDikirim' || element.name == 'idItem') {
                     data[element.name].push(element.value);
-                    if(element.name == 'jmlDikirim' && parseInt(element.value) > 0){
+                    if (element.name == 'jmlDikirim' && parseInt(element.value) > 0) {
                         zeroQty = false;
                     }
 
-                }
-                else{
+                } else {
                     data[element.name] = element.value;
                 }
             });
 
-            if(zeroQty){
+            if (zeroQty) {
                 swal.close();
                 swalError('Jumlah item yang dikirim tidak boleh kosong semua');
                 return false;
@@ -189,13 +177,12 @@
 
         });
 
-        $('.jmlDikirim').change(function(e){
+        $('.jmlDikirim').change(function(e) {
             var remaining = parseInt($(this).data('sisaqty'));
-            var qtysent   = parseInt($(this).val());
-            if(qtysent > remaining){
+            var qtysent = parseInt($(this).val());
+            if (qtysent > remaining) {
                 $(this).val(remaining);
-            }
-            else if(qtysent < 1){
+            } else if (qtysent < 1) {
                 $(this).val(1);
             }
 

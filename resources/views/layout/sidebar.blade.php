@@ -15,23 +15,28 @@
                 </div>
             </div>
             <ul class="nav nav-primary">
-                <li class="nav-item" {{set_active('home')}}>
+                <li class="nav-item {{set_active('home')}}">
                     <a href="{{url('/dashboard')}}" aria-expanded="false">
                         <i class="fas fa-home"></i>
                         <p>Dashboard</p>
                     </a>
                 </li>
-                <li class="nav-item {{set_active(['pembelian.index','pembelian.form.tambah'])}}">
+                <li class="nav-item {{set_active(['pembelian.index','pembelian.non.aktif','pembelian.form.tambah'])}}">
                     <a data-toggle="collapse" href="#pembelian">
                         <i class="fas fa-shopping-cart "></i>
                         <p>Pembelian</p>
                         <span class="caret"></span>
                     </a>
-                    <div class="collapse {{set_show(['pembelian.index','pembelian.form.tambah'])}}" id="pembelian">
+                    <div class="collapse {{set_show(['pembelian.index','pembelian.non.aktif','pembelian.form.tambah',])}}" id="pembelian">
                         <ul class="nav nav-collapse">
                             <li class="{{set_active('pembelian.index')}}">
-                                <a href="{{url('pembelian')}}">
-                                    <span class="sub-item">Daftar Pembelian</span>
+                                <a href="{{route('pembelian.index')}}">
+                                    <span class="sub-item">Daftar Pembelian Aktif</span>
+                                </a>
+                            </li>
+                            <li class="{{set_active('pembelian.non.aktif')}}">
+                                <a href="{{route('pembelian.non.aktif')}}">
+                                    <span class="sub-item">Daftar Pembelian Non Aktif</span>
                                 </a>
                             </li>
                             <li class="{{set_active('pembelian.form.tambah')}}">

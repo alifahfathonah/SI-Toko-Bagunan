@@ -30,9 +30,20 @@ class PembelianController extends Controller
      */
     public function index()
     {
-        $purchases = Purchase::orderBy('purchase_date', 'DESC')->get();
+        $purchases = Purchase::where('purchase_status', 'proses')->get();
         return view('pembelian/daftar_pembelian', compact('purchases'));
+
+        // $purchases = Purchase::where('purchase_status', 'selesai')->get();
+        // return view('pembelian/daftar_pembelian_non_aktif', compact('purchases'));
     }
+
+
+    public function nonaktif()
+    {
+        $purchases = Purchase::where('purchase_status', 'selesai')->get();
+        return view('pembelian/daftar_pembelian_non_aktif', compact('purchases'));
+    }
+
 
     /**
      * Show the form for creating a new resource.
