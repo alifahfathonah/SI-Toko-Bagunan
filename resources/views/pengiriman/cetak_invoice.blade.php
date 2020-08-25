@@ -107,7 +107,7 @@
                         <div class="col-md-2">
                             <p class="text-center" style="height: 70px;">Dikirim Oleh :</p>
                             <div role="separator" class="dropdown-divider"></div>
-                            <p class="text-center" style="height: 70px;">{{$shipping->driver->name}}</p>
+                            <p class="text-center" style="height: 70px;">{{@$shipping->driver->name??'-'}}</p>
                         </div>
                         <div class="col-md-2">
                             <p class="text-center" style="height: 70px;">Diterima Oleh :</p>

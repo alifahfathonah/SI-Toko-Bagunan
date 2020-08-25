@@ -172,7 +172,17 @@ class ShippingController extends Controller
             ];
             return response()->json($response);
         }
-        $pengiriman->driver_id = $request->input('driver');
+
+        $driver_id = $request->input('driver');
+        
+        if(!$driver_id){
+            $response = [
+                'success' => false,
+                'message' => "Supir tidak boleh kosong",
+            ];
+            return response()->json($response);
+        }
+        $pengiriman->driver_id = $driver_id;
         $pengiriman->status    = 'dikirim';
         $pengiriman->save();
 
