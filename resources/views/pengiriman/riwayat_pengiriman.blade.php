@@ -1,5 +1,5 @@
 @extends('layout.main')
-@section('title', 'Daftar Antrian Pengiriman')
+@section('title', 'Riwayat Pengiriman')
 
 
 @section('contain')
@@ -24,7 +24,7 @@
                     <i class="flaticon-right-arrow"></i>
                 </li>
                 <li class="nav-item">
-                    <a href="#">Daftar Antrian Pengiriman</a>
+                    <a href="#">Riwayat Pengiriman</a>
                 </li>
             </ul>
         </div>
@@ -33,7 +33,7 @@
                 <div class="card">
                     <div class="card-header">
                         <div class="d-flex align-items-center">
-                            <h4 class="card-title">Daftar Antrian Pengiriman</h4>
+                            <h4 class="card-title">Daftar Riwayat Pengiriman</h4>
                         </div>
                     </div>
                     <div class="card-body">
@@ -112,8 +112,8 @@
                         <div class="col-md-12 pr-0">
                             <div class="form-group">
                                 <label>Supir</label>
-                                <select class="form-control" name="driver" id="optionDriver">
-                                    <option value="" selected disabled>- Pilih Supir -</option>
+                                <select class="form-control" name="driver">
+                                    <option selected disabled>- Pilih Supir -</option>
                                     @foreach ($drivers as $driver)
                                     <option value="{{$driver->id}}">{{$driver->name}}</option>
                                     @endforeach
@@ -124,7 +124,7 @@
                 </div>
                 <div class="modal-footer no-bd">
                     <button type="button" class="btn btn-danger" data-dismiss="modal">Batal</button>
-                    <button type="submit" class="btn btn-success" id="kirimPesananBtn" disabled>Kirim</button>
+                    <button type="submit" class="btn btn-success">Kirim</button>
                 </div>
             </form>
         </div>
@@ -173,7 +173,6 @@
 
         $('#kirimPesanan').on('hidden.bs.modal', function() {
             $("#sendPengiriman").trigger("reset");
-            $('#kirimPesananBtn').attr('disabled','disabled');
         })
 
         $('.formDelete').on('submit', function(e) {
@@ -191,22 +190,10 @@
                                 swalSuccess('Hapus data berhasil');
                                 location.reload();
                             }
-                            else{
-                                swalError('Pilih supir terlebih dahulu');
-                            }
                         })
                     }
                 })
 
-        })
-
-        $('#optionDriver').change(function(){
-            if($(this).val() == ""){
-                $('#kirimPesananBtn').attr('disabled','disabled');
-            }
-            else{
-                $('#kirimPesananBtn').removeAttr('disabled');
-            }
         })
     });
 </script>

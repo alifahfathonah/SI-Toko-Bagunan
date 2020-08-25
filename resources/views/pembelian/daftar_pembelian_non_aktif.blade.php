@@ -1,5 +1,5 @@
 @extends('layout.main')
-@section('title', 'Daftar Pembelian')
+@section('title', 'Riwayat Pembelian')
 
 
 @section('contain')
@@ -24,7 +24,7 @@
                     <i class="flaticon-right-arrow"></i>
                 </li>
                 <li class="nav-item">
-                    <a href="#">Daftar Pembelian Non Aktif</a>
+                    <a href="#">Riwayat Pembelian</a>
                 </li>
             </ul>
         </div>
@@ -33,7 +33,7 @@
                 <div class="card">
                     <div class="card-header">
                         <div class="d-flex align-items-center">
-                            <h4 class="card-title">Daftar Pembelian Non Aktif</h4>
+                            <h4 class="card-title">Daftar Riwayat Pembelian</h4>
                             <a class="btn btn-primary btn-round ml-auto" href="{{route('pembelian.form.tambah')}}">
                                 <i class="fa fa-plus"></i>
                                 Tambah

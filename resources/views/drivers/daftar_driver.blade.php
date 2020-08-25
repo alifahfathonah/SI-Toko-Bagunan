@@ -18,13 +18,13 @@
                     <i class="flaticon-right-arrow"></i>
                 </li>
                 <li class="nav-item">
-                    <a href="{{route('driver.index')}}">Supir</a>
+                    <a href="{{route('driver.index')}}">Driver</a>
                 </li>
                 <li class="separator">
                     <i class="flaticon-right-arrow"></i>
                 </li>
                 <li class="nav-item">
-                    <a href="#">Daftar Supir</a>
+                    <a href="#">Daftar Driver</a>
                 </li>
             </ul>
         </div>
@@ -33,7 +33,7 @@
                 <div class="card">
                     <div class="card-header">
                         <div class="d-flex align-items-center">
-                            <h4 class="card-title">Daftar Supir</h4>
+                            <h4 class="card-title">Daftar Driver</h4>
                             <a class="btn btn-primary btn-round ml-auto" href="{{route('driver.form.tambah')}}">
                                 <i class="fa fa-plus"></i>
                                 Tambah
