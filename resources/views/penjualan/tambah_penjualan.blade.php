@@ -49,13 +49,13 @@
                                 <div class="col-sm-4">
                                     <div class="form-group">
                                         <label>Nama Pembeli</label>
-                                        <input type="text" class="form-control form-control" id="" name="namaPembeli">
+                                        <input type="text" class="form-control form-control" name="namaPembeli">
                                     </div>
                                 </div>
                                 <div class="col-sm-4">
                                     <div class="form-group">
                                         <label>Alamat</label>
-                                        <textarea class="form-control" id="" name="alamatPembeli" rows="3"></textarea>
+                                        <textarea class="form-control"  name="alamatPembeli" rows="3"></textarea>
                                     </div>
                                 </div>
                             </div>
@@ -277,22 +277,12 @@
 @endsection
 
 @section('script')
-<script src="{{asset('assets/js/plugin/sweetalert/sweetalert2.js')}}"></script>
+<script src="{{asset('assets/js/plugin/sweetalert/sweetalert2.all.min.js')}}"></script>
+<script src="{{asset('assets/js/alert.js')}}"></script>
 <script>
     $(document).ready(function() {
         document.getElementById("tglPembelian").valueAsDate = new Date()
 
-        var swalLoading = function() {
-            swal.fire({
-                title: "Loading....",
-                text: "Mohon Tunggu Sebentar",
-                allowOutsideClick: false,
-                onOpen: function() {
-                    Swal.showLoading()
-                }
-            })
-        }
-        swalLoading();
 
         var listItem = $('#daftarItem').DataTable({
             "pageLength": 7,
@@ -346,9 +336,9 @@
             $('#tambahItem').trigger('reset');
         });
 
-        $('#submitPurchase').click(function(event) {
+        $('#purchaseForm').submit(function(event) {
             event.preventDefault();
-            // swalLoading();
+            swalLoading();
 
             var purchase = $('#purchaseForm').serializeArray().reduce(function(obj, item) {
                 obj[item.name] = item.value;
@@ -370,18 +360,12 @@
                 type: "POST",
                 dataType: 'json',
                 success: function(data) {
-                    // swal.close();
-                    swal("Sukses!", "Tambah data penjualan sukses 😀", {
-                        buttons: {
-                            confirm: {
-                                className: 'btn btn-success'
-                            }
-                        },
-                    });
+                    swal.close();
+                    swalSuccess('Tambah Penjualan Sukses');
                     window.location.href = "{!!route('penjualan.index')!!}";
                 },
                 error: function(data) {
-                    console.log('Error:', "error insert data");
+                    swalError('Error, Silahkan coba lagi');
 
                 }
             });

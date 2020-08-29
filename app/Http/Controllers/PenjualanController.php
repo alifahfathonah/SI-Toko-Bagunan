@@ -86,8 +86,8 @@ class PenjualanController extends Controller
         }
 
         PenjualanItem::insert($saleItem);
-        dd("suskse");
-        // return json_encode("insert success");
+        
+        return json_encode("insert success");
     }
 
     /**
