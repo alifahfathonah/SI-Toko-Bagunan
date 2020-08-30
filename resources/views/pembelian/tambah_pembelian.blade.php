@@ -74,9 +74,9 @@
                                     <div class="form-group">
                                         <label>Status Pembayaran</label>
                                         <select class="form-control" id="status" name="paymentStatus">
-                                            <option value="Lunas">Lunas</option>
-                                            <option value="Sebagian">Sebagian</option>
-                                            <option value="Belum" selected>Belum</option>
+                                            <option value="lunas">Lunas</option>
+                                            <option value="sebagian">Sebagian</option>
+                                            <option value="belum" selected>Belum</option>
                                         </select>
                                     </div>
                                 </div>
@@ -538,20 +538,20 @@
                 purchase['dataItem'].push(dataItem[i]);
             }
 
-            $.ajax({
-                data: purchase,
-                url: "{!!  route('pembelian.tambah') !!}",
-                type: "POST",
-                dataType: 'json',
-                success: function(data) {
-                    swal.close();
-                    swalSuccess('Tambah data pembelian berhasil');
-                    window.location.href = "{!!route('pembelian.index')!!}";
-                },
-                error: function(data) {
-                    swalError('Error,tidak dapat menambah data');
-
+            $.post("{!!  route('pembelian.tambah') !!}",purchase,function(data){
+                swal.close();
+                swalSuccess('Tambah data pembelian berhasil');
+                window.location.href = "{!!route('pembelian.index')!!}";
+            }).fail(function(xhr) {
+                var message = "";
+                if(xhr.status == 422){
+                    let fields = xhr.responseJSON.errors;
+                        Object.keys(fields).forEach(function(key){
+                            message = fields[key][0];
+                            return true;
+                        })
                 }
+                swalError(message ?? 'Maaf gagal menyimpan, Coba lagi');
             });
 
         });
@@ -674,7 +674,8 @@
     $('#status').change(function() {
         if ($(this).val() == 'Lunas') {
             $('#jmlBayar').val($('#grandTotal').html());
-        } else {
+        }
+        else if($(this).val() == 'Belum'){
             $('#jmlBayar').val(0);
         }
 

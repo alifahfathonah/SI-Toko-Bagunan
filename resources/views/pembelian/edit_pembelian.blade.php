@@ -76,9 +76,9 @@
                                     <div class="form-group">
                                         <label>Status Pembayaran</label>
                                         <select class="form-control" id="status" name="paymentStatus">
-                                            <option value="Lunas" {{$purchase->payment_status == 'Lunas'? 'selected': '' }}>Lunas</option>
-                                            <option value="Sebagian" {{$purchase->payment_status == 'Sebagian'? 'selected': '' }}>Sebagian</option>
-                                            <option value="Belum" {{$purchase->payment_status == 'Belum' ? 'selected': '' }}>Belum</option>
+                                            <option value="Lunas" {{$purchase->payment_status == 'lunas'? 'selected': '' }}>Lunas</option>
+                                            <option value="Sebagian" {{$purchase->payment_status == 'sebagian'? 'selected': '' }}>Sebagian</option>
+                                            <option value="Belum" {{$purchase->payment_status == 'belum' ? 'selected': '' }}>Belum</option>
                                         </select>
                                     </div>
                                 </div>
@@ -430,7 +430,7 @@
                 success: function(data) {
                     swal.close();
                     swalSuccess('Tambah data pembelian berhasil');
-                    window.location.href = "{!!route('pembelian.index')!!}";
+                    window.location.href = "{!!route('pembelian.detail',['pembelian'=>$purchase->id])!!}";
                 },
                 error: function(data) {
                     swalError('Error,tidak dapat menambah data');

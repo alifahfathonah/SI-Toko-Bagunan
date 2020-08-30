@@ -48,7 +48,8 @@
                                         <th>Tanggal</th>
                                         <th>Supplier</th>
                                         <th>No. Referensi</th>
-                                        <th>Total</th>
+                                        <th>Total Pembelian</th>
+                                        <th>Total Pembayaran</th>
                                         <th>Status Pembelian</th>
                                         <th>Status Pembayaran</th>
                                         <th style="width: 10%">Aksi</th>
@@ -61,6 +62,7 @@
                                         <td>{{$purchase->supplier->name}}</td>
                                         <td>{{$purchase->reference_no}}</td>
                                         <td>{{number_format($purchase->total, 2)}}</td>
+                                        <td>{{number_format($purchase->paid_amount, 2)}}</td>
                                         <td>{!!badge($purchase->purchase_status)!!}</td>
                                         <td>{!!badge($purchase->payment_status)!!}</td>
                                         <td>
@@ -106,7 +108,7 @@
                 </button>
             </div>
 
-            <form id="formPembayaran" method="POST">
+            <form id="formPembayaran" method="POST" onsubmit="return validateFormPembayaran()">
                 @csrf
                 <input type="hidden" name="purchase_id" id="purchase_id">
                 <div class="modal-body">
@@ -307,37 +309,47 @@
 
     $('#formPembayaran').submit(function(e) {
         e.preventDefault();
-        swalLoading();
         var data = $(this).serializeArray();
         var _url = $(this).attr('action');
-        $.ajax({
-            data: data,
-            url: _url,
-            type: "POST",
-            dataType: 'json',
-            success: function(data) {
-                swal.close();
-                swalSuccess("Tambah Pembayaran Berhasil")
-                window.location.href = "{!!route('pembayaran.list',['id'=>':id'])!!}".replace(':id', $('#purchase_id').val());
-            },
-            error: function(data) {
-                swalError('Maaf Terjadi Error');
 
-            }
-        });
+        
+        if (validateFormPembayaran()) {
+            swalLoading();
+            $.ajax({
+                data: data,
+                url: _url,
+                type: "POST",
+                dataType: 'json',
+                success: function(data) {
+                    swal.close();
+                    swalSuccess("Tambah Pembayaran Berhasil")
+                    window.location.href = "{!!route('pembayaran.list',['id'=>':id'])!!}".replace(':id', $('#purchase_id').val());
+                },
+                error: function(data) {
+                    swalError('Maaf Terjadi Error');
+
+                }
+            });
+        }
+
     });
 
     $('#jenisPembayaran').change(function() {
         if ($(this).val() == 'lunas') {
             $('#totalPembayaran').val($('#totalTagihan').val());
-        } else if ($(this).val() == 'sebagian') {
-            $('#totalPembayaran').val(0);
         }
     });
 
     $('#totalPembayaran').blur(function() {
-        $totalTagihan = parseInt($('#totalTagihan').val());
-        $totalPembayaran = parseInt($(this).val());
+        totalTagihan = parseInt($('#totalTagihan').val());
+        totalPembayaran = parseInt($(this).val());
+
+        if (totalPembayaran >= totalTagihan) {
+            $('#jenisPembayaran').val('lunas').change();
+        } else if (totalPembayaran < totalTagihan && totalPembayaran > 0) {
+            $('#jenisPembayaran').val('sebagian').change();
+        }
+
     });
 
     function tambah_pembayaran() {
@@ -350,6 +362,18 @@
             // window.location.href = "{{url('pembelian')}}";
             alert("Sukses !");
         }
+    }
+
+    function validateFormPembayaran(){
+        if ($('#jenisPembayaran').val() == ""){
+            swalError("Jenis Pembayaran Tidak Boleh Kosong");
+            return false;
+        }
+        else if($('#totalPembayaran').val() == "" ||  $('#totalPembayaran').val() == "0"){
+            swalError("Jumlah yang dibayarkan tidak Boleh Kosong");
+            return false;
+        }
+        return true;
     }
 </script>
 @endsection

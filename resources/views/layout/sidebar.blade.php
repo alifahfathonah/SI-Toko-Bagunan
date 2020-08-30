@@ -31,7 +31,7 @@
                         <ul class="nav nav-collapse">
                             <li class="{{set_active('pembelian.index')}}">
                                 <a href="{{route('pembelian.index')}}">
-                                    <span class="sub-item">Daftar Pembelian</span>
+                                    <span class="sub-item">Pembelian Aktif</span>
                                 </a>
                             </li>
                             <li class="{{set_active('pembelian.riwayat')}}">
