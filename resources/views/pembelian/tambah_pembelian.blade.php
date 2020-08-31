@@ -509,7 +509,7 @@
             $('#grandTotal').html(parseInt($('#grandTotal').html()) + parseInt($('#totalItem').val()));
 
             // auto tambah jml bayar ketika status bernilai Lunas
-            if ($('#status').val() == 'Lunas') {
+            if ($('#status').val() == 'lunas') {
                 $('#jmlBayar').val($('#grandTotal').html());
             }
 
@@ -662,20 +662,20 @@
         grandTotal = parseInt($('#grandTotal').html());
 
         if (jumlahBayar >= grandTotal) {
-            $('#status').val('Lunas').change();
+            $('#status').val('lunas').change();
         } else if (jumlahBayar < grandTotal && jumlahBayar > 0) {
-            $('#status').val('Sebagian').change();
+            $('#status').val('sebagian').change();
         } else if (jumlahBayar <= 0) {
-            $('#status').val('Belum').change();
+            $('#status').val('belum').change();
         }
 
     });
 
     $('#status').change(function() {
-        if ($(this).val() == 'Lunas') {
+        if ($(this).val() == 'lunas') {
             $('#jmlBayar').val($('#grandTotal').html());
         }
-        else if($(this).val() == 'Belum'){
+        else if($(this).val() == 'belum'){
             $('#jmlBayar').val(0);
         }
 
