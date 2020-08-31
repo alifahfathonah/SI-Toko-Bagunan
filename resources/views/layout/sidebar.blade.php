@@ -31,7 +31,7 @@
                         <ul class="nav nav-collapse">
                             <li class="{{set_active('pembelian.index')}}">
                                 <a href="{{route('pembelian.index')}}">
-                                    <span class="sub-item">Daftar Pembelian</span>
+                                    <span class="sub-item">Pembelian Aktif</span>
                                 </a>
                             </li>
                             <li class="{{set_active('pembelian.riwayat')}}">
@@ -120,7 +120,7 @@
                         <ul class="nav nav-collapse">
                             <li class="{{set_active('pengiriman.index')}}">
                                 <a href="{{route('pengiriman.index')}}">
-                                    <span class="sub-item">Daftar Pengiriman</span>
+                                    <span class="sub-item">Pengiriman Aktif</span>
                                 </a>
                             </li>
                             <li class="{{set_active('pengiriman.riwayat')}}">

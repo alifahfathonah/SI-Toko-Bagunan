@@ -24,7 +24,7 @@ class ShippingController extends Controller
     public function riwayat()
     {
         //
-        $shippings = Shipping::where('status', 'dikirim')->get();
+        $shippings = Shipping::where('status', 'dikirim')->orderBy('updated_at','desc')->get();
         $drivers   = Driver::all();
         return view('pengiriman/riwayat_pengiriman', compact('shippings', 'drivers'));
     }

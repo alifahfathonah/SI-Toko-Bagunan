@@ -75,11 +75,12 @@
                                 <div class="col-sm-5 pr-0">
                                     <div class="form-group">
                                         <label>Status Pembayaran</label>
-                                        <select class="form-control" id="status" name="paymentStatus">
-                                            <option value="Lunas" {{$purchase->payment_status == 'Lunas'? 'selected': '' }}>Lunas</option>
-                                            <option value="Sebagian" {{$purchase->payment_status == 'Sebagian'? 'selected': '' }}>Sebagian</option>
-                                            <option value="Belum" {{$purchase->payment_status == 'Belum' ? 'selected': '' }}>Belum</option>
+                                        <select class="form-control" id="status" name="paymentStatus" disabled>
+                                            <option value="Lunas" {{$purchase->payment_status == 'lunas'? 'selected': '' }}>Lunas</option>
+                                            <option value="Sebagian" {{$purchase->payment_status == 'sebagian'? 'selected': '' }}>Sebagian</option>
+                                            <option value="Belum" {{$purchase->payment_status == 'belum' ? 'selected': '' }}>Belum</option>
                                         </select>
+                                        <small><i>Mengganti status pembayaran dapat dilakukan di edit pembayaran atau tambah pembayaran</i></small>
                                     </div>
                                 </div>
                                 <div class="col-sm-5 pr-0">
@@ -429,8 +430,8 @@
                 dataType: 'json',
                 success: function(data) {
                     swal.close();
-                    swalSuccess('Tambah data pembelian berhasil');
-                    window.location.href = "{!!route('pembelian.index')!!}";
+                    swalSuccess('Ubah data pembelian berhasil');
+                    window.location.href = "{!!route('pembelian.detail',['id'=>$purchase->id])!!}";
                 },
                 error: function(data) {
                     swalError('Error,tidak dapat menambah data');
