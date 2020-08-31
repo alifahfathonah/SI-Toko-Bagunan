@@ -430,7 +430,7 @@
                 success: function(data) {
                     swal.close();
                     swalSuccess('Tambah data pembelian berhasil');
-                    window.location.href = "{!!route('pembelian.detail',['pembelian'=>$purchase->id])!!}";
+                    window.location.href = "{!!route('pembelian.detail',['id'=>$purchase->id])!!}";
                 },
                 error: function(data) {
                     swalError('Error,tidak dapat menambah data');
