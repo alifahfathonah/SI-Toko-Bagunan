@@ -24,4 +24,13 @@ class Shipping extends Model
     {
         return $this->hasMany(PengirimanItem::class,'pengiriman_id','id');
     }
+
+    public function detailItems(){
+        $items = $this->items;
+        $product = [];
+        foreach ($items as $item) {
+            $product[] = $item->PenjualanItem->product->nama_produk;
+        }
+        return implode(', ', $product);
+    }   
 }

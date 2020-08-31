@@ -120,7 +120,7 @@
                         <ul class="nav nav-collapse">
                             <li class="{{set_active('pengiriman.index')}}">
                                 <a href="{{route('pengiriman.index')}}">
-                                    <span class="sub-item">Daftar Pengiriman</span>
+                                    <span class="sub-item">Pengiriman Aktif</span>
                                 </a>
                             </li>
                             <li class="{{set_active('pengiriman.riwayat')}}">

@@ -45,6 +45,7 @@
                                         <th width="10%">Tanggal</th>
                                         <th>Nama Pembeli</th>
                                         <th>Driver</th>
+                                        <th>Item</th>
                                         <th width="10%">Status Pengiriman</th>
                                         <th width="10%">Prioritas Pengiriman</th>
 
@@ -58,6 +59,9 @@
                                         <td>{{$shipping->tanggal_pengiriman}}</td>
                                         <td>{{$shipping->penjualan->nama_pembeli}}</td>
                                         <td>{{@$shipping->driver->name?? "-"}}</td>
+                                        <td>
+                                            {{$shipping->detailItems()}}
+                                        </td>
                                         <td>{!!badge($shipping->status)!!}</td>
                                         <td>{!!badge($shipping->prioritas)!!}</td>
 
@@ -139,6 +143,25 @@
     $(document).ready(function() {
         $('#daftarPengiriman').DataTable({
             "pageLength": 10,
+            columnDefs: [{
+                targets:6,
+                render: function(data, type, row, meta) {
+                    if (type === 'sort') {
+                    switch (data) {
+                        case 'NORMAL':
+                        return 0;
+                        case 'SEDANG':
+                        return 1;
+                        case 'PENTING':
+                        return 2;
+                    }
+                    }
+                    
+                    return data;
+                }
+                }],
+            order : [ 6, 'desc' ]
+            
         });
 
         $('#sendPengiriman').submit(function(e) {
