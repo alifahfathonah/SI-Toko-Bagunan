@@ -76,7 +76,19 @@ class PembelianController extends Controller
             'paid_amount'    => $request->input('jmlBayar'),
         ];
 
-        $data['purchase_status'] = $request->input('paymentStatus') == "lunas" ? "selesai" : "proses";
+        if($data['paid_amount'] >= $data['total']){
+            $data['payment_status'] = "lunas";
+        }
+        else if ($data['paid_amount'] > 0  && $data['paid_amount'] < $data['total']){
+            $data['payment_status'] = "sebagian";
+        }
+        else if ($data['paid_amount'] <= 0){
+            $data['payment_status'] = "belum";
+        }
+
+        $data['purchase_status'] =  $data['payment_status'] == "lunas" ? "selesai" : "proses";
+        
+        
         $purchase = Purchase::create($data);
 
         if ($data['paid_amount'] > 0) {
@@ -145,10 +157,24 @@ class PembelianController extends Controller
         $purchase = Purchase::find($id);
         $purchase->purchase_date  = $request->input('tglPembelian');
         $purchase->supplier_id    = $request->input('supp');
-        $purchase->nota_no       = $request->input('nota');
+        $purchase->nota_no        = $request->input('nota');
         $purchase->total          = $request->input('grandTotal');
-        $purchase->payment_status = $request->input('paymentStatus');
-        $purchase->purchase_status = $request->input('grandTotal') - $request->input('jmlBayar') == 0 ? "selesai" : "proses";
+        
+        
+        $paidAmount = $purchase->paid_amount;
+        $grandTotal = $request->input('grandTotal');
+
+        if($paidAmount >= $grandTotal){
+            $purchase->payment_status = "lunas";
+        }
+        else if ($paidAmount > 0  && $paidAmount < $grandTotal){
+            $purchase->payment_status = "sebagian";
+        }
+        else if ($paidAmount <= 0){
+            $purchase->payment_status= "belum";
+        }
+
+        $purchase->purchase_status = $purchase->payment_status == "lunas" ? "selesai" : "proses";
         $purchase->save();
 
         PurchaseItem::where('purchase_id', $purchase->id)->delete();
