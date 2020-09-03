@@ -8,7 +8,7 @@ class Shipping extends Model
 {
     protected $table = 'pengiriman';
     protected $fillable = [
-        'penjualan_id', 'tanggal_pengiriman', 'status','prioritas'
+        'tanggal_pengiriman', 'nama_pembeli', 'alamat_pembeli', 'phone', 'grantotal', 'status', 'prioritas'
     ];
 
     public function penjualan()
@@ -22,15 +22,16 @@ class Shipping extends Model
 
     public function items()
     {
-        return $this->hasMany(PengirimanItem::class,'pengiriman_id','id');
+        return $this->hasMany(PengirimanItem::class, 'pengiriman_id', 'id');
     }
 
-    public function detailItems(){
+    public function detailItems()
+    {
         $items = $this->items;
         $product = [];
         foreach ($items as $item) {
-            $product[] = $item->PenjualanItem->product->nama_produk;
+            $product[] = $item->product->nama_produk;
         }
         return implode(', ', $product);
-    }   
+    }
 }

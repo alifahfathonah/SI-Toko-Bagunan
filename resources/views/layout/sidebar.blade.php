@@ -128,6 +128,11 @@
                                     <span class="sub-item">Riwayat Pengiriman</span>
                                 </a>
                             </li>
+                            <li class="{{set_active('pengiriman.form.tambah')}}">
+                                <a href="{{route('pengiriman.form.tambah')}}">
+                                    <span class="sub-item">Tambah Pengiriman</span>
+                                </a>
+                            </li>
                         </ul>
                     </div>
                 </li>

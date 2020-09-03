@@ -34,6 +34,10 @@
                     <div class="card-header">
                         <div class="d-flex align-items-center">
                             <h4 class="card-title">Daftar Antrian Pengiriman</h4>
+                            <a class="btn btn-primary btn-round ml-auto" href="{{route('pengiriman.form.tambah')}}">
+                                <i class="fa fa-plus"></i>
+                                Tambah
+                            </a>
                         </div>
                     </div>
                     <div class="card-body">
@@ -45,6 +49,7 @@
                                         <th width="10%">Tanggal</th>
                                         <th>Nama Pembeli</th>
                                         <th>Driver</th>
+                                        <th>Uk. Kendaraan</th>
                                         <th>Item</th>
                                         <th width="10%">Status Pengiriman</th>
                                         <th width="10%">Prioritas Pengiriman</th>
@@ -57,8 +62,9 @@
                                     <tr {!!rowColor($shipping->prioritas)!!}>
                                         <td>{{$loop->iteration}}</td>
                                         <td>{{$shipping->tanggal_pengiriman}}</td>
-                                        <td>{{$shipping->penjualan->nama_pembeli}}</td>
+                                        <td>{{$shipping->nama_pembeli}}</td>
                                         <td>{{@$shipping->driver->name?? "-"}}</td>
+                                        <td>{{$shipping->uk_kendaraan}}</td>
                                         <td>
                                             {{$shipping->detailItems()}}
                                         </td>
@@ -74,9 +80,9 @@
                                                 <div role="separator" class="dropdown-divider"></div>
                                                 <a class="dropdown-item" href="{{route('pengiriman.detail',['pengiriman'=>$shipping])}}">Detail</a>
                                                 <div role="separator" class="dropdown-divider"></div>
-                                                <a class="dropdown-item" href="{{route('pengiriman.form.edit',['pengiriman'=>$shipping])}}">Edit</a>
+                                                <a class="dropdown-item" href="{{route('pengiriman.form.edit', $shipping->id)}}">Edit</a>
                                                 <div role="separator" class="dropdown-divider"></div>
-                                                <form class="formDelete" action="{{route('pengiriman.hapus',['pengiriman'=>$shipping])}}" method="post">
+                                                <form class="formDelete" action="{{route('pengiriman.hapus', $shipping->id)}}" method="post">
                                                     @csrf
                                                     @method('DELETE')
                                                     <button type="submit" class="dropdown-item">Hapus</button>
@@ -115,12 +121,19 @@
                         <input type="hidden" name="idPengiriman" id="idPengiriman">
                         <div class="col-md-12 pr-0">
                             <div class="form-group">
-                                <label>Supir</label>
+                                <label>Driver</label>
                                 <select class="form-control" name="driver" id="optionDriver">
-                                    <option value="" selected disabled>- Pilih Supir -</option>
+                                    <option value="" selected disabled>- Pilih Driver -</option>
                                     @foreach ($drivers as $driver)
                                     <option value="{{$driver->id}}">{{$driver->name}}</option>
                                     @endforeach
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label>Uk. Kendaraan</label>
+                                <select class="form-control" name="kendaraan" id="optionKendaraan">
+                                    <option value="besar">Besar</option>
+                                    <option value="kecil">Kecil</option>
                                 </select>
                             </div>
                         </div>
@@ -144,24 +157,24 @@
         $('#daftarPengiriman').DataTable({
             "pageLength": 10,
             columnDefs: [{
-                targets:6,
+                targets: 6,
                 render: function(data, type, row, meta) {
                     if (type === 'sort') {
-                    switch (data) {
-                        case 'NORMAL':
-                        return 0;
-                        case 'SEDANG':
-                        return 1;
-                        case 'PENTING':
-                        return 2;
+                        switch (data) {
+                            case 'NORMAL':
+                                return 0;
+                            case 'SEDANG':
+                                return 1;
+                            case 'PENTING':
+                                return 2;
+                        }
                     }
-                    }
-                    
+
                     return data;
                 }
-                }],
-            order : [ 6, 'desc' ]
-            
+            }],
+            order: [6, 'desc']
+
         });
 
         $('#sendPengiriman').submit(function(e) {
@@ -196,7 +209,7 @@
 
         $('#kirimPesanan').on('hidden.bs.modal', function() {
             $("#sendPengiriman").trigger("reset");
-            $('#kirimPesananBtn').attr('disabled','disabled');
+            $('#kirimPesananBtn').attr('disabled', 'disabled');
         })
 
         $('.formDelete').on('submit', function(e) {
@@ -213,8 +226,7 @@
                             if (response.success) {
                                 swalSuccess('Hapus data berhasil');
                                 location.reload();
-                            }
-                            else{
+                            } else {
                                 swalError('Pilih supir terlebih dahulu');
                             }
                         })
@@ -223,11 +235,17 @@
 
         })
 
-        $('#optionDriver').change(function(){
-            if($(this).val() == ""){
-                $('#kirimPesananBtn').attr('disabled','disabled');
+        $('#optionDriver').change(function() {
+            if ($(this).val() == "") {
+                $('#kirimPesananBtn').attr('disabled', 'disabled');
+            } else {
+                $('#kirimPesananBtn').removeAttr('disabled');
             }
-            else{
+        })
+        $('#optionKendaraan').change(function() {
+            if ($(this).val() == "") {
+                $('#kirimPesananBtn').attr('disabled', 'disabled');
+            } else {
                 $('#kirimPesananBtn').removeAttr('disabled');
             }
         })

@@ -50,7 +50,7 @@
                                         <th>No. Referensi</th>
                                         <th>Total Pembelian</th>
                                         <th>Total Pembayaran</th>
-                                        <th>Status Pembelian</th>
+                                        <th>Sisa Pembayaran</th>
                                         <th>Status Pembayaran</th>
                                         <th style="width: 10%">Aksi</th>
                                     </tr>
@@ -63,7 +63,7 @@
                                         <td>{{$purchase->reference_no}}</td>
                                         <td>{{number_format($purchase->total, 2)}}</td>
                                         <td>{{number_format($purchase->paid_amount, 2)}}</td>
-                                        <td>{!!badge($purchase->purchase_status)!!}</td>
+                                        <td>{{number_format($purchase->total-$purchase->paid_amount, 2)}}</td>
                                         <td>{!!badge($purchase->payment_status)!!}</td>
                                         <td>
                                             <button class="btn btn-primary btn-border dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Aksi</button>
@@ -312,7 +312,7 @@
         var data = $(this).serializeArray();
         var _url = $(this).attr('action');
 
-        
+
         if (validateFormPembayaran()) {
             swalLoading();
             $.ajax({
@@ -364,12 +364,11 @@
         }
     }
 
-    function validateFormPembayaran(){
-        if ($('#jenisPembayaran').val() == ""){
+    function validateFormPembayaran() {
+        if ($('#jenisPembayaran').val() == "") {
             swalError("Jenis Pembayaran Tidak Boleh Kosong");
             return false;
-        }
-        else if($('#totalPembayaran').val() == "" ||  $('#totalPembayaran').val() == "0"){
+        } else if ($('#totalPembayaran').val() == "" || $('#totalPembayaran').val() == "0") {
             swalError("Jumlah yang dibayarkan tidak Boleh Kosong");
             return false;
         }
