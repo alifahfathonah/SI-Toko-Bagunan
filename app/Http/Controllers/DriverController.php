@@ -56,7 +56,10 @@ class DriverController extends Controller
      */
     public function show($id)
     {
-        //
+        $driver = Driver::find($id);
+        $histories = $driver->histories()->orderBy('send_at','DESC')->get();
+        
+        return view('drivers.detail-driver', compact('driver','histories'));
     }
 
     /**

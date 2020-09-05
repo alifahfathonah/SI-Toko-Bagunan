@@ -211,9 +211,10 @@ class ShippingController extends Controller
             return response()->json($response);
         }
 
-        $pengiriman->driver_id = $driver_id;
+        $pengiriman->driver_id    = $driver_id;
         $pengiriman->uk_kendaraan = $kendaraan;
-        $pengiriman->status    = 'dikirim';
+        $pengiriman->status       = 'dikirim';
+        $pengiriman->send_at      =  Carbon::now();
         $pengiriman->save();
 
         $response = [

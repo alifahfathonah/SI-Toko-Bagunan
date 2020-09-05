@@ -61,9 +61,9 @@
                                         <td>{{$purchase->purchase_date}}</td>
                                         <td>{{$purchase->supplier->name}}</td>
                                         <td>{{$purchase->reference_no}}</td>
-                                        <td>{{number_format($purchase->total, 2)}}</td>
-                                        <td>{{number_format($purchase->paid_amount, 2)}}</td>
-                                        <td>{{number_format($purchase->total-$purchase->paid_amount, 2)}}</td>
+                                        <td class="text-right">{{number_format($purchase->total, 2)}}</td>
+                                        <td class="text-right">{{number_format($purchase->paid_amount, 2)}}</td>
+                                        <td class="text-right">{{number_format($purchase->total-$purchase->paid_amount, 2)}}</td>
                                         <td>{!!badge($purchase->payment_status)!!}</td>
                                         <td>
                                             <button class="btn btn-primary btn-border dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Aksi</button>
@@ -82,6 +82,13 @@
                                     </tr>
                                     @endforeach
                                 </tbody>
+                                <tfoot>
+                                    <tr>
+                                        <td colspan="5" style="text-align: center;"><b>Total Tagihan Keseluruhan </b></td>
+                                        <td class="text-right"><b><span id="grandTotal">{{number_format($purchases->sum('bill'), 2)}}</span></b></td>
+                                        <td colspan="2"></td>
+                                    </tr>
+                                </tfoot>
                             </table>
                         </div>
                     </div>

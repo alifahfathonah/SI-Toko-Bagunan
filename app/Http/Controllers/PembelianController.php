@@ -33,6 +33,7 @@ class PembelianController extends Controller
     public function index()
     {
         $purchases = Purchase::where('purchase_status', 'proses')->orderBy('created_at','DESC')->get();
+        
         return view('pembelian/daftar_pembelian', compact('purchases'));
 
         // $purchases = Purchase::where('purchase_status', 'selesai')->get();

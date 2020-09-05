@@ -3,12 +3,17 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Carbon\Carbon;
 
 class Shipping extends Model
 {
     protected $table = 'pengiriman';
     protected $fillable = [
-        'tanggal_pengiriman', 'nama_pembeli', 'alamat_pembeli', 'phone', 'grantotal', 'status', 'prioritas'
+        'tanggal_pengiriman', 'nama_pembeli', 'alamat_pembeli', 'phone', 'grantotal', 'status', 'prioritas','send_at'
+    ];
+
+    protected $appends = [
+        'time_send'
     ];
 
     public function penjualan()
@@ -33,5 +38,9 @@ class Shipping extends Model
             $product[] = $item->product->nama_produk;
         }
         return implode(', ', $product);
+    }
+
+    public function getTimeSendAttribute(){
+        return Carbon::parse($this->attributes['send_at'])->format('H:i');
     }
 }

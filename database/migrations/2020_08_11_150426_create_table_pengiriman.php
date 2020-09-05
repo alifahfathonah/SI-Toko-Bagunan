@@ -24,6 +24,7 @@ class CreateTablePengiriman extends Migration
             $table->string('uk_kendaraan', 20)->nullable();
             $table->string('status', 20);
             $table->string('prioritas', 20);
+            $table->dateTime('send_at')->nullable();
             $table->timestamps();
         });
     }

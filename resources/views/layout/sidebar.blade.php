@@ -68,7 +68,7 @@
                         </ul>
                     </div>
                 </li>
-                <li class="nav-item {{set_active(['penjualan.index','penjualan.form.tambah'])}}">
+                {{-- <li class="nav-item {{set_active(['penjualan.index','penjualan.form.tambah'])}}">
                     <a data-toggle="collapse" href="#penjualan">
                         <i class="fas fa-chart-bar"></i>
                         <p>Penjualan</p>
@@ -88,7 +88,7 @@
                             </li>
                         </ul>
                     </div>
-                </li>
+                </li> --}}
                 <li class="nav-item {{set_active(['driver.index','driver.form.tambah'])}}">
                     <a data-toggle="collapse" href="#driver">
                         <i class="fas fa-user-tie"></i>
@@ -118,6 +118,11 @@
                     </a>
                     <div class="collapse {{set_show(['pengiriman.index','pengiriman.riwayat','pengiriman.form.tambah'])}}" id="pengiriman">
                         <ul class="nav nav-collapse">
+                            <li class="{{set_active('pengiriman.form.tambah')}}">
+                                <a href="{{route('pengiriman.form.tambah')}}">
+                                    <span class="sub-item">Tambah Pengiriman</span>
+                                </a>
+                            </li>
                             <li class="{{set_active('pengiriman.index')}}">
                                 <a href="{{route('pengiriman.index')}}">
                                     <span class="sub-item">Pengiriman Aktif</span>
@@ -126,11 +131,6 @@
                             <li class="{{set_active('pengiriman.riwayat')}}">
                                 <a href="{{route('pengiriman.riwayat')}}">
                                     <span class="sub-item">Riwayat Pengiriman</span>
-                                </a>
-                            </li>
-                            <li class="{{set_active('pengiriman.form.tambah')}}">
-                                <a href="{{route('pengiriman.form.tambah')}}">
-                                    <span class="sub-item">Tambah Pengiriman</span>
                                 </a>
                             </li>
                         </ul>

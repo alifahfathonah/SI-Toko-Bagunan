@@ -123,12 +123,34 @@
     </div>
 </div>
 
+<div id="printku" style="display:none">
+    <div class="title"> =======SUMBER REJEKI======== </div>
+    <div class="title"> ============================= </div>
+
+    
+    <div> Nama:  {{$shipping->nama_pembeli}}</div>
+    <div> Alamat: {{$shipping->alamat_pembeli}} </div>
+
+    <div> ============================= </div>
+    
+    <div> 
+        @foreach ($shipping->items as $item)
+        <div>{{$loop->iteration}}. {{$item->product->nama_produk}}  @ {{$item->quantity}} {{$item->unit->name_unit}}  => Rp.{{number_format($item->total)}} </div>
+        @endforeach
+    </div>
+    <div> ============================= </div>
+    <div> 
+        Total : Rp.{{number_format($grandTotal)}}
+    </div>
+
+</div>
+
 @endsection
 
 @section('script')
 <script type="text/javascript">
     function cetak() {
-        var printContents = document.getElementById('print').innerHTML;
+        var printContents = document.getElementById('printku').innerHTML;
         var originalContents = document.body.innerHTML;
         document.body.innerHTML = printContents;
         window.print();
