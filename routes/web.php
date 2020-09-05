@@ -104,9 +104,8 @@ Route::get('/pengiriman/riwayat/list', 'ShippingController@riwayat')->name('peng
 Route::get('/pengiriman/cetak_invoice/{id}', 'ShippingController@cetak_invoice')->name('pengiriman.cetak-invoice');
 Route::get('/pengiriman/{id}/create', 'ShippingController@create')->name('pengiriman.tambah.form');
 Route::post('pengiriman/{pengiriman}/send', 'ShippingController@sendShipping')->name('pengiriman.kirim');
-Route::get('/pengiriman/invoice/cetak', function(){
-    return view('pengiriman.print_invoice');
-});
+Route::get('/pengiriman/cetak_invoice/{id}/pdf', 'ShippingController@pdf_invoice')->name('pengiriman.cetak-pdf');
+
 
 
 

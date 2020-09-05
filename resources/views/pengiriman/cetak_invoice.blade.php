@@ -118,7 +118,9 @@
         </div>
         <div class="text-right" style="padding-right: 20px;">
             <a href="{{route('pengiriman.index')}}" class="btn btn-danger">Batal</a>&nbsp;
-            <a class="btn btn-success" style="color: #fff;" onclick="cetak()">Cetak</a>
+            <a href="{{route('pengiriman.cetak-pdf',['id'=>$shipping->id])}}" class="btn btn-success" style="color: #fff;">Cetak</a>
+
+            {{-- <a class="btn btn-success" style="color: #fff;" onclick="cetak()">Cetak</a> --}}
         </div>
     </div>
 </div>

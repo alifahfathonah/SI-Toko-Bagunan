@@ -12,6 +12,7 @@ use App\Models\Penjualan;
 use App\Models\PenjualanItem;
 use App\Models\PengirimanItem;
 use Carbon\Carbon;
+use PDF;
 
 class ShippingController extends Controller
 {
@@ -240,5 +241,16 @@ class ShippingController extends Controller
             'message' => "Hapus pengiriman berhasil",
         ];
         return response()->json($response);
+    }
+
+    public function pdf_invoice($id)
+    {
+        $shipping = Shipping::find($id);
+        $shippingItem = PengirimanItem::where('pengiriman_id', $id)->get();
+        $customPaper = array(0,0,302,500);
+        
+        $pdf = PDF::loadview('pengiriman/print_invoice', compact('shipping', 'shippingItem'));
+        $pdf->setPaper($customPaper);
+	    return $pdf->stream();
     }
 }

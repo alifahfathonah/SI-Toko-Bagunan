@@ -9,29 +9,44 @@
 <style>
     html, body
     {
-    width: 300px;
+    width: 302px;
     }
-
+     
+     .title{
+         text-align: center;
+     }
     
 </style>
 <body>
-    <div class="title"> =======SUMBER REJEKI======== </div>
-    <div class="title"> ============================= </div>
-
+    <div id="printku">
+        <div class="title">SUMBER REJEKI</div>
+        <div  class="title"> ============================= </div>
     
-    <div> Nama:  {{$shipment->nama_pembeli}}</div>
-    <div> Alamat: {{$shipment->alamat_pembeli}} </div>
-
-    <div> ============================= </div>
+        
+        <div> Nama:  {{$shipping->nama_pembeli}}</div>
+        <div> Alamat: {{$shipping->alamat_pembeli}} </div>
     
-    <div> 
-        @foreach ($pengiriman->items as $item)
-        <div>{{$loop->iteration}}. {{$item->product->nama_produk}}  @{{$item->quantity}} {{$item->unit->name_unit}} Rp.{{$item->total}} </div>
-        @endforeach
-    </div>
-    <div> ============================= </div>
-    <div> 
-        Total : {{$shipment->grandtotal}}
+        <div> ============================= </div>
+        
+        <div> 
+            
+            @php
+            $grandTotal = 0;
+            @endphp
+
+            @foreach ($shipping->items as $item)
+
+            @php
+            $grandTotal = $grandTotal + ($item->quantity * $item->unit_price);
+            @endphp
+            <div>{{$loop->iteration}}. {{$item->product->nama_produk}}  @ {{$item->quantity}} {{$item->unit->name_unit}}  => Rp.{{number_format($item->total)}} </div>
+            @endforeach
+        </div>
+        <div> ============================= </div>
+        <div> 
+            Total : Rp.{{number_format($grandTotal)}}
+        </div>
+    
     </div>
 
 </body>
