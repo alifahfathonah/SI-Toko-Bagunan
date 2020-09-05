@@ -45,6 +45,7 @@
                                         <th width="10%">Tanggal</th>
                                         <th>Nama Pembeli</th>
                                         <th>Driver</th>
+                                        <th>Uk. Kendaraan</th>
                                         <th width="10%">Status Pengiriman</th>
                                         <th width="10%">Prioritas Pengiriman</th>
 
@@ -56,8 +57,9 @@
                                     <tr {!!rowColor($shipping->prioritas)!!}>
                                         <td>{{$loop->iteration}}</td>
                                         <td>{{$shipping->tanggal_pengiriman}}</td>
-                                        <td>{{$shipping->penjualan->nama_pembeli}}</td>
+                                        <td>{{$shipping->nama_pembeli}}</td>
                                         <td>{{@$shipping->driver->name?? "-"}}</td>
+                                        <td>{{$shipping->uk_kendaraan}}</td>
                                         <td>{!!badge($shipping->status)!!}</td>
                                         <td>{!!badge($shipping->prioritas)!!}</td>
 

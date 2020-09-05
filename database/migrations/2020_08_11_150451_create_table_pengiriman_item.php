@@ -16,8 +16,11 @@ class CreateTablePengirimanItem extends Migration
         Schema::create('pengiriman_item', function (Blueprint $table) {
             $table->id();
             $table->foreignID('pengiriman_id')->references('id')->on('pengiriman');
-            $table->foreignID('penjualan_item_id')->references('id')->on('penjualan_item');
+            $table->foreignID('product_id')->references('id')->on('products');
             $table->integer('quantity');
+            $table->string('unit_id')->references('id')->on('units');
+            $table->decimal('unit_price', 25, 2)->default(0.00);
+            $table->integer('total');
             $table->timestamps();
         });
     }

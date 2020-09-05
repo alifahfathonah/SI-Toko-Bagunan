@@ -12,6 +12,10 @@ class Purchase extends Model
         'created_at','updated_at','deleted_at','id'
     ];
 
+    protected $appends = [
+        'bill'
+    ];
+
     public function supplier()
     {
         return $this->belongsTo(Supplier::class);
@@ -38,5 +42,10 @@ class Purchase extends Model
                 'length' => 5 // Jumlah digit yang akan digunakan sebagai nomor urut
             ]
         ];
+    }
+
+    public function getBillAttribute()
+    {
+        return $this->attributes['total']-$this->attributes['paid_amount'];
     }
 }

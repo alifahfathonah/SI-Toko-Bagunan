@@ -60,6 +60,8 @@
                                         <td>
                                             <button class="btn btn-primary btn-border dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Aksi</button>
                                             <div class="dropdown-menu">
+                                                <a class="dropdown-item" href="{{route('driver.detail', $driver->id)}}">Detail</a>
+                                                <div role="separator" class="dropdown-divider"></div>
                                                 <a class="dropdown-item" href="{{route('driver.edit', $driver->id)}}">Edit</a>
                                                 <div role="separator" class="dropdown-divider"></div>
                                                 <a class="dropdown-item" data-toggle="modal" data-target="#hapusModal{{$driver->id}}">Hapus</a>

@@ -48,14 +48,13 @@
                                 <p class="mb-0">{{$shipping->tanggal_pengiriman}}</p>
                             </div>
                             <div class="col-md-4 pb-1 text-left">
-                                <p class="mb-0 fw-bold">Nomor</p>
-                                <p class="mb-0">{{$shipping->penjualan->reference_no}}</p>
+
                             </div>
                             <div class="col-md-4 pb-1 text-left">
                                 <p class="mb-0 fw-bold">Penerima</p>
-                                <p class="mb-0">{{$shipping->penjualan->nama_pembeli}}</p>
-                                <p class="mb-0">{{$shipping->penjualan->alamat_pembeli}}</p>
-                                <p class="mb-0">Telp. {{$shipping->penjualan->phone}}</p>
+                                <p class="mb-0">{{$shipping->nama_pembeli}}</p>
+                                <p class="mb-0">{{$shipping->alamat_pembeli}}</p>
+                                <p class="mb-0">Telp. {{$shipping->phone}}</p>
                             </div>
                         </div>
                     </div>
@@ -81,16 +80,16 @@
                             @foreach($shippingItem as $item)
 
                             @php
-                            $grandTotal = $grandTotal + ($item->quantity * $item->PenjualanItem->unit_price);
+                            $grandTotal = $grandTotal + ($item->quantity * $item->unit_price);
                             @endphp
 
                             <tr>
                                 <td class="text-center" style="height:30px;">{{$loop->iteration}}</td>
-                                <td style="height:30px;">{{$item->PenjualanItem->product->nama_produk}}</td>
+                                <td style="height:30px;">{{$item->product->nama_produk}}</td>
                                 <td class="text-right" style="height:30px;">{{$item->quantity}}</td>
-                                <td class="text-center" style="height:30px;">{{$item->PenjualanItem->unit->name_unit}}</td>
-                                <td class="text-right" style="height:30px;">{{number_format($item->PenjualanItem->unit_price, 2)}}</td>
-                                <td class="text-right" style="height:30px;">{{number_format($item->quantity * $item->PenjualanItem->unit_price, 2)}}</td>
+                                <td class="text-center" style="height:30px;">{{$item->unit->name_unit}}</td>
+                                <td class="text-right" style="height:30px;">{{number_format($item->unit_price, 2)}}</td>
+                                <td class="text-right" style="height:30px;">{{number_format($item->quantity * $item->unit_price, 2)}}</td>
                             </tr>
                             @endforeach
                             <tr>
@@ -124,12 +123,34 @@
     </div>
 </div>
 
+<div id="printku" style="display:none">
+    <div class="title"> =======SUMBER REJEKI======== </div>
+    <div class="title"> ============================= </div>
+
+    
+    <div> Nama:  {{$shipping->nama_pembeli}}</div>
+    <div> Alamat: {{$shipping->alamat_pembeli}} </div>
+
+    <div> ============================= </div>
+    
+    <div> 
+        @foreach ($shipping->items as $item)
+        <div>{{$loop->iteration}}. {{$item->product->nama_produk}}  @ {{$item->quantity}} {{$item->unit->name_unit}}  => Rp.{{number_format($item->total)}} </div>
+        @endforeach
+    </div>
+    <div> ============================= </div>
+    <div> 
+        Total : Rp.{{number_format($grandTotal)}}
+    </div>
+
+</div>
+
 @endsection
 
 @section('script')
 <script type="text/javascript">
     function cetak() {
-        var printContents = document.getElementById('print').innerHTML;
+        var printContents = document.getElementById('printku').innerHTML;
         var originalContents = document.body.innerHTML;
         document.body.innerHTML = printContents;
         window.print();

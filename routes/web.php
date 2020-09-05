@@ -85,7 +85,9 @@ Route::resource('driver', 'DriverController')->names([
     'store' => 'driver.tambah',
     'edit' => 'driver.edit',
     'update' => 'driver.update',
-    'destroy' => 'driver.hapus'
+    'destroy' => 'driver.hapus',
+    'show' => 'driver.detail'
+
 ]);
 
 Route::resource('pengiriman', 'ShippingController')->names([
@@ -102,6 +104,10 @@ Route::get('/pengiriman/riwayat/list', 'ShippingController@riwayat')->name('peng
 Route::get('/pengiriman/cetak_invoice/{id}', 'ShippingController@cetak_invoice')->name('pengiriman.cetak-invoice');
 Route::get('/pengiriman/{id}/create', 'ShippingController@create')->name('pengiriman.tambah.form');
 Route::post('pengiriman/{pengiriman}/send', 'ShippingController@sendShipping')->name('pengiriman.kirim');
+Route::get('/pengiriman/invoice/cetak', function(){
+    return view('pengiriman.print_invoice');
+});
+
 
 
 Route::resource('penjualan', 'PenjualanController')->names([

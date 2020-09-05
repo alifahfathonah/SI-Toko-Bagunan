@@ -11,4 +11,9 @@ class Driver extends Model
     protected $fillable = [
         'name', 'phone'
     ];
+
+    public function histories()
+    {
+        return $this->hasMany(Shipping::class);
+    }
 }

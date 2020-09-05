@@ -1,5 +1,5 @@
 @extends('layout.main')
-@section('title', 'Tambah Penjualan')
+@section('title', 'Tambah Pengiriman')
 
 
 @section('contain')
@@ -7,7 +7,7 @@
 <div class="content">
     <div class="page-inner">
         <div class="page-header">
-            <h4 class="page-title">Penjualan</h4>
+            <h4 class="page-title">Pengiriman</h4>
             <ul class="breadcrumbs">
                 <li class="nav-home">
                     <a href="{{route('home')}}">
@@ -18,13 +18,13 @@
                     <i class="flaticon-right-arrow"></i>
                 </li>
                 <li class="nav-item">
-                    <a href="{{route('penjualan.index')}}">Penjualan</a>
+                    <a href="{{route('pembelian.index')}}">Pengiriman</a>
                 </li>
                 <li class="separator">
                     <i class="flaticon-right-arrow"></i>
                 </li>
                 <li class="nav-item">
-                    <a href="#">Tambah Penjualan</a>
+                    <a href="#">Tambah Pengiriman</a>
                 </li>
             </ul>
         </div>
@@ -33,47 +33,47 @@
                 <div class="card">
                     <div class="card-header">
                         <div class="d-flex align-items-center">
-                            <h4 class="card-title">Tambah Penjualan</h4>
+                            <h4 class="card-title">Tambah Pengiriman</h4>
                         </div>
                     </div>
-                    <form id="purchaseForm" action="{{route('penjualan.tambah')}}" method="POST">
+                    <form id="shippingForm" action="{{route('pengiriman.tambah')}}" method="POST">
                         @csrf
                         <div class="card-body">
                             <div class="row">
                                 <div class="col-sm-4 pr-0">
                                     <div class="form-group">
-                                        <label>Tanggal</label>
-                                        <input type="date" class="form-control form-control" id="tglPembelian" name="tglPembelian">
-                                    </div>
-                                </div>
-                                <div class="col-sm-4">
-                                    <div class="form-group">
                                         <label>Nama Pembeli</label>
-                                        <input type="text" class="form-control form-control" name="namaPembeli">
+                                        <input type="text" class="form-control form-control" id="namaPembeli" name="namaPembeli" required autofocus>
                                     </div>
                                 </div>
-                                <div class="col-sm-4">
+                                <div class="col-sm-4 pr-0">
                                     <div class="form-group">
                                         <label>Alamat</label>
-                                        <textarea class="form-control" name="alamatPembeli" rows="3"></textarea>
+                                        <input type="text" class="form-control" id="alamatPembeli" name="alamatPembeli" required></input>
+                                    </div>
+                                </div>
+                                <div class="col-sm-4 pr-0">
+                                    <div class="form-group">
+                                        <label>Telephone</label>
+                                        <input type="number" class="form-control" id="phonePembeli" name="phonePembeli" required></input>
                                     </div>
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="col-sm-4 pr-0">
                                     <div class="form-group">
-                                        <label>Status Pembayaran</label>
-                                        <select class="form-control" id="status" name="paymentStatus">
-                                            <option value="Lunas">Lunas</option>
-                                            <option value="Sebagian">Sebagian</option>
-                                            <option value="Belum" selected>Belum</option>
-                                        </select>
+                                        <label>Tanggal</label>
+                                        <input type="date" class="form-control form-control" id="tglPengiriman" name="tglPengiriman">
                                     </div>
                                 </div>
                                 <div class="col-sm-4 pr-0">
                                     <div class="form-group">
-                                        <label>Jumlah yang Dibayarkan</label>
-                                        <input type="number" class="form-control form-control" id="jmlBayar" name="jmlBayar" value="0">
+                                        <label>Prioritas Pengiriman</label>
+                                        <select class="form-control" name="prioritas">
+                                            <option value="penting">Penting</option>
+                                            <option value="sedang">Sedang</option>
+                                            <option value="normal" selected>Normal</option>
+                                        </select>
                                     </div>
                                 </div>
                             </div>
@@ -116,9 +116,9 @@
                             </div>
                         </div>
                         <div class="card-footer text-right">
-                            <a href="{{route('penjualan.index')}}" class="btn btn-danger">Batal</a>&nbsp;
+                            <a href="{{route('pengiriman.index')}}" class="btn btn-danger">Batal</a>&nbsp;
                             <button type="reset" class="btn btn-info">Reset</button>&nbsp;
-                            <button type="submit" class="btn btn-success" id="submitPurchase">Simpan</button>
+                            <button type="submit" class="btn btn-success" id="submitShipping">Simpan</button>
                         </div>
                     </form>
                 </div>
@@ -281,11 +281,11 @@
 <script src="{{asset('assets/js/alert.js')}}"></script>
 <script>
     $(document).ready(function() {
-        document.getElementById("tglPembelian").valueAsDate = new Date()
+        document.getElementById("tglPengiriman").valueAsDate = new Date()
 
 
         var listItem = $('#daftarItem').DataTable({
-            "pageLength": 7,
+            "pageLength": 10,
             "columns": [{
                     "data": "nomor"
                 },
@@ -336,33 +336,33 @@
             $('#tambahItem').trigger('reset');
         });
 
-        $('#purchaseForm').submit(function(event) {
+        $('#shippingForm').submit(function(event) {
             event.preventDefault();
             swalLoading();
 
-            var purchase = $('#purchaseForm').serializeArray().reduce(function(obj, item) {
+            var shipping = $('#shippingForm').serializeArray().reduce(function(obj, item) {
                 obj[item.name] = item.value;
                 return obj;
             }, {});
-            purchase['grandTotal'] = parseInt($('#grandTotal').html());
-            purchase['dataItem'] = [];
+            shipping['grandTotal'] = parseInt($('#grandTotal').html());
+            shipping['dataItem'] = [];
 
             dataItem = listItem.rows().data();
 
             for (let i = 0; i < dataItem.length; i++) {
-                purchase['dataItem'].push(dataItem[i]);
+                shipping['dataItem'].push(dataItem[i]);
             }
 
 
             $.ajax({
-                data: purchase,
-                url: "{!!  route('penjualan.tambah') !!}",
+                data: shipping,
+                url: "{!!  route('pengiriman.tambah') !!}",
                 type: "POST",
                 dataType: 'json',
                 success: function(data) {
                     swal.close();
-                    swalSuccess('Tambah Penjualan Sukses');
-                    window.location.href = "{!!route('penjualan.index')!!}";
+                    swalSuccess('Tambah Pengiriman Sukses');
+                    window.location.href = "{!!route('pengiriman.index')!!}";
                 },
                 error: function(data) {
                     swalError('Error, Silahkan coba lagi');
@@ -463,6 +463,15 @@
 
         }
     });
+    $('#hargaItemEdit').change(function() {
+        if (parseInt($(this).val()) > 0) {
+            jumlah = parseInt($('#jumlahItemEdit').val());
+
+            totalItem = jumlah * parseInt($(this).val());
+            $('#totalItemEdit').val(totalItem);
+
+        }
+    });
 
     $('#jmlBayar').change(function() {
         console.log("sda");
@@ -478,30 +487,5 @@
         }
 
     });
-
-
-
-    function tambah_pembelian() {
-        var status = document.getElementById("status").value;
-        var jml_beli = 1000;
-        var jml_bayar = document.getElementById("jmlBayar").value;
-
-        if (status == 'lunas') {
-            if (jml_bayar < jml_beli || jml_bayar > jml_beli) {
-                alert("Jumlah pembayaran tidak sesuai !");
-            } else {
-                alert("Sukses !");
-            }
-        } else {
-            if (jml_bayar <= 0) {
-                alert("Jumlah pembayaran harus lebih dari 0 !");
-            } else if (jml_bayar == jml_beli) {
-                alert("Status pembayaran tidak sesuai !");
-            } else {
-                // window.location.href = "{{route('pembelian.tambah')}}";
-                alert("Sukses !");
-            }
-        }
-    }
 </script>
 @endsection

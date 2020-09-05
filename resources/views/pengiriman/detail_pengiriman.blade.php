@@ -33,32 +33,38 @@
                 <div class="card">
                     <div class="card-header">
                         <div class="d-flex align-items-center">
-                            <h4 class="card-title">Edit Pengiriman</h4>
+                            <h4 class="card-title">Detail Pengiriman</h4>
                         </div>
                     </div>
                     <div class="card-body">
                         <div class="row">
-                            <div class="col-sm-4 pr-0">
+                            <div class="col-sm-3 pr-0">
                                 <div class="form-group">
                                     <label>Nama Pembeli</label>
-                                    <input type="text" class="form-control form-control" id="namaPembeli" name="namaPembeli" value="{{$penjualan->nama_pembeli}}" disabled>
+                                    <input type="text" class="form-control form-control" value="{{$pengiriman->nama_pembeli}}" disabled>
                                 </div>
                             </div>
-                            <div class="col-sm-4 pr-0">
+                            <div class="col-sm-3 pr-0">
                                 <div class="form-group">
-                                    <label>ALamat</label>
-                                    <input type="text" class="form-control form-control" id="alamat" name="alamat" value="{{$penjualan->alamat_pembeli}}" disabled>
+                                    <label>Alamat</label>
+                                    <input type="text" class="form-control form-control" value="{{$pengiriman->alamat_pembeli}}" disabled>
+                                </div>
+                            </div>
+                            <div class="col-sm-3 pr-0">
+                                <div class="form-group">
+                                    <label>Telephone</label>
+                                    <input type="text" class="form-control form-control" value="{{$pengiriman->phone}}" disabled>
                                 </div>
                             </div>
                         </div>
                         <div class="row">
-                            <div class="col-sm-4 pr-0">
+                            <div class="col-sm-3 pr-0">
                                 <div class="form-group">
                                     <label>Tanggal</label>
-                                    <input type="date" class="form-control form-control" id="tglPengiriman" name="tglPengiriman" value="{{$pengiriman->tanggal_pengiriman}}" disabled>
+                                    <input type="date" class="form-control form-control" value="{{$pengiriman->tanggal_pengiriman}}" disabled>
                                 </div>
                             </div>
-                            <div class="col-sm-4 pr-0">
+                            <div class="col-sm-3 pr-0">
                                 <div class="form-group">
                                     <label>Prioritas Pengiriman</label>
                                     <select class="form-control" name="prioritas" disabled>
@@ -69,13 +75,24 @@
                                 </div>
                             </div>
                             @isset($pengiriman->driver_id)
-                            <div class="col-sm-4 pr-0">
+                            <div class="col-sm-3 pr-0">
                                 <div class="form-group">
-                                    <label>Supir</label>
+                                    <label>Driver</label>
                                     <select class="form-control" name="driver" disabled>
                                         @foreach ($drivers as $driver)
                                         <option value="{{$driver->id}}" {{$driver->id == $pengiriman->driver_id ? 'selected' : ''}}>{{$driver->name}}</option>
                                         @endforeach
+                                    </select>
+                                </div>
+                            </div>
+                            @endisset
+                            @isset($pengiriman->uk_kendaraan)
+                            <div class="col-sm-3 pr-0">
+                                <div class="form-group">
+                                    <label>Uk. Kendaraan</label>
+                                    <select class="form-control" name="driver" disabled>
+                                        <option value="besar" {{$pengiriman->uk_kendaraan == 'besar' ? 'selected' : ''}}>Besar</option>
+                                        <option value="kecil" {{$pengiriman->uk_kendaraan == 'kecil' ? 'selected' : ''}}>Kecil</option>
                                     </select>
                                 </div>
                             </div>
@@ -91,20 +108,18 @@
                                 <table id="daftarItemPenjualan" class="display table table-striped table-hover">
                                     <thead>
                                         <tr>
-                                            <th>No.</th>
-                                            <th>Nama Item</th>
-                                            <th>Jumlah Dibeli</th>
-                                            <th>Unit</th>
-                                            <th>Jumlah Dikirim</th>
+                                            <th class="text-center">No.</th>
+                                            <th class="text-center">Nama Item</th>
+                                            <th class="text-center">Unit</th>
+                                            <th class="text-center">Jumlah Dikirim</th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         @foreach($pengiriman->items as $item)
                                         <tr>
                                             <td>{{$loop->iteration}}</td>
-                                            <td>{{$item->penjualanItem->product->nama_produk}}</td>
-                                            <td>{{$item->penjualanItem->quantity}}</td>
-                                            <td>{{$item->penjualanItem->unit->name_unit}}</td>
+                                            <td>{{$item->product->nama_produk}}</td>
+                                            <td>{{$item->unit->name_unit}}</td>
                                             <td>{{$item->quantity}}</td>
                                         </tr>
                                         @endforeach

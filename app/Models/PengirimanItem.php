@@ -9,8 +9,13 @@ class PengirimanItem extends Model
     protected $table = 'pengiriman_item';
     protected $guarded = [];
 
-    public function PenjualanItem()
+    public function product()
     {
-        return $this->belongsTo(PenjualanItem::class);
+        return $this->belongsTo(Product::class);
+    }
+
+    public function unit()
+    {
+        return $this->belongsTo(Unit::class);
     }
 }
