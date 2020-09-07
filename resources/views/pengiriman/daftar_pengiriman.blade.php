@@ -76,7 +76,7 @@
                                             <div class="dropdown-menu">
                                                 <a class="dropdown-item sendBtn" data-toggle="modal" data-target="#kirimPesanan" data-pengiriman="{{$shipping->id}}">Kirim Pesanan</a>
                                                 <div role="separator" class="dropdown-divider"></div>
-                                                <a class="dropdown-item" href="{{url('/pengiriman/cetak_invoice', $shipping->id)}}">Cetak Surat Jalan</a>
+                                                <a class="dropdown-item" href="{{url('/pengiriman/cetak_invoice', $shipping->id)}}" target="_blank">Cetak Surat Jalan</a>
                                                 <div role="separator" class="dropdown-divider"></div>
                                                 <a class="dropdown-item" href="{{route('pengiriman.detail',['pengiriman'=>$shipping])}}">Detail</a>
                                                 <div role="separator" class="dropdown-divider"></div>
