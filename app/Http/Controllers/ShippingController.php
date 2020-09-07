@@ -36,8 +36,11 @@ class ShippingController extends Controller
     {
         $shipping = Shipping::find($id);
         $shippingItem = PengirimanItem::where('pengiriman_id', $id)->get();
-
-        return view('pengiriman/cetak_invoice', compact('shipping', 'shippingItem'));
+        $customPaper = array(0,0,302,500);
+        
+        $pdf = PDF::loadview('pengiriman/print_invoice', compact('shipping', 'shippingItem'));
+        $pdf->setPaper($customPaper);
+	    return $pdf->stream();
     }
     public function create()
     {
@@ -52,10 +55,12 @@ class ShippingController extends Controller
             'nama_pembeli'          => $request->input('namaPembeli'),
             'alamat_pembeli'        => $request->input('alamatPembeli'),
             'phone'                 => $request->input('phonePembeli'),
-            'grandtotal'            => $request->input('granTotal'),
+            'grandtotal'            => $request->input('grandTotal'),
             'prioritas'             => $request->input('prioritas'),
             'status'                => 'pending',
         ];
+
+        
 
         $shipping = Shipping::create($data);
 

@@ -9,7 +9,7 @@ class Shipping extends Model
 {
     protected $table = 'pengiriman';
     protected $fillable = [
-        'tanggal_pengiriman', 'nama_pembeli', 'alamat_pembeli', 'phone', 'grantotal', 'status', 'prioritas','send_at'
+        'tanggal_pengiriman', 'nama_pembeli', 'alamat_pembeli', 'phone', 'grandtotal', 'status', 'prioritas','send_at'
     ];
 
     protected $appends = [
