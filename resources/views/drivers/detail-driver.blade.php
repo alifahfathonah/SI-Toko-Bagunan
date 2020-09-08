@@ -1,5 +1,5 @@
 @extends('layout.main')
-@section('title', 'Daftar Sales')
+@section('title', 'Detail Driver')
 
 
 @section('contain')
@@ -53,9 +53,9 @@
                                 </div>
                             </div>
                         </div>
-                       
+
                     </div>
-                    
+
 
                 </div>
             </div>
