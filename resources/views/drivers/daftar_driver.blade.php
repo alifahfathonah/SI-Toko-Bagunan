@@ -1,5 +1,5 @@
 @extends('layout.main')
-@section('title', 'Daftar Supir')
+@section('title', 'Daftar Driver')
 
 
 @section('contain')

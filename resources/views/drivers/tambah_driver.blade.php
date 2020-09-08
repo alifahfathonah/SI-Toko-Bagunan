@@ -1,5 +1,5 @@
 @extends('layout.main')
-@section('title', 'Tambah Supir')
+@section('title', 'Tambah Driver')
 
 @section('contain')
 
