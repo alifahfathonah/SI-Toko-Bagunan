@@ -140,7 +140,7 @@
                     </div>
                 </div>
                 <div class="modal-footer no-bd">
-                    <button type="button" class="btn btn-danger" data-dismiss="modal">Batal</button>
+                    <button type="button" class="btn btn-danger" data-dismiss="modal" id="closePesananBtn">Batal</button>
                     <button type="submit" class="btn btn-success" id="kirimPesananBtn" disabled>Kirim</button>
                 </div>
             </form>
@@ -203,11 +203,16 @@
                 });
         })
 
-        $('.sendBtn').click(function() {
+        $(document).on('click','.sendBtn',function(){
             $('#idPengiriman').val($(this).data('pengiriman'));
         });
 
         $('#kirimPesanan').on('hidden.bs.modal', function() {
+            $("#sendPengiriman").trigger("reset");
+            $('#kirimPesananBtn').attr('disabled', 'disabled');
+        })
+
+        $('#closePesananBtn').on('click', function() {
             $("#sendPengiriman").trigger("reset");
             $('#kirimPesananBtn').attr('disabled', 'disabled');
         })

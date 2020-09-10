@@ -66,7 +66,7 @@
                                         <td>
                                             <button class="btn btn-primary btn-border dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Aksi</button>
                                             <div class="dropdown-menu">
-                                                <a class="dropdown-item sendBtn" data-toggle="modal" data-target="#kirimPesanan" data-pengiriman="{{$shipping->id}}">Kirim Pesanan</a>
+                                                {{-- <a class="dropdown-item sendBtn" data-toggle="modal" data-target="#kirimPesanan" data-pengiriman="{{$shipping->id}}">Kirim Pesanan</a> --}}
                                                 <div role="separator" class="dropdown-divider"></div>
                                                 <a class="dropdown-item" href="{{url('/pengiriman/cetak_invoice', $shipping->id)}}" target="_blank">Cetak Surat Jalan</a>
                                                 <div role="separator" class="dropdown-divider"></div>
@@ -113,20 +113,27 @@
                         <input type="hidden" name="idPengiriman" id="idPengiriman">
                         <div class="col-md-12 pr-0">
                             <div class="form-group">
-                                <label>Supir</label>
-                                <select class="form-control" name="driver">
-                                    <option selected disabled>- Pilih Supir -</option>
+                                <label>Driver</label>
+                                <select class="form-control" name="driver" id="optionDriver">
+                                    <option value="" selected disabled>- Pilih Driver -</option>
                                     @foreach ($drivers as $driver)
                                     <option value="{{$driver->id}}">{{$driver->name}}</option>
                                     @endforeach
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label>Uk. Kendaraan</label>
+                                <select class="form-control" name="kendaraan" id="optionKendaraan">
+                                    <option value="besar">Besar</option>
+                                    <option value="kecil">Kecil</option>
                                 </select>
                             </div>
                         </div>
                     </div>
                 </div>
                 <div class="modal-footer no-bd">
-                    <button type="button" class="btn btn-danger" data-dismiss="modal">Batal</button>
-                    <button type="submit" class="btn btn-success">Kirim</button>
+                    <button type="button" class="btn btn-danger" data-dismiss="modal" id="closePesananBtn">Batal</button>
+                    <button type="submit" class="btn btn-success" id="kirimPesananBtn" disabled>Kirim</button>
                 </div>
             </form>
         </div>
@@ -169,13 +176,15 @@
                 });
         })
 
-        $('.sendBtn').click(function() {
+        $(document).on('click','.sendBtn',function(){
             $('#idPengiriman').val($(this).data('pengiriman'));
         });
 
         $('#kirimPesanan').on('hidden.bs.modal', function() {
             $("#sendPengiriman").trigger("reset");
+            $('#kirimPesananBtn').attr('disabled', 'disabled');
         })
+
 
         $('.formDelete').on('submit', function(e) {
             e.preventDefault();
