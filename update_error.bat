@@ -2,6 +2,6 @@
 :: TOOLS FIXING ERROR .
 TITLE UPDATE APLIKASI 
 ECHO Mohon tunggu sebentar......
-git status
+git pull
 ECHO Tekan enter untuk mengakhiri proses update...
 PAUSE >nul
