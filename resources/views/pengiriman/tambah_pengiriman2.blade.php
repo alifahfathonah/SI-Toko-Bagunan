@@ -463,6 +463,28 @@
 
         }
     });
+
+    //in modal edit item
+    $('#jumlahItem').change(function(){
+        let hargaPerItem = parseInt($('#hargaItem').val());
+
+        if(hargaPerItem > 0){
+            totalItem = hargaPerItem * parseInt($(this).val());
+            $('#totalItem').val(totalItem);
+        }
+    });
+
+    //in modal edit item
+    $('#jumlahItemEdit').change(function(){
+        let hargaPerItem = parseInt($('#hargaItemEdit').val());
+
+        if(hargaPerItem > 0){
+            totalItem = hargaPerItem * parseInt($(this).val());
+            $('#totalItemEdit').val(totalItem);
+        }
+    });
+
+
     $('#hargaItemEdit').change(function() {
         if (parseInt($(this).val()) > 0) {
             jumlah = parseInt($('#jumlahItemEdit').val());
@@ -474,7 +496,6 @@
     });
 
     $('#jmlBayar').change(function() {
-        console.log("sda");
         jumlahBayar = parseInt($(this).val());
         grandTotal = parseInt($('#grandTotal').html());
 

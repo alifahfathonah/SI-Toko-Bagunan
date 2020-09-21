@@ -56,7 +56,7 @@
                                 <div class="col-sm-3 pr-0">
                                     <div class="form-group">
                                         <label>Telephone</label>
-                                        <input type="text" class="form-control form-control" id="phonePembeli" name="alamatPembeli" value="{{$pengiriman->phone}}">
+                                        <input type="number" class="form-control form-control" id="phonePembeli" name="phonePembeli" value="{{$pengiriman->phone}}">
                                     </div>
                                 </div>
                             </div>

@@ -48,8 +48,7 @@
                                         <th width="5%">No.</th>
                                         <th width="10%">Tanggal</th>
                                         <th>Nama Pembeli</th>
-                                        <th>Driver</th>
-                                        <th>Uk. Kendaraan</th>
+                                        <th>Alamat Pembeli</th>
                                         <th>Item</th>
                                         <th width="10%">Status Pengiriman</th>
                                         <th width="10%">Prioritas Pengiriman</th>
@@ -63,13 +62,12 @@
                                         <td>{{$loop->iteration}}</td>
                                         <td>{{$shipping->tanggal_pengiriman}}</td>
                                         <td>{{$shipping->nama_pembeli}}</td>
-                                        <td>{{@$shipping->driver->name?? "-"}}</td>
-                                        <td>{{$shipping->uk_kendaraan}}</td>
+                                        <td>{{$shipping->alamat_pembeli}}</td>
                                         <td>
                                             {{$shipping->detailItems()}}
                                         </td>
                                         <td>{!!badge($shipping->status)!!}</td>
-                                        <td>{!!badge($shipping->prioritas)!!}</td>
+                                        <td>{{$shipping->prioritas}}</td>
 
                                         <td>
                                             <button class="btn btn-primary btn-border dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Aksi</button>
@@ -161,13 +159,28 @@
                 render: function(data, type, row, meta) {
                     if (type === 'sort') {
                         switch (data) {
-                            case 'NORMAL':
-                                return 0;
-                            case 'SEDANG':
+                            case 'normal':
                                 return 1;
-                            case 'PENTING':
+                                break;
+                            case 'sedang':
                                 return 2;
+                                break;
+                            case 'penting':
+                                return 3;
+                                break;
                         }
+                    }
+
+                    switch (data) {
+                        case 'normal':
+                            return '<span class="badge badge-primary">'+ data.toUpperCase() +'</span>';
+                            break;
+                        case 'sedang':
+                            return '<span class="badge badge-warning">'+ data.toUpperCase() +'</span>';
+                            break;
+                        case 'penting':
+                            return '<span class="badge badge-danger">'+ data.toUpperCase() +'</span>';
+                            break;
                     }
 
                     return data;

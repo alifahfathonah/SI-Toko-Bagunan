@@ -16,7 +16,16 @@
         text-align: center;
     }
 
+    #signature{
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 30px;
+    }
     
+    #signature, #signature>tr, #signature tr td{
+        border:1px solid;
+        text-align: center;
+    }
 
     
     
@@ -28,12 +37,12 @@
             <thead>
                 <tr>
                     <th colspan="2" style="text-align: center">
-                        TOKO SUMBER REJEKI
+                        TOKO BANGUNAN SUMBER REJEKI
                     </th>
                 </tr>
                 <tr>
-                    <th colspan="2" style="text-align: center">
-                        LAMONGAN
+                    <th colspan="2" style="text-align: center; font-size: 13px; border-bottom: 2px double ; ">
+                        Jl. Raya Sugio-Lamongan Ds.Sumberagung
                     </th>
                 </tr>
             </thead>
@@ -87,7 +96,7 @@
                         {{$item->product->nama_produk}}
                     </td>
                     <td style="text-align: right">
-                        @ {{$item->quantity}}
+                        {{$item->quantity}}
                     </td>
                 </tr>
                 @endforeach
@@ -97,12 +106,23 @@
                     <td colspan="2" style="text-align: center;" > Total Barang </td>
                     <td style="text-align: right;" > {{$shipping->items->sum('quantity')}} </td>
                 </tr>
-                <tr>
-                    <td colspan="2" style="text-align: center;" > Total Harga </td>
-                    <td style="text-align: right;" > Rp. {{number_format($shipping->grandtotal,2)}} </td>
-                </tr>   
-                
             </tfoot>
+        </table>
+
+        <table id="signature">
+            <tbody>
+                <tr >
+                    <td style="height: 80px">
+                    </td>
+                    <td>
+                        
+                    </td>
+                </tr>
+                <tr>
+                    <td>Tanda Terima Pembeli</td>
+                    <td>Checker Gudang</td>
+                </tr>
+            </tbody>
         </table>
         
     </div>

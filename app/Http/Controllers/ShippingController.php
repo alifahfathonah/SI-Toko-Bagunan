@@ -105,93 +105,40 @@ class ShippingController extends Controller
     public function update(Request $request, $id)
     {
         $pengiriman = Shipping::find($id);
-        $pengiriman->tanggal_pengiriman  = $request->input('tglPengiriman');
-        $pengiriman->nama_pembeli  = $request->input('namaPembeli');
-        $pengiriman->alamat_pembeli  = $request->input('alamatPembeli');
-        $pengiriman->phone  = $request->input('phonePembeli');
-        $pengiriman->driver_id  = $request->input('driver');
-        $pengiriman->uk_kendaraan  = $request->input('kendaraan');
-        $pengiriman->grandtotal          = $request->input('grandTotal');
+        $pengiriman->tanggal_pengiriman     = $request->input('tglPengiriman');
+        $pengiriman->nama_pembeli           = $request->input('namaPembeli');
+        $pengiriman->alamat_pembeli         = $request->input('alamatPembeli');
+        $pengiriman->phone                  = $request->input('phonePembeli');
+        $pengiriman->driver_id              = $request->input('driver');
+        $pengiriman->uk_kendaraan           = $request->input('kendaraan');
+        $pengiriman->grandtotal             = $request->input('grandTotal');
+        $pengiriman->grandtotal             = $request->input('grandTotal');
+        $pengiriman->prioritas              = $request->input('prioritas');
         $pengiriman->save();
 
+        //delete item yang ada
         PengirimanItem::where('pengiriman_id', $pengiriman->id)->delete();
 
         $items = $request->input('dataItem');
         $pengirimanItem = [];
 
+        //insert baru
         foreach ($items as $item) {
             $unit = Unit::firstOrCreate(['name_unit' => $item['unitItem']]);
-            $product = Unit::firstOrCreate(['name_unit' => $item['unitItem']]);
+            $product = Product::firstOrCreate(['nama_produk' => $item['nama']]);
             $pengirimanItem[] = [
                 "pengiriman_id"   => $pengiriman->id,
-                "product_id"  => $product->id,
+                "product_id"     => $product->id,
                 "unit_id"       => $unit->id,
                 "quantity"      => $item['jumlahItem'],
                 "unit_price"    => $item['hargaItem'],
                 "total"         => $item['totalItem'],
+                "created_at"     => Carbon::now(),
+                "updated_at"     => Carbon::now(),
             ];
         }
 
         PengirimanItem::insert($pengirimanItem);
-
-        return json_encode("insert success");
-    }
-    public function update_pengiriman(Request $request, Shipping $pengiriman)
-    {
-        //edit pengiriman
-        $pengiriman->penjualan_id            = $request->input('id_penjualan');
-        $pengiriman->tanggal_pengiriman      = $request->input('tglPengiriman');
-        $pengiriman->prioritas               = $request->input('prioritas');
-
-        $driver_id = $request->input('driver');
-
-        //cek jika sudah melakaukan pemilihan driver
-        if (isset($driver_id)) {
-            $pengiriman->driver_id   = $driver_id;
-        }
-
-        //mempersiapkan data baru untuk pengiriman item, skema update delete
-        $idItem = $request->input('idItem');
-        $qtySend = $request->input('jmlDikirim');
-        $shippingItem = [];
-
-        foreach ($idItem as $i => $item) {
-            if ($qtySend[$i] > 0) {
-                $shippingItem[] = [
-                    "pengiriman_id"      => $pengiriman->id,
-                    "penjualan_item_id"  => $item,
-                    "quantity"           => $qtySend[$i],
-                ];
-            }
-        }
-
-        //cek jika semua qty send 0 maka tidak ada barang yang dikirim dan error
-        if (count($shippingItem) == 0) {
-            return response(422);
-        }
-
-        $pengiriman->save(); //save hasil editan pengiriman
-
-
-        //delete pengiriman item lama 
-        $pengirimanItem = $pengiriman->items;
-
-        foreach ($pengirimanItem as $item) {
-            $penjualanItem = $item->PenjualanItem;
-            $penjualanItem->quantity_sent = $penjualanItem->quantity_sent - $item->quantity;
-            $penjualanItem->save();
-
-            $item->delete();
-        }
-
-        // insert pengiriman item baru
-        $pengirimanItem = PengirimanItem::insert($shippingItem);
-
-        foreach ($shippingItem as $item) {
-            $penjualanItem = PenjualanItem::find($item["penjualan_item_id"]);
-            $penjualanItem->quantity_sent = $penjualanItem->quantity_sent + $item["quantity"];
-            $penjualanItem->save();
-        }
 
         return json_encode("insert success");
     }
