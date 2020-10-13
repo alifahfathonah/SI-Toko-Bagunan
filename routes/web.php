@@ -126,3 +126,6 @@ Route::get('/penjualan/{id}/pembayaran/list', 'PenjualanController@payment_list'
 Route::get('/penjualan/pembayaran/edit/{id}/{sale_id}', 'PenjualanController@payment_edit')->name('pembayaransale.edit');
 Route::get('/penjualan/pembayaran/update/{id}', 'PenjualanController@payment_update')->name('pembayaransale.update');
 Route::get('/penjualan/pembayaran/delete/{id}', 'PenjualanController@payment_destroy')->name('pembayaransale.destroy');
+
+Route::get('/backup', 'DBController@backup')->name('db.backup');
+
