@@ -126,3 +126,15 @@ Route::get('/penjualan/{id}/pembayaran/list', 'PenjualanController@payment_list'
 Route::get('/penjualan/pembayaran/edit/{id}/{sale_id}', 'PenjualanController@payment_edit')->name('pembayaransale.edit');
 Route::get('/penjualan/pembayaran/update/{id}', 'PenjualanController@payment_update')->name('pembayaransale.update');
 Route::get('/penjualan/pembayaran/delete/{id}', 'PenjualanController@payment_destroy')->name('pembayaransale.destroy');
+
+
+Route::resource('vehicle', 'VehicleController')->names([
+    'index'  => 'vehicle.index',
+    'create' => 'vehicle.form.tambah',
+    'store' => 'vehicle.tambah',
+    'edit' => 'vehicle.edit',
+    'update' => 'vehicle.update',
+    'destroy' => 'vehicle.hapus',
+    'show' => 'vehicle.detail'
+
+]);

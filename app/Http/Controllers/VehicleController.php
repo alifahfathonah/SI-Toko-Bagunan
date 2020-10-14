@@ -3,10 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Vehicle;
 
-use App\Models\Driver;
-
-class DriverController extends Controller
+class VehicleController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -15,9 +14,8 @@ class DriverController extends Controller
      */
     public function index()
     {
-        //
-        $drivers = Driver::all();
-        return view('drivers/daftar_driver', compact('drivers'));
+        $vehicles = Vehicle::all();
+        return view('vehicles/daftar_vehicle', compact('vehicles'));
     }
 
     /**
@@ -28,7 +26,6 @@ class DriverController extends Controller
     public function create()
     {
         //
-        return view('drivers/tambah_driver');
     }
 
     /**
@@ -40,12 +37,6 @@ class DriverController extends Controller
     public function store(Request $request)
     {
         //
-        $data = [
-            'name'        => $request->input('namaDriver'),
-            'phone'       => $request->input('phoneDriver'),
-        ];
-        Driver::create($data);
-        return redirect()->route('driver.index');
     }
 
     /**
@@ -56,10 +47,7 @@ class DriverController extends Controller
      */
     public function show($id)
     {
-        $driver = Driver::find($id);
-        $histories = $driver->histories()->orderBy('send_at', 'DESC')->get();
-
-        return view('drivers.detail-driver', compact('driver', 'histories'));
+        //
     }
 
     /**
@@ -71,9 +59,6 @@ class DriverController extends Controller
     public function edit($id)
     {
         //
-        $driver = Driver::find($id);
-
-        return view('drivers.edit_driver', compact('driver'));
     }
 
     /**
@@ -86,14 +71,6 @@ class DriverController extends Controller
     public function update(Request $request, $id)
     {
         //
-        $driver = Driver::find($id);
-
-        $driver->name = $request->input('namaDriverEdit');
-        $driver->phone = $request->input('phoneDriverEdit');
-
-        $driver->save();
-
-        return redirect()->route('driver.index');
     }
 
     /**
@@ -105,10 +82,5 @@ class DriverController extends Controller
     public function destroy($id)
     {
         //
-        $driver = Driver::find($id);
-
-        $driver->delete();
-
-        return redirect()->route('driver.index');
     }
 }
