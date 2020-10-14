@@ -15,7 +15,7 @@ class VehicleController extends Controller
     public function index()
     {
         $vehicles = Vehicle::all();
-        return view('vehicles/daftar_vehicle', compact('vehicles'));
+        return view('vehicles/daftar_vehicles', compact('vehicles'));
     }
 
     /**
@@ -25,7 +25,7 @@ class VehicleController extends Controller
      */
     public function create()
     {
-        //
+        return view('vehicles/tambah_vehicle');
     }
 
     /**
@@ -36,7 +36,12 @@ class VehicleController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $data = [
+            'name'        => $request->input('namaVehicle'),
+            'price'       => $request->input('priceVehicle'),
+        ];
+        Vehicle::create($data);
+        return redirect()->route('vehicle.index');
     }
 
     /**
