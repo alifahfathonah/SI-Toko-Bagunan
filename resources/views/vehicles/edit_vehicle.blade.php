@@ -1,5 +1,5 @@
 @extends('layout.main')
-@section('title', 'Tambah Kendaraan')
+@section('title', 'Edit Kendaraan')
 
 @section('contain')
 
@@ -23,7 +23,7 @@
                     <i class="flaticon-right-arrow"></i>
                 </li>
                 <li class="nav-item">
-                    <a href="#">Tambah Kendaraan</a>
+                    <a href="#">Edit Kendaraan</a>
                 </li>
             </ul>
         </div>
@@ -32,21 +32,22 @@
                 <div class="card">
                     <div class="card-header">
                         <div class="d-flex align-items-center">
-                            <h4 class="card-title">Tambah Kendaraan</h4>
+                            <h4 class="card-title">Edit Kendaraan</h4>
                         </div>
                     </div>
-                    <form action="{{route('vehicle.tambah')}}" method="POST">
+                    <form method="POST" action="{{route('vehicle.update', $vehicle->id)}}">
+                        @method ('PUT')
                         @csrf
                         <div class="card-body">
                             <div class="row">
                                 <div class="col-sm-12">
                                     <div class="form-group">
                                         <label>Nama</label>
-                                        <input type="text" class="form-control form-control" id="namaVehicle" name="namaVehicle" autofocus required>
+                                        <input type="text" class="form-control form-control" id="namaVehicleEdit" name="namaVehicleEdit" value="{{$vehicle->name}}" autofocus required>
                                     </div>
                                     <div class="form-group">
                                         <label>Harga</label>
-                                        <input type="number" class="form-control form-control" id="priceVehicle" name="priceVehicle" required>
+                                        <input type="number" class="form-control form-control" id="priceVehicleEdit" name="priceVehicleEdit" value="{{$vehicle->price}}" required>
                                     </div>
                                 </div>
                             </div>
