@@ -158,7 +158,7 @@
                 </li>
                 <li class="nav-item {{set_active(['pengiriman.index','pengiriman.riwayat','pengiriman.form.tambah','driver.index', 'driver.form.tambah'])}}">
                     <a data-toggle="collapse" href="#kendaraan">
-                        <i class="fas fa-shipping-fast"></i>
+                        <i class="fas fa-truck"></i>
                         <p>Kendaraan</p>
                         <span class="caret"></span>
                     </a>
