@@ -1,5 +1,5 @@
 @extends('layout.main')
-@section('title', 'Edit Supir')
+@section('title', 'Edit Driver')
 
 @section('contain')
 
@@ -46,7 +46,7 @@
                                         <input type="text" class="form-control form-control" id="namaDriverEdit" name="namaDriverEdit" value="{{$driver->name}}" autofocus required>
                                     </div>
                                     <div class="form-group">
-                                        <label>Telephone</label>
+                                        <label>Nomor Telepon</label>
                                         <input type="number" class="form-control form-control" id="phoneDriverEdit" name="phoneDriverEdit" value="{{$driver->phone}}" required>
                                     </div>
                                 </div>

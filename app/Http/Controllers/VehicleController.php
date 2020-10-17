@@ -41,7 +41,7 @@ class VehicleController extends Controller
             'price'       => $request->input('priceVehicle'),
         ];
         Vehicle::create($data);
-        return redirect()->route('vehicle.index');
+        return redirect()->route('kendaraan.index');
     }
 
     /**
@@ -86,7 +86,7 @@ class VehicleController extends Controller
 
         $vehicle->save();
 
-        return redirect()->route('vehicle.index');
+        return redirect()->route('kendaraan.index');
     }
 
     /**
@@ -101,6 +101,6 @@ class VehicleController extends Controller
 
         $vehicle->delete();
 
-        return redirect()->route('vehicle.index');
+        return redirect()->route('kendaraan.index');
     }
 }

@@ -17,7 +17,7 @@
                     <i class="flaticon-right-arrow"></i>
                 </li>
                 <li class="nav-item">
-                    <a href="{{route('vehicle.index')}}">Kendaraan</a>
+                    <a href="{{route('kendaraan.index')}}">Kendaraan</a>
                 </li>
                 <li class="separator">
                     <i class="flaticon-right-arrow"></i>
@@ -35,7 +35,7 @@
                             <h4 class="card-title">Edit Kendaraan</h4>
                         </div>
                     </div>
-                    <form method="POST" action="{{route('vehicle.update', $vehicle->id)}}">
+                    <form method="POST" action="{{route('kendaraan.update', $vehicle->id)}}">
                         @method ('PUT')
                         @csrf
                         <div class="card-body">
@@ -53,7 +53,7 @@
                             </div>
                         </div>
                         <div class="card-footer text-right">
-                            <a href="{{route('vehicle.index')}}" class="btn btn-danger">Batal</a>&nbsp;
+                            <a href="{{route('kendaraan.index')}}" class="btn btn-danger">Batal</a>&nbsp;
                             <button type="reset" class="btn btn-info">Reset</button>&nbsp;
                             <button type="submit" class="btn btn-success">Simpan</button>
                         </div>
