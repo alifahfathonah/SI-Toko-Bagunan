@@ -45,7 +45,7 @@
                                         <input type="text" class="form-control form-control" id="namaVehicle" name="namaVehicle" autofocus required>
                                     </div>
                                     <div class="form-group">
-                                        <label>Harga</label>
+                                        <label>Ongkos Kirim</label>
                                         <input type="number" class="form-control form-control" id="priceVehicle" name="priceVehicle" required>
                                     </div>
                                 </div>

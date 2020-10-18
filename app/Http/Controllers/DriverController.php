@@ -5,6 +5,10 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 
 use App\Models\Driver;
+use App\Models\Shipping;
+use App\Models\SalaryDriver;
+
+
 
 class DriverController extends Controller
 {
@@ -110,5 +114,27 @@ class DriverController extends Controller
         $driver->delete();
 
         return redirect()->route('driver.index');
+    }
+
+    public function paidSalary(Driver $driver){
+        $pengiriman = Shipping::where('driver_id',$driver->id)->where('has_paid_driver',false)->get();
+        
+        $salary = 0; 
+        foreach ($pengiriman as $delivery) {
+            $salary+= $delivery->vehicle->price;
+        }
+
+        $salaryDriver   = SalaryDriver::create([
+            'driver_id' => $driver->id,
+            'amount'    => $salary,
+        ]);
+
+        foreach($pengiriman as $delivery){
+            $delivery->has_paid_driver = true;
+            $delivery->salary_id   = $salaryDriver->id;
+            $delivery->save();
+        }
+        dd('sukses');
+
     }
 }

@@ -130,8 +130,9 @@
                             <div class="form-group">
                                 <label>Uk. Kendaraan</label>
                                 <select class="form-control" name="kendaraan" id="optionKendaraan">
-                                    <option value="besar">Besar</option>
-                                    <option value="kecil">Kecil</option>
+                                    @foreach ($vehicles as $vehicle)
+                                    <option value="{{$vehicle->id}}">{{$vehicle->name}}</option>
+                                    @endforeach
                                 </select>
                             </div>
                         </div>

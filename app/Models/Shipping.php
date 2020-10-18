@@ -30,6 +30,11 @@ class Shipping extends Model
         return $this->hasMany(PengirimanItem::class, 'pengiriman_id', 'id');
     }
 
+    public function vehicle()
+    {
+        return $this->belongsTo(Vehicle::class,'kendaraan_id','id');
+    }
+
     public function detailItems()
     {
         $items = $this->items;
@@ -43,4 +48,6 @@ class Shipping extends Model
     public function getTimeSendAttribute(){
         return Carbon::parse($this->attributes['send_at'])->format('H:i');
     }
+
+
 }

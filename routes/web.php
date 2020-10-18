@@ -90,6 +90,10 @@ Route::resource('driver', 'DriverController')->names([
 
 ]);
 
+Route::group(['prefix' => 'driver'], function () {
+    Route::get('{driver}/gaji/bayar', 'DriverController@paidSalary');
+});
+
 Route::resource('pengiriman', 'ShippingController')->names([
     'index' => 'pengiriman.index',
     'create' => 'pengiriman.form.tambah',
