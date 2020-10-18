@@ -11,6 +11,8 @@ use App\Models\Driver;
 use App\Models\Penjualan;
 use App\Models\PenjualanItem;
 use App\Models\PengirimanItem;
+use App\Models\Vehicle;
+
 use Carbon\Carbon;
 use PDF;
 
@@ -22,7 +24,8 @@ class ShippingController extends Controller
         //
         $shippings = Shipping::where('status', 'pending')->get();
         $drivers   = Driver::all();
-        return view('pengiriman/daftar_pengiriman', compact('shippings', 'drivers'));
+        $vehicles  = Vehicle::all();
+        return view('pengiriman/daftar_pengiriman', compact('shippings', 'drivers', 'vehicles'));
     }
 
     public function riwayat()
@@ -165,9 +168,12 @@ class ShippingController extends Controller
         }
 
         $pengiriman->driver_id    = $driver_id;
-        $pengiriman->uk_kendaraan = $kendaraan;
+        $pengiriman->kendaraan_id = $kendaraan;
         $pengiriman->status       = 'dikirim';
         $pengiriman->send_at      =  Carbon::now();
+        $pengiriman->has_paid_driver  =  false;
+
+
         $pengiriman->save();
 
         $response = [

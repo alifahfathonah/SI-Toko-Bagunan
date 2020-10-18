@@ -90,6 +90,10 @@ Route::resource('driver', 'DriverController')->names([
 
 ]);
 
+Route::group(['prefix' => 'driver'], function () {
+    Route::post('{driver}/gaji/bayar', 'DriverController@paidSalary')->name('driver.salary.pay');
+});
+
 Route::resource('pengiriman', 'ShippingController')->names([
     'index' => 'pengiriman.index',
     'create' => 'pengiriman.form.tambah',
@@ -126,3 +130,17 @@ Route::get('/penjualan/{id}/pembayaran/list', 'PenjualanController@payment_list'
 Route::get('/penjualan/pembayaran/edit/{id}/{sale_id}', 'PenjualanController@payment_edit')->name('pembayaransale.edit');
 Route::get('/penjualan/pembayaran/update/{id}', 'PenjualanController@payment_update')->name('pembayaransale.update');
 Route::get('/penjualan/pembayaran/delete/{id}', 'PenjualanController@payment_destroy')->name('pembayaransale.destroy');
+
+Route::get('/backup', 'DBController@backup')->name('db.backup');
+
+
+Route::resource('kendaraan', 'VehicleController')->names([
+    'index'  => 'kendaraan.index',
+    'create' => 'kendaraan.form.tambah',
+    'store' => 'kendaraan.tambah',
+    'edit' => 'kendaraan.edit',
+    'update' => 'kendaraan.update',
+    'destroy' => 'kendaraan.hapus',
+    'show' => 'kendaraan.detail'
+
+]);

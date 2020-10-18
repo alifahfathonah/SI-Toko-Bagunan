@@ -45,7 +45,7 @@
                                         <input type="text" class="form-control form-control" id="namaDriver" name="namaDriver" autofocus required>
                                     </div>
                                     <div class="form-group">
-                                        <label>Telephone</label>
+                                        <label>Nomor Telepon</label>
                                         <input type="number" class="form-control form-control" id="phoneDriver" name="phoneDriver" required>
                                     </div>
                                 </div>

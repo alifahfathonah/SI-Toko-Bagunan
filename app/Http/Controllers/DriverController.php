@@ -5,6 +5,10 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 
 use App\Models\Driver;
+use App\Models\Shipping;
+use App\Models\SalaryDriver;
+
+
 
 class DriverController extends Controller
 {
@@ -57,9 +61,10 @@ class DriverController extends Controller
     public function show($id)
     {
         $driver = Driver::find($id);
-        $histories = $driver->histories()->orderBy('send_at','DESC')->get();
-        
-        return view('drivers.detail-driver', compact('driver','histories'));
+        $histories   = $driver->histories()->where('has_paid_driver',false)->orderBy('send_at', 'DESC')->get();
+        $salaries    = SalaryDriver::where('driver_id',$id)->orderBy('created_at', 'DESC')->get();
+
+        return view('drivers.detail-driver', compact('driver', 'histories', 'salaries'));
     }
 
     /**
@@ -110,5 +115,32 @@ class DriverController extends Controller
         $driver->delete();
 
         return redirect()->route('driver.index');
+    }
+
+    public function paidSalary(Driver $driver){
+        $pengiriman = Shipping::where('driver_id',$driver->id)->where('has_paid_driver',false)->get();
+        
+        $salary = 0; 
+
+        if(count($pengiriman))
+        {
+            foreach ($pengiriman as $delivery) {
+                $salary+= $delivery->vehicle->price;
+            }
+    
+            $salaryDriver   = SalaryDriver::create([
+                'driver_id' => $driver->id,
+                'amount'    => $salary,
+            ]);
+    
+            foreach($pengiriman as $delivery){
+                $delivery->has_paid_driver = true;
+                $delivery->salary_id   = $salaryDriver->id;
+                $delivery->save();
+            }
+        }
+        
+        return redirect()->route('driver.detail', $driver->id);
+
     }
 }

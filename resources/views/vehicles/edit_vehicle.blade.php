@@ -1,12 +1,12 @@
 @extends('layout.main')
-@section('title', 'Edit Driver')
+@section('title', 'Edit Kendaraan')
 
 @section('contain')
 
 <div class="content">
     <div class="page-inner">
         <div class="page-header">
-            <h4 class="page-title">Pengiriman</h4>
+            <h4 class="page-title">Kendaraan</h4>
             <ul class="breadcrumbs">
                 <li class="nav-home">
                     <a href="{{route('home')}}">
@@ -17,13 +17,13 @@
                     <i class="flaticon-right-arrow"></i>
                 </li>
                 <li class="nav-item">
-                    <a href="{{route('driver.index')}}">Driver</a>
+                    <a href="{{route('kendaraan.index')}}">Kendaraan</a>
                 </li>
                 <li class="separator">
                     <i class="flaticon-right-arrow"></i>
                 </li>
                 <li class="nav-item">
-                    <a href="#">Edit Driver</a>
+                    <a href="#">Edit Kendaraan</a>
                 </li>
             </ul>
         </div>
@@ -32,10 +32,10 @@
                 <div class="card">
                     <div class="card-header">
                         <div class="d-flex align-items-center">
-                            <h4 class="card-title">Edit Driver</h4>
+                            <h4 class="card-title">Edit Kendaraan</h4>
                         </div>
                     </div>
-                    <form method="POST" action="{{route('driver.update', $driver->id)}}">
+                    <form method="POST" action="{{route('kendaraan.update', $vehicle->id)}}">
                         @method ('PUT')
                         @csrf
                         <div class="card-body">
@@ -43,17 +43,18 @@
                                 <div class="col-sm-12">
                                     <div class="form-group">
                                         <label>Nama</label>
-                                        <input type="text" class="form-control form-control" id="namaDriverEdit" name="namaDriverEdit" value="{{$driver->name}}" autofocus required>
+                                        <input type="text" class="form-control form-control" id="namaVehicleEdit" name="namaVehicleEdit" value="{{$vehicle->name}}" autofocus required>
                                     </div>
                                     <div class="form-group">
-                                        <label>Nomor Telepon</label>
-                                        <input type="number" class="form-control form-control" id="phoneDriverEdit" name="phoneDriverEdit" value="{{$driver->phone}}" required>
+                                        <label>Harga</label>
+                                        <input type="number" class="form-control form-control" id="priceVehicleEdit" name="priceVehicleEdit" value="{{$vehicle->price}}" required>
                                     </div>
                                 </div>
                             </div>
                         </div>
                         <div class="card-footer text-right">
-                            <a href="{{route('driver.index')}}" class="btn btn-danger">Batal</a>&nbsp;
+                            <a href="{{route('kendaraan.index')}}" class="btn btn-danger">Batal</a>&nbsp;
+                            <button type="reset" class="btn btn-info">Reset</button>&nbsp;
                             <button type="submit" class="btn btn-success">Simpan</button>
                         </div>
                     </form>

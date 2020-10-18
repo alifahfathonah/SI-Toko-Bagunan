@@ -32,6 +32,10 @@
                     <ul class="dropdown-menu dropdown-user animated fadeIn">
                         <div class="dropdown-user-scroll scrollbar-outer">
                             <li>
+                                <a class="dropdown-item" href="{{route('db.backup')}}" id="backupBtn"><i class="fas fa-download"> Back Up Data</i></a>
+                            </li>
+                            <div role="separator" class="dropdown-divider"></div>
+                            <li>
                                 <a class="dropdown-item" href="{{route('logout')}}"><i class="fas fa-sign-out-alt"> Logout</i></a>
                             </li>
                         </div>

@@ -156,6 +156,27 @@
                         </ul>
                     </div>
                 </li>
+                <li class="nav-item {{set_active(['kendaraan.index', 'kendaraan.form.tambah'])}}">
+                    <a data-toggle="collapse" href="#kendaraan">
+                        <i class="fas fa-truck"></i>
+                        <p>Kendaraan</p>
+                        <span class="caret"></span>
+                    </a>
+                    <div class="collapse {{set_show(['kendaraan.index', 'kendaraan.form.tambah'])}}" id="kendaraan">
+                        <ul class="nav nav-collapse">
+                            <li class="{{set_active('kendaraan.index')}}">
+                                <a href="{{route('kendaraan.index')}}">
+                                    <span class="sub-item">Daftar Kendaraan</span>
+                                </a>
+                            </li>
+                            <li class="{{set_active('kendaraan.form.tambah')}}">
+                                <a href="{{route('kendaraan.form.tambah')}}">
+                                    <span class="sub-item">Tambah Kendaraan</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </li>
             </ul>
         </div>
     </div>

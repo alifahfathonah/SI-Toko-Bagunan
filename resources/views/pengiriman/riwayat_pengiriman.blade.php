@@ -59,7 +59,7 @@
                                         <td>{{$shipping->tanggal_pengiriman}}</td>
                                         <td>{{$shipping->nama_pembeli}}</td>
                                         <td>{{@$shipping->driver->name?? "-"}}</td>
-                                        <td>{{$shipping->uk_kendaraan}}</td>
+                                        <td>{{$shipping->uk_kendaraan?? $shipping->vehicle->name }}</td>
                                         <td>{!!badge($shipping->status)!!}</td>
                                         <td>{!!badge($shipping->prioritas)!!}</td>
 
