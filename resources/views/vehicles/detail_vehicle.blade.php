@@ -17,7 +17,7 @@
                     <i class="flaticon-right-arrow"></i>
                 </li>
                 <li class="nav-item">
-                    <a href="{{route('vehicle.index')}}">Kendaraan</a>
+                    <a href="{{route('kendaraan.index')}}">Kendaraan</a>
                 </li>
                 <li class="separator">
                     <i class="flaticon-right-arrow"></i>
@@ -50,7 +50,7 @@
                         </div>
                     </div>
                     <div class="card-footer text-right">
-                        <a href="{{route('vehicle.index')}}" class="btn btn-danger">Kembali</a>
+                        <a href="{{route('kendaraan.index')}}" class="btn btn-danger">Kembali</a>
                     </div>
                 </div>
             </div>

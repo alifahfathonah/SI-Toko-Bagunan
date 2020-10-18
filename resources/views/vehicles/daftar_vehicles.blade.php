@@ -18,7 +18,7 @@
                     <i class="flaticon-right-arrow"></i>
                 </li>
                 <li class="nav-item">
-                    <a href="{{route('vehicle.index')}}">Kendaraan</a>
+                    <a href="{{route('kendaraan.index')}}">Kendaraan</a>
                 </li>
                 <li class="separator">
                     <i class="flaticon-right-arrow"></i>
@@ -34,7 +34,7 @@
                     <div class="card-header">
                         <div class="d-flex align-items-center">
                             <h4 class="card-title">Daftar Kendaraan</h4>
-                            <a class="btn btn-primary btn-round ml-auto" href="{{route('vehicle.form.tambah')}}">
+                            <a class="btn btn-primary btn-round ml-auto" href="{{route('kendaraan.form.tambah')}}">
                                 <i class="fa fa-plus"></i>
                                 Tambah
                             </a>
@@ -60,9 +60,9 @@
                                         <td>
                                             <button class="btn btn-primary btn-border dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Aksi</button>
                                             <div class="dropdown-menu">
-                                                <a class="dropdown-item" href="{{route('vehicle.detail', $vehicle->id)}}">Detail</a>
+                                                <a class="dropdown-item" href="{{route('kendaraan.detail', $vehicle->id)}}">Detail</a>
                                                 <div role="separator" class="dropdown-divider"></div>
-                                                <a class="dropdown-item" href="{{route('vehicle.edit', $vehicle->id)}}">Edit</a>
+                                                <a class="dropdown-item" href="{{route('kendaraan.edit', $vehicle->id)}}">Edit</a>
                                                 <div role="separator" class="dropdown-divider"></div>
                                                 <a class="dropdown-item" data-toggle="modal" data-target="#hapusModal{{$vehicle->id}}">Hapus</a>
                                             </div>
@@ -96,7 +96,7 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <form action="{{route('vehicle.hapus', $vehicle->id)}}" method="POST">
+            <form action="{{route('kendaraan.hapus', $vehicle->id)}}" method="POST">
                 @method ('DELETE')
                 @csrf
                 <div class="modal-body">

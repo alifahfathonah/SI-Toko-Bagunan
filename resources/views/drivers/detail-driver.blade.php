@@ -33,14 +33,14 @@
                 <div class="card">
                     <div class="card-header">
                         <div class="d-flex align-items-center">
-                            <h4 class="card-title">Detail Pengiriman</h4>
+                            <h4 class="card-title">Detail Driver</h4>
                         </div>
                     </div>
                     <div class="card-body">
                         <div class="row">
                             <div class="col-sm-3 pr-0">
                                 <div class="form-group">
-                                    <label>Nama Supir</label>
+                                    <label>Nama</label>
                                     <input type="text" class="form-control" value="{{$driver->name}}" disabled>
                                 </div>
                             </div>
@@ -48,7 +48,7 @@
                         <div class="row">
                             <div class="col-sm-3 pr-0">
                                 <div class="form-group">
-                                    <label>Nomor Telepon Supir</label>
+                                    <label>Nomor Telepon</label>
                                     <input type="text" class="form-control" value="{{$driver->phone}}" disabled>
                                 </div>
                             </div>
@@ -65,12 +65,12 @@
                 <div class="card">
                     <div class="card-header">
                         <div class="d-flex align-items-center">
-                            <h4 class="card-title">Daftar Riwayat Pengiriman</h4>
+                            <h4 class="card-title">Riwayat Pengiriman</h4>
                         </div>
                     </div>
                     <div class="card-body">
                         <div class="table-responsive">
-                            <table id="daftarSales" class="display table table-striped table-hover">
+                            <table id="riwayatPengiriman" class="display table table-striped table-hover">
                                 <thead>
                                     <tr>
                                         <th>No.</th>
@@ -78,6 +78,48 @@
                                         <th>Waktu Pengiriman</th>
                                         <th>Nama Pembeli</th>
                                         <th>Alamat Pembeli</th>
+                                        <th>Aksi</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach ($histories as $history)
+                                    <tr>
+                                        <td>{{$loop->iteration}}</td>
+                                        <td>{{$history->tanggal_pengiriman}}</td>
+                                        <td>{{$history->time_send}}</td>
+                                        <td>{{$history->nama_pembeli}}</td>
+                                        <td>{{$history->alamat_pembeli}}</td>
+                                        <td>
+                                            <button class="btn btn-primary btn-border dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Aksi</button>
+                                            <div class="dropdown-menu">
+                                                <a class="dropdown-item" href="{{route('pengiriman.detail',['pengiriman'=>$history])}}">Detail</a>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    @endforeach
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header">
+                        <div class="d-flex align-items-center">
+                            <h4 class="card-title">Riwayat Gaji</h4>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table id="riwayatGaji" class="display table table-striped table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>No.</th>
+                                        <th>Tanggal</th>
+                                        <th>Jumlah Gaji</th>
                                         <th>Aksi</th>
                                     </tr>
                                 </thead>
@@ -114,7 +156,10 @@
 @section('script')
 <script>
     $(document).ready(function() {
-        $('#daftarSales').DataTable({
+        $('#riwayatPengiriman').DataTable({
+            "pageLength": 5,
+        });
+        $('#riwayatGaji').DataTable({
             "pageLength": 5,
         });
     });

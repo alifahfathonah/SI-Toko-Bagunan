@@ -17,7 +17,7 @@
                     <i class="flaticon-right-arrow"></i>
                 </li>
                 <li class="nav-item">
-                    <a href="{{route('vehicle.index')}}">Kendaraan</a>
+                    <a href="{{route('kendaraan.index')}}">Kendaraan</a>
                 </li>
                 <li class="separator">
                     <i class="flaticon-right-arrow"></i>
@@ -35,7 +35,7 @@
                             <h4 class="card-title">Tambah Kendaraan</h4>
                         </div>
                     </div>
-                    <form action="{{route('vehicle.tambah')}}" method="POST">
+                    <form action="{{route('kendaraan.tambah')}}" method="POST">
                         @csrf
                         <div class="card-body">
                             <div class="row">
@@ -52,7 +52,7 @@
                             </div>
                         </div>
                         <div class="card-footer text-right">
-                            <a href="{{route('vehicle.index')}}" class="btn btn-danger">Batal</a>&nbsp;
+                            <a href="{{route('kendaraan.index')}}" class="btn btn-danger">Batal</a>&nbsp;
                             <button type="reset" class="btn btn-info">Reset</button>&nbsp;
                             <button type="submit" class="btn btn-success">Simpan</button>
                         </div>

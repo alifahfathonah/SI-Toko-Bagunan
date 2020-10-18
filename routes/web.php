@@ -134,13 +134,13 @@ Route::get('/penjualan/pembayaran/delete/{id}', 'PenjualanController@payment_des
 Route::get('/backup', 'DBController@backup')->name('db.backup');
 
 
-Route::resource('vehicle', 'VehicleController')->names([
-    'index'  => 'vehicle.index',
-    'create' => 'vehicle.form.tambah',
-    'store' => 'vehicle.tambah',
-    'edit' => 'vehicle.edit',
-    'update' => 'vehicle.update',
-    'destroy' => 'vehicle.hapus',
-    'show' => 'vehicle.detail'
+Route::resource('kendaraan', 'VehicleController')->names([
+    'index'  => 'kendaraan.index',
+    'create' => 'kendaraan.form.tambah',
+    'store' => 'kendaraan.tambah',
+    'edit' => 'kendaraan.edit',
+    'update' => 'kendaraan.update',
+    'destroy' => 'kendaraan.hapus',
+    'show' => 'kendaraan.detail'
 
 ]);

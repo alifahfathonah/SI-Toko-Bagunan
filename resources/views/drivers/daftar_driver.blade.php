@@ -47,7 +47,7 @@
                                     <tr>
                                         <th>No.</th>
                                         <th>Nama</th>
-                                        <th>Telephone</th>
+                                        <th>Nomor Telepon</th>
                                         <th style="width: 10%">Aksi</th>
                                     </tr>
                                 </thead>
