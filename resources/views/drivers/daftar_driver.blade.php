@@ -64,6 +64,11 @@
                                                 <div role="separator" class="dropdown-divider"></div>
                                                 <a class="dropdown-item" href="{{route('driver.edit', $driver->id)}}">Edit</a>
                                                 <div role="separator" class="dropdown-divider"></div>
+                                                <form action="{{route('driver.salary.pay', $driver->id)}}" method="POST">
+                                                    @csrf
+                                                    <button type="submit" class="dropdown-item">Bayar Gaji</button>
+                                                </form>
+                                                <div role="separator" class="dropdown-divider"></div>
                                                 <a class="dropdown-item" data-toggle="modal" data-target="#hapusModal{{$driver->id}}">Hapus</a>
                                             </div>
                                         </td>

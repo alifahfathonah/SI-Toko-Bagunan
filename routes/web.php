@@ -91,7 +91,7 @@ Route::resource('driver', 'DriverController')->names([
 ]);
 
 Route::group(['prefix' => 'driver'], function () {
-    Route::get('{driver}/gaji/bayar', 'DriverController@paidSalary');
+    Route::post('{driver}/gaji/bayar', 'DriverController@paidSalary')->name('driver.salary.pay');
 });
 
 Route::resource('pengiriman', 'ShippingController')->names([

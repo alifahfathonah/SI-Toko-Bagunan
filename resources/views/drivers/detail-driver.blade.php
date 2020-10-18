@@ -78,6 +78,7 @@
                                         <th>Waktu Pengiriman</th>
                                         <th>Nama Pembeli</th>
                                         <th>Alamat Pembeli</th>
+                                        <th>Uk Kendaraan</th>
                                         <th>Aksi</th>
                                     </tr>
                                 </thead>
@@ -89,6 +90,7 @@
                                         <td>{{$history->time_send}}</td>
                                         <td>{{$history->nama_pembeli}}</td>
                                         <td>{{$history->alamat_pembeli}}</td>
+                                        <td>{{$history->uk_kendaraan ?? $history->vehicle->name}}</td>
                                         <td>
                                             <button class="btn btn-primary btn-border dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Aksi</button>
                                             <div class="dropdown-menu">
@@ -120,23 +122,21 @@
                                         <th>No.</th>
                                         <th>Tanggal</th>
                                         <th>Jumlah Gaji</th>
-                                        <th>Aksi</th>
+                                        {{-- <th>Aksi</th> --}}
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach ($histories as $history)
+                                    @foreach ($salaries as $salary)
                                     <tr>
                                         <td>{{$loop->iteration}}</td>
-                                        <td>{{$history->tanggal_pengiriman}}</td>
-                                        <td>{{$history->time_send}}</td>
-                                        <td>{{$history->nama_pembeli}}</td>
-                                        <td>{{$history->alamat_pembeli}}</td>
-                                        <td>
+                                        <td>{{$salary->salary_date}}</td>
+                                        <td>{{number_format($salary->amount, 2)}}</td>
+                                        {{-- <td>
                                             <button class="btn btn-primary btn-border dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Aksi</button>
                                             <div class="dropdown-menu">
                                                 <a class="dropdown-item" href="{{route('pengiriman.detail',['pengiriman'=>$history])}}">Detail</a>
                                             </div>
-                                        </td>
+                                        </td> --}}
                                     </tr>
                                     @endforeach
                                 </tbody>
